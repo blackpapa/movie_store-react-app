@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { getMovies } from "./../services/fakeMovieService";
 
 class Movie extends Component {
-  state = { movies: getMovies() };
+  state = { movies: [] };
+
+  componentDidMount() {
+    const movies = getMovies();
+    this.setState({ movies });
+  }
 
   handleDelete = (movie) => {
     const movies = this.state.movies.filter((m) => m._id !== movie._id);
@@ -20,7 +25,7 @@ class Movie extends Component {
             <tr>
               <th>Title</th>
               <th>Genre</th>
-              <th>Number</th>
+              <th>NumberInStock</th>
               <th>Rate</th>
               <th></th>
             </tr>
