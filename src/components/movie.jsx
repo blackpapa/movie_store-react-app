@@ -4,7 +4,7 @@ import Like from "./common/like";
 import Pagination from "./common/pagination";
 
 class Movie extends Component {
-  state = { movies: [], pageSize: 10 };
+  state = { movies: [], pageSize: 4 };
 
   componentDidMount() {
     const movies = getMovies();
@@ -31,6 +31,7 @@ class Movie extends Component {
 
   render() {
     const { length: count } = this.state.movies;
+    const { pageSize, currentPage, movies } = this.state;
 
     if (count === 0) return <p>There is no movie in the store</p>;
     return (
@@ -48,7 +49,7 @@ class Movie extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.movies.map((movie) => (
+            {movies.map((movie) => (
               <tr key={movie._id}>
                 <td>{movie.title}</td>
                 <td>{movie.genre.name}</td>
@@ -74,9 +75,9 @@ class Movie extends Component {
         </table>
         <Pagination
           itemsCount={count}
-          pageSize={this.state.pageSize}
+          pageSize={pageSize}
           onPageChange={this.handlePageChange}
-          currentPage={this.state.currentPage}
+          currentPage={currentPage}
         />
       </React.Fragment>
     );
