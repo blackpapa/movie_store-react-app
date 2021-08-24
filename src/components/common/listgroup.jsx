@@ -5,7 +5,11 @@ const Listgroup = (props) => {
   return (
     <ul className="list-group">
       {items.map((item) => (
-        <li key={item._id} className="list-group-item">
+        <li
+          onClick={() => onItemSelect(item)}
+          key={item._id}
+          className="list-group-item"
+        >
           {item.name}
         </li>
       ))}
