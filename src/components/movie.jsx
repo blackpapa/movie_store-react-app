@@ -24,6 +24,10 @@ class Movie extends Component {
     this.setState(movies);
   };
 
+  handlePageChange = () => {
+    console.log("page change");
+  };
+
   render() {
     const { length: count } = this.state.movies;
 
@@ -67,7 +71,11 @@ class Movie extends Component {
             ))}
           </tbody>
         </table>
-        <Pagination />
+        <Pagination
+          itemsCount={count}
+          pageSize={4}
+          onPageChange={this.handlePageChange}
+        />
       </React.Fragment>
     );
   }
