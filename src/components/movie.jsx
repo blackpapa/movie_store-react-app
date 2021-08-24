@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { getMovies } from "./../services/fakeMovieService";
+import { getGenres } from "../services/fakeGenreService";
 import Like from "./common/like";
 import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
 import { paginate } from "./utils/paginate";
 
 class Movie extends Component {
-  state = { movies: [], pageSize: 4, currentPage: 1 };
+  state = { movies: [], genres: [], pageSize: 4, currentPage: 1 };
 
   componentDidMount() {
     const movies = getMovies();
-    this.setState({ movies });
+    const genres = getGenres();
+    this.setState({ movies, genres });
   }
 
   handleDelete = (movie) => {
@@ -30,9 +32,13 @@ class Movie extends Component {
     this.setState({ currentPage: page });
   };
 
+  handleSelectedGenre = (genre) => {
+    console.log(genre);
+  };
+
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, movies: allMovies } = this.state;
+    const { pageSize, currentPage, movies: allMovies, genres } = this.state;
 
     const movies = paginate(allMovies, currentPage, pageSize);
 
@@ -40,7 +46,7 @@ class Movie extends Component {
     return (
       <div className="row">
         <div className="col-3">
-          <Listgroup />
+          <Listgroup items={genres} onItemSelect={this.handleSelectedGenre} />
         </div>
         <div className="col">
           <p>There are {count} movies in the store</p>
