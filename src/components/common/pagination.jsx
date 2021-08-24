@@ -5,6 +5,8 @@ const Pagination = (props) => {
   const { itemsCount, pageSize, onPageChange, currentPage } = props;
   //[1, 2, 3]
   const page = Math.ceil(itemsCount / pageSize);
+  if (page === 1) return null;
+
   const pages = _.range(1, page + 1);
 
   return (

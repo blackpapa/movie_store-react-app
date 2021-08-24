@@ -4,7 +4,7 @@ import Like from "./common/like";
 import Pagination from "./common/pagination";
 
 class Movie extends Component {
-  state = { movies: [] };
+  state = { movies: [], pageSize: 10 };
 
   componentDidMount() {
     const movies = getMovies();
@@ -74,7 +74,7 @@ class Movie extends Component {
         </table>
         <Pagination
           itemsCount={count}
-          pageSize={4}
+          pageSize={this.state.pageSize}
           onPageChange={this.handlePageChange}
           currentPage={this.state.currentPage}
         />
