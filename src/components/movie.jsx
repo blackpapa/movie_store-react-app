@@ -75,6 +75,7 @@ class Movie extends Component {
           itemsCount={count}
           pageSize={4}
           onPageChange={this.handlePageChange}
+          currentPage={this.state.currentPage}
         />
       </React.Fragment>
     );
