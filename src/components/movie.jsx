@@ -7,7 +7,12 @@ import Listgroup from "./common/listgroup";
 import { paginate } from "./utils/paginate";
 
 class Movie extends Component {
-  state = { movies: [], genres: [], pageSize: 4, currentPage: 1 };
+  state = {
+    movies: [],
+    genres: [],
+    pageSize: 4,
+    currentPage: 1,
+  };
 
   componentDidMount() {
     const movies = getMovies();
@@ -33,14 +38,24 @@ class Movie extends Component {
   };
 
   handleSelectedGenre = (genre) => {
-    this.setState({ selectedGenre: genre });
+    this.setState({ selectedGenre: genre, currentPage: 1 });
   };
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, movies: allMovies, genres } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      movies: allMovies,
+      genres,
+      selectedGenre,
+    } = this.state;
 
-    const movies = paginate(allMovies, currentPage, pageSize);
+    const filtered = selectedGenre
+      ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+      : allMovies;
+
+    const movies = paginate(filtered, currentPage, pageSize);
 
     if (count === 0) return <p>There is no movie in the store</p>;
     return (
