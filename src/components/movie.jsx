@@ -4,6 +4,11 @@ import { getMovies } from "./../services/fakeMovieService";
 class Movie extends Component {
   state = { movies: getMovies() };
 
+  handleDelete = (movie) => {
+    const movies = this.state.movies.filter((m) => m._id !== movie._id);
+    this.setState({ movies });
+  };
+
   render() {
     return (
       <table className="table">
@@ -24,7 +29,12 @@ class Movie extends Component {
               <td>{movie.numberInStock}</td>
               <td>{movie.dailyRentalRate}</td>
               <td>
-                <button className="button btn-danger btn-sm">Delete</button>
+                <button
+                  onClick={() => this.handleDelete(movie)}
+                  className="button btn-danger btn-sm"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
