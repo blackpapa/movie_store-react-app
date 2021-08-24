@@ -24,8 +24,8 @@ class Movie extends Component {
     this.setState(movies);
   };
 
-  handlePageChange = () => {
-    console.log("page change");
+  handlePageChange = (page) => {
+    console.log("page change", page);
   };
 
   render() {
