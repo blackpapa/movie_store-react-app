@@ -45,7 +45,7 @@ class Movie extends Component {
     if (count === 0) return <p>There is no movie in the store</p>;
     return (
       <div className="row">
-        <div className="col-3">
+        <div className="col-2">
           <Listgroup items={genres} onItemSelect={this.handleSelectedGenre} />
         </div>
         <div className="col">

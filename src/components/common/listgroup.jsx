@@ -1,7 +1,16 @@
 import React from "react";
 
-const Listgroup = () => {
-  return <h1>list group</h1>;
+const Listgroup = (props) => {
+  const { items, onItemSelect } = props;
+  return (
+    <ul className="list-group">
+      {items.map((item) => (
+        <li key={item._id} className="list-group-item">
+          {item.name}
+        </li>
+      ))}
+    </ul>
+  );
 };
 
 export default Listgroup;
