@@ -10,6 +10,8 @@ class Movie extends Component {
   };
 
   render() {
+    if (this.state.movies.length === 0)
+      return <p>There is no movie in the store</p>;
     return (
       <React.Fragment>
         <p>There are {this.state.movies.length} movies in the store</p>
