@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { getMovies } from "./../services/fakeMovieService";
 import Like from "./common/like";
 import Pagination from "./common/pagination";
+import { paginate } from "./utils/paginate";
 
 class Movie extends Component {
-  state = { movies: [], pageSize: 4 };
+  state = { movies: [], pageSize: 4, currentPage: 1 };
 
   componentDidMount() {
     const movies = getMovies();
@@ -25,13 +26,14 @@ class Movie extends Component {
   };
 
   handlePageChange = (page) => {
-    console.log("page change", page);
     this.setState({ currentPage: page });
   };
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, movies } = this.state;
+    const { pageSize, currentPage, movies: allMovies } = this.state;
+
+    const movies = paginate(allMovies, currentPage, pageSize);
 
     if (count === 0) return <p>There is no movie in the store</p>;
     return (
