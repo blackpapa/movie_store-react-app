@@ -7,7 +7,10 @@ const TableHeader = (props) => {
     <thead>
       <tr>
         {columns.map((column) => (
-          <th key={column.path} onClick={() => onSort(column.path)}>
+          <th
+            key={column.path || column.key}
+            onClick={() => onSort(column.path)}
+          >
             {column.label}
           </th>
         ))}
