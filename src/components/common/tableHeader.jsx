@@ -8,6 +8,7 @@ const TableHeader = (props) => {
       <tr>
         {columns.map((column) => (
           <th
+            className="clickable"
             key={column.path || column.key}
             onClick={() => onSort(column.path)}
           >
