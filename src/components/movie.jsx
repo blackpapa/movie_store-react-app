@@ -52,7 +52,6 @@ class Movie extends Component {
       pageSize,
       currentPage,
       movies: allMovies,
-      genres,
       selectedGenre,
       sortColumn,
     } = this.state;
