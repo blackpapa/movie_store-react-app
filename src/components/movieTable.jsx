@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Like from "./common/like";
+import TableHeader from "./common/tableHeader";
 
 class MovieTable extends Component {
   raiseSort = (path) => {
@@ -14,22 +15,20 @@ class MovieTable extends Component {
     return this.props.onSort(sortColumn);
   };
 
+  columns = [
+    { path: "title", label: "Title" },
+    { path: "genre.name", label: "Genre" },
+    { path: "numberInStock", label: "Stock" },
+    { path: "dailyRentalRate", label: "Rate" },
+    {},
+    {},
+  ];
+
   render() {
     const { movies, onLike, onDelete } = this.props;
     return (
       <table className="table">
-        <thead>
-          <tr>
-            <th onClick={() => this.raiseSort("title")}>Title</th>
-            <th onClick={() => this.raiseSort("genre.name")}>Genre</th>
-            <th onClick={() => this.raiseSort("numberInStock")}>
-              NumberInStock
-            </th>
-            <th onClick={() => this.raiseSort("dailyRentalRate")}>Rate</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
+        <TableHeader columns={this.columns} onSort={this.raiseSort} />
         <tbody>
           {movies.map((movie) => (
             <tr key={movie._id}>
