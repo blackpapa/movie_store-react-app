@@ -9,7 +9,7 @@ const TableBody = (props) => {
       {items.map((item) => (
         <tr key={item._id}>
           {columns.map((column) => (
-            <td>{_.get(item, column.path)}</td>
+            <td>{_.get(item, column.path) || column.content(item)}</td>
           ))}
         </tr>
       ))}
