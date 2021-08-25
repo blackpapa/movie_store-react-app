@@ -46,27 +46,6 @@ class MovieTable extends Component {
       <table className="table">
         <TableHeader columns={this.columns} onSort={this.raiseSort} />
         <TableBody columns={this.columns} items={movies} />
-        {/* <tbody>
-          {movies.map((movie) => (
-            <tr key={movie._id}>
-              <td>{movie.title}</td>
-              <td>{movie.genre.name}</td>
-              <td>{movie.numberInStock}</td>
-              <td>{movie.dailyRentalRate}</td>
-              <td>
-                <Like liked={movie.liked} onLike={() => onLike(movie)} />
-              </td>
-              <td>
-                <button
-                  onClick={() => onDelete(movie)}
-                  className="button btn-danger btn-sm"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody> */}
       </table>
     );
   }
