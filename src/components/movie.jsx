@@ -45,7 +45,12 @@ class Movie extends Component {
 
   handleSort = (path) => {
     const sortColumn = { ...this.state.sortColumn };
-    sortColumn.path = path;
+    if (path === sortColumn.path) {
+      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
+    } else {
+      sortColumn.path = path;
+      sortColumn.order = "asc";
+    }
     this.setState({ sortColumn });
   };
 
