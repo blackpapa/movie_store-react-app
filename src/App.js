@@ -3,7 +3,7 @@ import Movie from "./components/movie";
 
 function App() {
   return (
-    <main className="container">
+    <main style={{ paddingTop: "20px" }} className="container">
       <Movie />
     </main>
   );
