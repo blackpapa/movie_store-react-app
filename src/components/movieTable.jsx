@@ -4,18 +4,6 @@ import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
 
 class MovieTable extends Component {
-  raiseSort = (path) => {
-    const sortColumn = { ...this.props.sortColumn };
-    if (path === sortColumn.path) {
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-    } else {
-      sortColumn.path = path;
-      sortColumn.order = "asc";
-    }
-
-    return this.props.onSort(sortColumn);
-  };
-
   columns = [
     { path: "title", label: "Title" },
     { path: "genre.name", label: "Genre" },
@@ -41,10 +29,14 @@ class MovieTable extends Component {
   ];
 
   render() {
-    const { movies } = this.props;
+    const { movies, sortColumn, onSort } = this.props;
     return (
       <table className="table">
-        <TableHeader columns={this.columns} onSort={this.raiseSort} />
+        <TableHeader
+          columns={this.columns}
+          onSort={onSort}
+          sortColumn={sortColumn}
+        />
         <TableBody columns={this.columns} items={movies} />
       </table>
     );
