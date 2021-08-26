@@ -9,7 +9,7 @@ class LoginForm extends Component {
           <label htmlFor="username" className="form-label">
             Username
           </label>
-          <input type="text" id="username" className="form-control" />
+          <input autoFocus type="text" id="username" className="form-control" />
         </div>
         <div>
           <label htmlFor="password" className="form-label">
