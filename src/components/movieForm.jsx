@@ -1,9 +1,20 @@
 import React, { Component } from "react";
 
 class MovieForm extends Component {
-  state = {};
+  handleSave = () => {
+    this.props.history.push("/");
+  };
+
   render() {
-    return <h1>MovieForm</h1>;
+    const { match } = this.props;
+    return (
+      <div>
+        <h1>{match.params.id}</h1>
+        <button onClick={this.handleSave} className="button btn btn-primary">
+          save
+        </button>
+      </div>
+    );
   }
 }
 
