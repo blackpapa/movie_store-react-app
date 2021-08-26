@@ -5,7 +5,9 @@ class TableBody extends Component {
   renderCell = (item, column) => {
     if (column.content) return column.content(item);
 
-    return _.get(item, column.path);
+    return typeof _.get(item, column.path) === "boolean"
+      ? _.get(item, column.path).toString()
+      : _.get(item, column.path);
   };
 
   createKey = (column) => {
