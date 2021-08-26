@@ -1,4 +1,5 @@
 import "./App.css";
+import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Movies from "./components/movies";
 import Customers from "./components/customers";
@@ -6,8 +7,8 @@ import Rentals from "./components/rentals";
 import MovieForm from "./components/movieForm";
 import NotFound from "./components/notFound";
 import NavBar from "./components/common/navbar";
-import React from "react";
 import Footer from "./components/common/footer";
+import LoginForm from "./components/loginForm";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/rentals" component={Rentals}></Route>
           <Route path="/not-found" component={NotFound}></Route>
           <Route path="/movies" component={Movies}></Route>
+          <Route path="/login" component={LoginForm}></Route>
           <Redirect from="/" exact to="/movies" />
           <Redirect to="/not-found" />
         </Switch>

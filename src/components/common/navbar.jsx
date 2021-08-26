@@ -26,13 +26,16 @@ const NavBar = () => {
               aria-current="page"
               to="/movies"
             >
-              movies
+              Movies
             </NavLink>
             <NavLink className="nav-link" to="/customers">
-              customers
+              Customers
             </NavLink>
             <NavLink className="nav-link" to="/rentals">
-              rentals
+              Rentals
+            </NavLink>
+            <NavLink className="nav-link" to="/login">
+              Login
             </NavLink>
           </div>
         </div>
