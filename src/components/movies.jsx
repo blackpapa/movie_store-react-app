@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getMovies } from "./../services/fakeMovieService";
+import { getMovies } from "../services/fakeMovieService";
 import { getGenres } from "../services/fakeGenreService";
 import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
@@ -7,7 +7,7 @@ import { paginate } from "./utils/paginate";
 import MovieTable from "./movieTable";
 import _ from "lodash";
 
-class Movie extends Component {
+class Movies extends Component {
   state = {
     movies: [],
     genres: [],
@@ -106,4 +106,4 @@ class Movie extends Component {
   }
 }
 
-export default Movie;
+export default Movies;
