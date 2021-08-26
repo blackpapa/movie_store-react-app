@@ -3,8 +3,8 @@ import React, { Component } from "react";
 class LoginForm extends Component {
   state = {};
 
-  handleSubmit = () => {
-    console.log("submit");
+  handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   render() {
