@@ -12,7 +12,7 @@ function App() {
   return (
     <React.Fragment>
       <NavBar />
-      <main style={{ paddingTop: "20px" }} className="container">
+      <main className="container">
         <Switch>
           <Route path="/movies/:id" component={MovieForm}></Route>
           <Route path="/customers" component={Customers}></Route>
