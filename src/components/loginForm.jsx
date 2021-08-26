@@ -2,9 +2,14 @@ import React, { Component } from "react";
 
 class LoginForm extends Component {
   state = {};
+
+  handleSubmit = () => {
+    console.log("submit");
+  };
+
   render() {
     return (
-      <form className="form-login">
+      <form onSubmit={this.handleSubmit} className="form-login">
         <div>
           <label htmlFor="username" className="form-label">
             Username
@@ -17,6 +22,7 @@ class LoginForm extends Component {
           </label>
           <input type="text" id="password" className="form-control" />
         </div>
+        <button className="btn mt-3 w-100 btn-primary">Login</button>
       </form>
     );
   }
