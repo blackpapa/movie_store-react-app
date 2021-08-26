@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getCustomers } from "./../services/fakeCustomerService";
 import CustomerTable from "./customerTable";
+import _ from "lodash";
 
 class Customer extends Component {
   state = { customers: [], sortColumn: { path: "name", order: "asc" } };
@@ -22,7 +23,13 @@ class Customer extends Component {
   };
 
   render() {
-    const { customers, sortColumn } = this.state;
+    const { sortColumn } = this.state;
+
+    let customers = _.orderBy(
+      this.state.customers,
+      sortColumn.path,
+      sortColumn.order
+    );
     return (
       <React.Fragment>
         <CustomerTable
