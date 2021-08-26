@@ -7,6 +7,12 @@ class LoginForm extends Component {
     e.preventDefault();
   };
 
+  handleChange = (e) => {
+    const account = { ...this.state.account };
+    account[e.currentTarget.name] = e.currentTarget.value;
+    this.setState({ account });
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="form-login">
@@ -17,7 +23,9 @@ class LoginForm extends Component {
           <input
             autoFocus
             value={this.state.account.username}
+            onChange={this.handleChange}
             type="text"
+            name="username"
             id="username"
             className="form-control"
           />
@@ -29,6 +37,8 @@ class LoginForm extends Component {
           <input
             value={this.state.account.password}
             type="text"
+            onChange={this.handleChange}
+            name="password"
             id="password"
             className="form-control"
           />
