@@ -7,6 +7,7 @@ import MovieForm from "./components/movieForm";
 import NotFound from "./components/notFound";
 import NavBar from "./components/common/navbar";
 import React from "react";
+import Footer from "./components/common/footer";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Redirect to="/not-found" />
         </Switch>
       </main>
+      <Footer />
     </React.Fragment>
   );
 }
