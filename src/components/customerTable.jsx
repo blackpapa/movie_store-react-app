@@ -8,9 +8,21 @@ class CustomerTable extends Component {
     { path: "name", label: "Name" },
     { path: "isGold", label: "IsGold" },
     { path: "phone", label: "Phone" },
+    {
+      key: "delete",
+      content: (customer) => (
+        <button
+          onClick={() => this.props.onDelete(customer)}
+          className="btn btn-sm btn-danger"
+        >
+          Delete
+        </button>
+      ),
+    },
   ];
   render() {
     const { customers, sortColumn, onSort } = this.props;
+
     return (
       <table className="table">
         <TableHeader

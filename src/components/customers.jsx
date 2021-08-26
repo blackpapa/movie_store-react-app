@@ -14,6 +14,13 @@ class Customer extends Component {
     this.setState({ sortColumn });
   };
 
+  handleDelete = (customer) => {
+    const customers = this.state.customers.filter(
+      (c) => c._id !== customer._id
+    );
+    this.setState({ customers });
+  };
+
   render() {
     const { customers, sortColumn } = this.state;
     return (
@@ -21,6 +28,7 @@ class Customer extends Component {
         <CustomerTable
           customers={customers}
           onSort={this.handleSort}
+          onDelete={this.handleDelete}
           sortColumn={sortColumn}
         />
       </React.Fragment>
