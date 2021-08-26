@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="#">
+        <Link className="navbar-brand" to="/">
           Navbar
         </Link>
         <button
@@ -21,22 +21,18 @@ const NavBar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <NavLink className="nav-link active" aria-current="page" to="#">
-              Home
-            </NavLink>
-            <NavLink className="nav-link" to="#">
-              Features
-            </NavLink>
-            <NavLink className="nav-link" to="#">
-              Pricing
-            </NavLink>
             <NavLink
-              className="nav-link disabled"
-              to="#"
-              tabindex="-1"
-              aria-disabled="true"
+              className="nav-link active"
+              aria-current="page"
+              to="/movies"
             >
-              Disabled
+              movies
+            </NavLink>
+            <NavLink className="nav-link" to="/customers">
+              customers
+            </NavLink>
+            <NavLink className="nav-link" to="/rentals">
+              rentals
             </NavLink>
           </div>
         </div>
