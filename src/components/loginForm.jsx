@@ -4,7 +4,7 @@ class LoginForm extends Component {
   state = {};
   render() {
     return (
-      <form>
+      <form className="form-login">
         <div>
           <label htmlFor="username" className="form-label">
             Username
