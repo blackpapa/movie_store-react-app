@@ -1,7 +1,7 @@
 import React from "react";
 
 const Input = (props) => {
-  const { label, name, value, onChange } = props;
+  const { label, name, value, onChange, error } = props;
   return (
     <div>
       <label htmlFor={name} className="form-label">
@@ -15,6 +15,7 @@ const Input = (props) => {
         id={name}
         className="form-control"
       />
+      {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 };
