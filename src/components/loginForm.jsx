@@ -8,10 +8,12 @@ class LoginForm extends Component {
     errors: { username: "", password: "" },
   };
 
-  schema = Joi.object({
+  schemaObj = {
     username: Joi.string().required().label("Username"),
     password: Joi.string().required().label("Password"),
-  });
+  };
+
+  schema = Joi.object(this.schemaObj);
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -39,13 +41,14 @@ class LoginForm extends Component {
   };
 
   validateProperty = ({ name, value }) => {
-    if (name === "username") {
-      if (value.trim() === "") return "Username is required";
-    }
+    const obj = { [name]: value };
 
-    if (name === "password") {
-      if (value.trim() === "") return "Password is required";
-    }
+    const schema = Joi.object({
+      [name]: this.schemaObj[name],
+    });
+
+    const { error } = schema.validate(obj);
+    return error ? error.details[0].message : null;
   };
 
   handleChange = (e) => {
