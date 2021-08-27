@@ -28,13 +28,13 @@ class LoginForm extends Component {
   };
 
   validate = () => {
-    const errors = { ...this.state.errors };
     const { error } = this.schema.validate(this.state.account, {
       abortEarly: false,
     });
 
     if (!error) return null;
 
+    const errors = {};
     for (let item of error.details) errors[item.path[0]] = item.message;
 
     return errors;
@@ -80,7 +80,12 @@ class LoginForm extends Component {
           onChange={this.handleChange}
           error={errors.password}
         />
-        <button className="btn mt-3 w-100 btn-primary">Login</button>
+        <button
+          disabled={this.validate()}
+          className="btn mt-3 w-100 btn-primary"
+        >
+          Login
+        </button>
         <p className="mt-5 mb-3 text-muted text-center">© 2017–2021</p>
       </form>
     );
