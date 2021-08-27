@@ -8,7 +8,6 @@ const Input = (props) => {
         {label}
       </label>
       <input
-        autoFocus
         value={value}
         onChange={onChange}
         type="text"

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Input from "./common/input";
+import logo from "../logo.svg";
 
 class LoginForm extends Component {
   state = { account: { username: "", password: "" } };
@@ -24,20 +25,14 @@ class LoginForm extends Component {
           value={account.username}
           onChange={this.handleChange}
         />
-        <div>
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
-          <input
-            value={account.password}
-            type="text"
-            onChange={this.handleChange}
-            name="password"
-            id="password"
-            className="form-control"
-          />
-        </div>
+        <Input
+          label="Password"
+          name="password"
+          value={account.password}
+          onChange={this.handleChange}
+        />
         <button className="btn mt-3 w-100 btn-primary">Login</button>
+        <p className="mt-5 mb-3 text-muted text-center">© 2017–2021</p>
       </form>
     );
   }
