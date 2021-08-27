@@ -21,11 +21,7 @@ const NavBar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <NavLink
-              className="nav-link active"
-              aria-current="page"
-              to="/movies"
-            >
+            <NavLink className="nav-link" aria-current="page" to="/movies">
               Movies
             </NavLink>
             <NavLink className="nav-link" to="/customers">
