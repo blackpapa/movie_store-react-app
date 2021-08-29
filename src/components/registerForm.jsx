@@ -19,9 +19,13 @@ class RegisterForm extends Form {
 
   schema = Joi.object(this.schemaObj);
 
+  doSubmit = () => {
+    console.log("submit");
+  };
+
   render() {
     return (
-      <form action="" className="form-login">
+      <form onSubmit={this.handleSubmit} className="form-login">
         {this.renderInput("username", "Username")}
         {this.renderInput("password", "Password", "password")}
         {this.renderInput("name", "Name")}
