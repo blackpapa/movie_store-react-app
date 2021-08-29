@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import Joi from "joi";
+import Form from "./common/form";
 import Input from "./common/input";
 
-class LoginForm extends Component {
+class LoginForm extends Form {
   state = {
     data: { username: "", password: "" },
     errors: { username: "", password: "" },
@@ -13,17 +15,6 @@ class LoginForm extends Component {
   };
 
   schema = Joi.object(this.schemaObj);
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    const errors = this.validate();
-
-    this.setState({ errors: errors || {} });
-    if (errors) return;
-
-    this.doSubmit();
-  };
 
   doSubmit = () => {
     //call the server
