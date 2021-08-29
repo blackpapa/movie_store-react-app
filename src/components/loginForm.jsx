@@ -39,12 +39,7 @@ class LoginForm extends Form {
           onChange={this.handleChange}
           error={errors.password}
         />
-        <button
-          disabled={this.validate()}
-          className="btn mt-3 w-100 btn-primary"
-        >
-          Login
-        </button>
+        {this.renderButton("login")}
         <p className="mt-5 mb-3 text-muted text-center">© 2017–2021</p>
       </form>
     );

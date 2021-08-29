@@ -49,6 +49,14 @@ class Form extends Component {
 
     this.doSubmit();
   };
+
+  renderButton = (label) => {
+    return (
+      <button disabled={this.validate()} className="btn mt-3 w-100 btn-primary">
+        {label}
+      </button>
+    );
+  };
 }
 
 export default Form;
