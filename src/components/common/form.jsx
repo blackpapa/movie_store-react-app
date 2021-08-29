@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Joi from "joi";
+import Input from "./input";
 
 class Form extends Component {
   state = { data: {}, errors: {} };
@@ -55,6 +56,19 @@ class Form extends Component {
       <button disabled={this.validate()} className="btn mt-3 w-100 btn-primary">
         {label}
       </button>
+    );
+  };
+
+  renderInput = (name, label) => {
+    const { data, errors } = this.state;
+    return (
+      <Input
+        label={label}
+        name={name}
+        value={data[name]}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
     );
   };
 }
