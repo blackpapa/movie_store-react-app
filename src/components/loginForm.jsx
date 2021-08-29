@@ -4,7 +4,7 @@ import Joi from "joi";
 
 class LoginForm extends Component {
   state = {
-    account: { username: "", password: "" },
+    data: { username: "", password: "" },
     errors: { username: "", password: "" },
   };
 
@@ -28,7 +28,7 @@ class LoginForm extends Component {
   };
 
   validate = () => {
-    const { error } = this.schema.validate(this.state.account, {
+    const { error } = this.schema.validate(this.state.data, {
       abortEarly: false,
     });
 
@@ -57,26 +57,26 @@ class LoginForm extends Component {
     if (errorMessage) errors[e.currentTarget.name] = errorMessage;
     else delete errors[e.currentTarget.name];
 
-    const account = { ...this.state.account };
-    account[e.currentTarget.name] = e.currentTarget.value;
-    this.setState({ account, errors });
+    const data = { ...this.state.data };
+    data[e.currentTarget.name] = e.currentTarget.value;
+    this.setState({ data, errors });
   };
 
   render() {
-    const { account, errors } = this.state;
+    const { data, errors } = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="form-login">
         <Input
           label="Username"
           name="username"
-          value={account.username}
+          value={data.username}
           onChange={this.handleChange}
           error={errors.username}
         />
         <Input
           label="Password"
           name="password"
-          value={account.password}
+          value={data.password}
           onChange={this.handleChange}
           error={errors.password}
         />
