@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Input from "./common/input";
-import Joi from "joi";
 
 class LoginForm extends Component {
   state = {
@@ -25,41 +24,6 @@ class LoginForm extends Component {
 
     //call the server
     console.log("submitted");
-  };
-
-  validate = () => {
-    const { error } = this.schema.validate(this.state.data, {
-      abortEarly: false,
-    });
-
-    if (!error) return null;
-
-    const errors = {};
-    for (let item of error.details) errors[item.path[0]] = item.message;
-
-    return errors;
-  };
-
-  validateProperty = ({ name, value }) => {
-    const obj = { [name]: value };
-
-    const schema = Joi.object({
-      [name]: this.schemaObj[name],
-    });
-
-    const { error } = schema.validate(obj);
-    return error ? error.details[0].message : null;
-  };
-
-  handleChange = (e) => {
-    const errors = { ...this.state.errors };
-    const errorMessage = this.validateProperty(e.currentTarget);
-    if (errorMessage) errors[e.currentTarget.name] = errorMessage;
-    else delete errors[e.currentTarget.name];
-
-    const data = { ...this.state.data };
-    data[e.currentTarget.name] = e.currentTarget.value;
-    this.setState({ data, errors });
   };
 
   render() {
