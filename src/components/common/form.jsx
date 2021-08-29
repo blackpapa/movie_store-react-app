@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import Joi from "joi";
 
 class Form extends Component {
@@ -37,6 +37,17 @@ class Form extends Component {
     const data = { ...this.state.data };
     data[e.currentTarget.name] = e.currentTarget.value;
     this.setState({ data, errors });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const errors = this.validate();
+
+    this.setState({ errors: errors || {} });
+    if (errors) return;
+
+    this.doSubmit();
   };
 }
 
