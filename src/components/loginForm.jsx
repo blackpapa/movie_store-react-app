@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Joi from "joi";
 import Form from "./common/form";
-import Input from "./common/input";
 
 class LoginForm extends Form {
   state = {
@@ -25,7 +24,7 @@ class LoginForm extends Form {
     return (
       <form onSubmit={this.handleSubmit} className="form-login">
         {this.renderInput("username", "Username")}
-        {this.renderInput("password", "Password")}
+        {this.renderInput("password", "Password", "password")}
         {this.renderButton("login")}
         <p className="mt-5 mb-3 text-muted text-center">© 2017–2021</p>
       </form>
