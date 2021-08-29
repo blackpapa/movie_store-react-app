@@ -22,6 +22,10 @@ class LoginForm extends Component {
     this.setState({ errors: errors || {} });
     if (errors) return;
 
+    this.doSubmit();
+  };
+
+  doSubmit = () => {
     //call the server
     console.log("submitted");
   };
