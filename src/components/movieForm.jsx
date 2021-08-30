@@ -17,7 +17,12 @@ class MovieForm extends Form {
         <form className="form-login">
           <h1>{match.params.id}</h1>
           {this.renderInput("title", "Title")}
-          <Select name={"genres"} label={"Genre"} items={this.genres} />
+          <Select
+            name={"genres"}
+            label={"Genre"}
+            items={this.genres}
+            defaultOption={"default"}
+          />
           {this.renderInput("numberInStock", "Number in Stock")}
           {this.renderInput("dailyRentalRate", "Rate")}
           <button onClick={this.handleSave} className="button btn btn-primary">
