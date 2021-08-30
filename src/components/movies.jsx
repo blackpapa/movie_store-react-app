@@ -16,6 +16,7 @@ class Movies extends Component {
     pageSize: 4,
     currentPage: 1,
     selectedGenre: { _id: "", name: "All Genres" },
+    searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
   };
 
@@ -53,6 +54,10 @@ class Movies extends Component {
     this.setState({ sortColumn });
   };
 
+  handleSearch = (searchQuery) => {
+    console.log(searchQuery);
+  };
+
   getPageData = () => {
     const {
       pageSize,
@@ -76,8 +81,14 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, genres, sortColumn, selectedGenre } =
-      this.state;
+    const {
+      pageSize,
+      currentPage,
+      genres,
+      sortColumn,
+      selectedGenre,
+      searchQuery,
+    } = this.state;
 
     const { movies, totalCount } = this.getPageData();
 
@@ -95,7 +106,7 @@ class Movies extends Component {
           <Link to="/movies/new">
             <button className="btn btn-primary">New Movie</button>
           </Link>
-          <SearchBox />
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
           <p>There are {totalCount} movies in the store</p>
           <MovieTable
             movies={movies}
