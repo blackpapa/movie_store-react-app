@@ -1,8 +1,21 @@
 import React from "react";
 import { getGenres } from "../services/fakeGenreService";
 import Form from "./common/form";
+import Joi from "joi";
 
 class MovieForm extends Form {
+  state = {
+    data: { title: "", numberInStock: "", dailyRentalRate: "" },
+    errors: {},
+  };
+
+  schemaObj = {
+    title: Joi.string().required(),
+    numberInStock: Joi.number().min(0).max(10).required(),
+    dailyRentalRate: Joi.number().required(),
+  };
+  schema = Joi.object(this.schemaObj);
+
   genres = getGenres();
 
   doSubmit = () => {
