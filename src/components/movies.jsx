@@ -47,7 +47,7 @@ class Movies extends Component {
   };
 
   handleSelectedGenre = (genre) => {
-    this.setState({ selectedGenre: genre, currentPage: 1 });
+    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
   };
 
   handleSort = (sortColumn) => {
@@ -114,7 +114,9 @@ class Movies extends Component {
           <Link to="/movies/new">
             <button className="btn btn-primary">New Movie</button>
           </Link>
+
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
+
           <p>There are {totalCount} movies in the store</p>
           <MovieTable
             movies={movies}
