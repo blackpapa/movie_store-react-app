@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { getGenres } from "../services/fakeGenreService";
 import Form from "./common/form";
+import Select from "./common/select";
 
 class MovieForm extends Form {
   genres = getGenres();
@@ -16,15 +17,7 @@ class MovieForm extends Form {
         <form className="form-login">
           <h1>{match.params.id}</h1>
           {this.renderInput("title", "Title")}
-          <label htmlFor="genres" className="form-label">
-            Genre
-          </label>
-          <select name="genres" id="genres" className="custom-select">
-            <option selected>Action</option>
-            {this.genres.map((g) => (
-              <option>{g.name}</option>
-            ))}
-          </select>
+          <Select name={"genres"} label={"Genre"} items={this.genres} />
           {this.renderInput("numberInStock", "Number in Stock")}
           {this.renderInput("dailyRentalRate", "Rate")}
           <button onClick={this.handleSave} className="button btn btn-primary">
