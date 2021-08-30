@@ -36,17 +36,13 @@ class MovieForm extends Form {
 
   render() {
     const { match } = this.props;
+    const { data } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit} className="form-login">
           <h1>{match.params.id}</h1>
           {this.renderInput("title", "Title")}
-          {this.renderSelect(
-            "genres",
-            "Genre",
-            getGenres(),
-            this.state.data.genreName
-          )}
+          {this.renderSelect("genres", "Genre", getGenres(), data.genreName)}
           {this.renderInput("numberInStock", "Number in Stock")}
           {this.renderInput("dailyRentalRate", "Rate")}
           {this.renderButton("Save")}
