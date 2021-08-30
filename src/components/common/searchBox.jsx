@@ -5,6 +5,7 @@ const SearchBox = ({ value, onChange }) => {
     <input
       type="text"
       name="query"
+      style={{ maxWidth: 300 }}
       className="form-control my-3"
       placeholder="Search..."
       value={value}
