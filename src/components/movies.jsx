@@ -55,7 +55,7 @@ class Movies extends Component {
   };
 
   handleSearch = (searchQuery) => {
-    console.log(searchQuery);
+    this.setState({ searchQuery, selectedGenre: "", currentPage: 1 });
   };
 
   getPageData = () => {
@@ -64,13 +64,21 @@ class Movies extends Component {
       currentPage,
       movies: allMovies,
       selectedGenre,
+      searchQuery,
       sortColumn,
     } = this.state;
 
-    let filtered =
-      selectedGenre && selectedGenre._id
-        ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
-        : allMovies;
+    let filtered = allMovies;
+    if (searchQuery) {
+      filtered = allMovies.filter((m) =>
+        m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+    } else {
+      filtered =
+        selectedGenre && selectedGenre._id
+          ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+          : allMovies;
+    }
 
     filtered = _.orderBy(filtered, sortColumn.path, sortColumn.order);
 
