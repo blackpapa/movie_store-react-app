@@ -5,6 +5,7 @@ import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
 import { paginate } from "./utils/paginate";
 import MovieTable from "./movieTable";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 class Movies extends Component {
@@ -19,7 +20,10 @@ class Movies extends Component {
   componentDidMount() {
     const movies = getMovies();
     const genres = [{ _id: "", name: "All Genres" }, ...getGenres()];
-    this.setState({ movies, genres });
+    this.setState({
+      movies,
+      genres,
+    });
   }
 
   handleDelete = (movie) => {
@@ -86,7 +90,9 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <button className="btn btn-primary">New Movie</button>
+          <Link to="/movies/new">
+            <button className="btn btn-primary">New Movie</button>
+          </Link>
           <p>There are {totalCount} movies in the store</p>
           <MovieTable
             movies={movies}
