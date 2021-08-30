@@ -75,12 +75,15 @@ class Form extends Component {
   };
 
   renderSelect = (name, label, items, defaultOption = "default") => {
+    const { errors } = this.state;
     return (
       <Select
         name={name}
         label={label}
         items={items}
         defaultOption={defaultOption}
+        onChange={this.handleChange}
+        error={errors[name]}
       />
     );
   };
