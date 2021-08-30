@@ -7,6 +7,7 @@ import { paginate } from "./utils/paginate";
 import MovieTable from "./movieTable";
 import { Link } from "react-router-dom";
 import _ from "lodash";
+import SearchBox from "./common/searchBox";
 
 class Movies extends Component {
   state = {
@@ -94,6 +95,7 @@ class Movies extends Component {
           <Link to="/movies/new">
             <button className="btn btn-primary">New Movie</button>
           </Link>
+          <SearchBox />
           <p>There are {totalCount} movies in the store</p>
           <MovieTable
             movies={movies}
