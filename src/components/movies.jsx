@@ -14,6 +14,7 @@ class Movies extends Component {
     genres: [],
     pageSize: 4,
     currentPage: 1,
+    selectedGenre: { _id: "", name: "All Genres" },
     sortColumn: { path: "title", order: "asc" },
   };
 
