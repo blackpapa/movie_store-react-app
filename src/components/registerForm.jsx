@@ -1,6 +1,7 @@
 import React from "react";
 import Form from "./common/form";
 import Joi from "joi";
+import { register } from "../services/userService";
 
 class RegisterForm extends Form {
   state = {
@@ -20,7 +21,7 @@ class RegisterForm extends Form {
   schema = Joi.object(this.schemaObj);
 
   doSubmit = () => {
-    console.log("submit");
+    register(this.state.data);
   };
 
   render() {
