@@ -1,6 +1,7 @@
 import React from "react";
 import { getGenres } from "../services/genreService";
 import { getMovie, saveMovie } from "../services/movieService";
+import logger from "../services/logService";
 import Form from "./common/form";
 import Joi from "joi";
 
@@ -19,13 +20,17 @@ class MovieForm extends Form {
     const movieId = this.props.match.params.id;
     if (movieId === "new") return;
 
-    const { data: movie } = await getMovie(movieId);
-    if (!movie) return this.props.history.replace("/not-found");
+    try {
+      const { data: movie } = await getMovie(movieId);
 
-    this.setState({
-      data: this.mapToViewMovie(movie),
-      defaultOption: movie.genre.name,
-    });
+      this.setState({
+        data: this.mapToViewMovie(movie),
+        defaultOption: movie.genre.name,
+      });
+    } catch (error) {
+      logger.log(error);
+      this.props.history.replace("/not-found");
+    }
   }
 
   schemaObj = {
