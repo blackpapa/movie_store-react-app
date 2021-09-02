@@ -1,5 +1,5 @@
 import React from "react";
-import { getGenres } from "../services/fakeGenreService";
+import { getGenres } from "../services/genreService";
 import { getMovie, saveMovie } from "../services/fakeMovieService";
 import Form from "./common/form";
 import Joi from "joi";
@@ -12,8 +12,8 @@ class MovieForm extends Form {
     errors: {},
   };
 
-  componentDidMount() {
-    const genres = getGenres();
+  async componentDidMount() {
+    const { data: genres } = await getGenres();
     this.setState({ genres });
 
     const movieId = this.props.match.params.id;
