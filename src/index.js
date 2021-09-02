@@ -6,6 +6,9 @@ import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import "react-toastify/dist/ReactToastify.css";
+import logger from "./services/logService";
+
+logger.init();
 
 ReactDOM.render(
   <React.StrictMode>
