@@ -13,10 +13,12 @@ class MovieForm extends Form {
     errors: {},
   };
 
-  async componentDidMount() {
+  async populateGenres() {
     const { data: genres } = await getGenres();
     this.setState({ genres });
+  }
 
+  async populateMovies() {
     const movieId = this.props.match.params.id;
     if (movieId === "new") return;
 
@@ -31,6 +33,11 @@ class MovieForm extends Form {
       logger.log(error);
       this.props.history.replace("/not-found");
     }
+  }
+
+  async componentDidMount() {
+    this.populateGenres();
+    this.populateMovies();
   }
 
   schemaObj = {
