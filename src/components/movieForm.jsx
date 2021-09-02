@@ -35,7 +35,7 @@ class MovieForm extends Form {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.populateGenres();
     this.populateMovies();
   }
