@@ -12,6 +12,8 @@ axios.interceptors.response.use(null, (error) => {
     toast.error("Unexpected occured !");
     logger.log(error);
   }
+
+  return Promise.reject(error);
 });
 
 const http = {
