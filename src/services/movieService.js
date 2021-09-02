@@ -13,3 +13,10 @@ export function getMovie(movieId) {
 export function deleteMovie(movieId) {
   return http.delete(`${apiEndPoint}/${movieId}`);
 }
+
+export function saveMovie(movie) {
+  const body = { ...movie };
+  delete body._id;
+
+  return http.post(apiEndPoint, body);
+}
