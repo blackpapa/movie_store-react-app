@@ -6,7 +6,7 @@ export function getMovies() {
   return http.get(apiEndPoint);
 }
 
-export function getMovie(movidId) {
+export function getMovie(movieId) {
   return http.get(`${apiEndPoint}/${movieId}`);
 }
 
