@@ -11,10 +11,11 @@ import NavBar from "./components/common/navbar";
 import Footer from "./components/common/footer";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import Logout from "./components/logout";
 import "./App.css";
 
 class App extends Component {
-  state = { user: {} };
+  state = {};
 
   componentDidMount() {
     try {
@@ -39,6 +40,7 @@ class App extends Component {
             <Route path="/not-found" component={NotFound}></Route>
             <Route path="/movies" component={Movies}></Route>
             <Route path="/login" component={LoginForm}></Route>
+            <Route path="/logout" component={Logout}></Route>
             <Route path="/register" component={RegisterForm}></Route>
             <Redirect from="/" exact to="/movies" />
             <Redirect to="/not-found" />
