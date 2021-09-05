@@ -42,6 +42,8 @@ class Movies extends Component {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         toast.error("The movie has already been deleted ");
+      } else if (error.response && error.response.status === 400) {
+        toast.error("Please login to do the operation !!");
       } else if (error.response) {
         toast.error(error.response.data);
       }

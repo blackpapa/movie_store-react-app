@@ -1,6 +1,7 @@
 import React from "react";
 import { getGenres } from "../services/genreService";
 import { getMovie, saveMovie } from "../services/movieService";
+import { toast } from "react-toastify";
 import logger from "../services/logService";
 import Form from "./common/form";
 import Joi from "joi";
@@ -30,6 +31,9 @@ class MovieForm extends Form {
         defaultOption: movie.genre.name,
       });
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        toast.error("Please login to do the operation!!");
+      }
       logger.log(error);
       this.props.history.replace("/not-found");
     }
