@@ -60,9 +60,9 @@ class Movies extends Component<State> {
     });
   }
 
-  handleDelete = async (movie) => {
+  handleDelete = async (movie: Movie) => {
     const originalMovies = this.state.movies;
-    const movies = originalMovies.filter((m) => m._id !== movie._id);
+    const movies = originalMovies.filter((m: Movie) => m._id !== movie._id);
     this.setState({ movies });
 
     try {
