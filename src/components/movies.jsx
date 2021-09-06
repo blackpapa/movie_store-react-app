@@ -42,8 +42,13 @@ class Movies extends Component {
     } catch (error) {
       if (error.response && error.response.status === 404) {
         toast.error("The movie has already been deleted ");
-        this.setState({ movies: originalMovies });
+      } else if (error.response && error.response.status === 400) {
+        toast.error("Please login to do the operation !!");
+      } else if (error.response) {
+        toast.error(error.response.data);
       }
+
+      this.setState({ movies: originalMovies });
     }
   };
 
@@ -110,6 +115,7 @@ class Movies extends Component {
       selectedGenre,
       searchQuery,
     } = this.state;
+    const { user } = this.props;
 
     const { movies, totalCount } = this.getPageData();
 
@@ -124,10 +130,11 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <Link to="/movies/new">
-            <button className="btn btn-primary">New Movie</button>
-          </Link>
-
+          {user && (
+            <Link to="/movies/new">
+              <button className="btn btn-primary">New Movie</button>
+            </Link>
+          )}
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
 
           <p>There are {totalCount} movies in the store</p>
