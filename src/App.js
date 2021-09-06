@@ -15,8 +15,6 @@ import Logout from "./components/logout";
 import "./App.css";
 import ProtectedRoute from "./components/common/protectedRoute";
 
-console.log(process.env);
-
 class App extends Component {
   state = {};
 
