@@ -10,7 +10,7 @@ import _ from "lodash";
 import SearchBox from "./common/searchBox";
 import { toast } from "react-toastify";
 
-interface Movies {
+interface Movie {
   _id: string,
   title: string,
   genre: string,
@@ -18,8 +18,24 @@ interface Movies {
   dailyRentalRate: number,
 }
 
+interface Genre {
+  _id: string,
+  name: string,
+}
+
+interface SortColumn {
+  path: string,
+  order: string,
+}
+
 interface State {
-  movies: Movies[]
+  movies: Movie[],
+  genres: Genre[],
+  pageSize: number,
+  currentPage: number,
+  selectedGenre: Genre,
+  searchQuery: string,
+  sortColumn: SortColumn
 }
 
 class Movies extends Component<State> {
