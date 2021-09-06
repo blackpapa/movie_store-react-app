@@ -10,7 +10,19 @@ import _ from "lodash";
 import SearchBox from "./common/searchBox";
 import { toast } from "react-toastify";
 
-class Movies extends Component {
+interface Movies {
+  _id: string,
+  title: string,
+  genre: string,
+  numberInStock: number,
+  dailyRentalRate: number,
+}
+
+interface State {
+  movies: Movies[]
+}
+
+class Movies extends Component<State> {
   state = {
     movies: [],
     genres: [],
