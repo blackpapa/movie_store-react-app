@@ -20,7 +20,9 @@ class LoginForm extends Form {
     const { data } = this.state;
     await login(data.username, data.password);
 
-    window.location = "/";
+    const { state } = this.props.location;
+
+    window.location = state ? state.from.pathname : "/";
   };
 
   render() {
