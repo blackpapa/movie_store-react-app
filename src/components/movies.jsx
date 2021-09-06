@@ -119,7 +119,6 @@ class Movies extends Component {
 
     const { movies, totalCount } = this.getPageData();
 
-    if (count === 0) return <p>There is no movie in the store</p>;
     return (
       <div className="row">
         <div className="col-2">
