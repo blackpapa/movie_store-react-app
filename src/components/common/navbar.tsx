@@ -1,7 +1,21 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 
-class NavBar extends Component {
+interface User {
+  _id: string,
+  name: string,
+  isAdmin? : boolean,
+}
+
+interface Props {
+  user: User
+}
+ 
+interface State {
+  isCollapsed: boolean
+}
+ 
+class NavBar extends Component<Props, State> {
   state = { isCollapsed: true };
 
   handleCollapse = () => {
