@@ -22,7 +22,7 @@ interface State {
   searchQuery: string,
 }
 
-class Customer extends Component<State> {
+class Customers extends Component<State> {
   state = {
     customers: [],
     sortColumn: { path: "name", order: "asc" },
@@ -43,7 +43,8 @@ class Customer extends Component<State> {
   };
 
   handleDelete = (customer:Customer) => {
-    const customers = this.state.customers.filter(
+    const originalCustomers = this.state.customers;
+    const customers = originalCustomers.filter(
       (c: Customer) => c._id !== customer._id
     );
     this.setState({ customers });
@@ -75,4 +76,4 @@ class Customer extends Component<State> {
   }
 }
 
-export default Customer;
+export default Customers;
