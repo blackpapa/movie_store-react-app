@@ -36,7 +36,7 @@ interface Props {
   sortColumn: SortColumn,
   onLike: (movie: Movie) => void
   onDelete: (movie: Movie) => void
-  onSort: any
+  onSort: (sortColumn: SortColumn) => void
 }
 
 class MovieTable extends Component<Props> {
