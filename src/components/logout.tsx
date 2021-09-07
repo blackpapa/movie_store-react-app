@@ -7,7 +7,7 @@ class Logout extends Component {
   componentDidMount() {
     logout();
 
-    window.location = "/";
+    window.location.href = "/";
   }
 
   render() {
