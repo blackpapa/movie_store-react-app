@@ -146,7 +146,6 @@ class Movies extends Component<Props, State> {
   };
 
   render() {
-    const { length: count } = this.state.movies;
     const {
       pageSize,
       currentPage,
