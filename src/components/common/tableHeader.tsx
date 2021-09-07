@@ -1,18 +1,5 @@
 import { Component } from "react";
 
-interface Movie {
-  _id: string,
-  title: string,
-  genre: Genre,
-  numberInStock: number,
-  dailyRentalRate: number,
-  liked?:boolean
-}
-
-interface Genre {
-  _id: string,
-  name: string,
-}
 
 interface SortColumn {
   path: string,
@@ -22,9 +9,8 @@ interface SortColumn {
 interface Column {
     path?: string,
     label?: string,
-    content?: (movie: Movie) => JSX.Element;
+    content?: (item: any) => JSX.Element;
     key?: string,
-
 }
 
 interface Props {

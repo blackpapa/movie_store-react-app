@@ -1,16 +1,28 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import _ from "lodash";
 
-class TableBody extends Component {
-  renderCell = (item, column) => {
+interface Column {
+  path?: string,
+  label?: string,
+  content?: (item: any) => JSX.Element;
+  key?: string,
+}
+
+interface Props {
+  columns: Column[],
+  items: any[],
+}
+
+class TableBody extends Component<Props> {
+  renderCell = (item: any, column: Column) => {
     if (column.content) return column.content(item);
 
-    return typeof _.get(item, column.path) === "boolean"
-      ? _.get(item, column.path).toString()
-      : _.get(item, column.path);
+    return typeof _.get(item, column.path as string) === "boolean"
+      ? _.get(item, column.path as string).toString()
+      : _.get(item, column.path as string);
   };
 
-  createKey = (column) => {
+  createKey = (column: Column) => {
     return column.path || column.key;
   };
 
