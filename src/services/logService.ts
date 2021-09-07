@@ -13,7 +13,7 @@ function init() {
   });
 }
 
-function log(error) {
+function log(error: any) {
   Sentry.captureException(error);
 }
 
