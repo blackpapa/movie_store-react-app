@@ -1,14 +1,14 @@
-import React, { Component } from "react";
+import { Component } from "react";
+import { Link } from "react-router-dom";
 import { deleteMovie, getMovies } from "../services/movieService";
 import { getGenres } from "../services/genreService";
+import { paginate } from "./utils/paginate";
+import { toast } from "react-toastify";
 import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
-import { paginate } from "./utils/paginate";
 import MovieTable from "./movieTable";
-import { Link } from "react-router-dom";
-import _ from "lodash";
 import SearchBox from "./common/searchBox";
-import { toast } from "react-toastify";
+import _ from "lodash";
 
 interface Movie {
   _id: string,
