@@ -1,8 +1,27 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
 
-class CustomerTable extends Component {
+interface Customer {
+  _id:string,
+  name: string,
+  phone: string,
+  isGold?: boolean
+}
+
+interface SortColumn {
+  path: string,
+  order: string,
+}
+
+interface Props {
+  customers: Customer[],
+  sortColumn: SortColumn,
+  onDelete: (customer: Customer) => void
+  onSort: (sortColumn: SortColumn) => void
+}
+
+class CustomerTable extends Component<Props> {
   state = {};
   columns = [
     { path: "name", label: "Name" },
@@ -10,7 +29,7 @@ class CustomerTable extends Component {
     { path: "phone", label: "Phone" },
     {
       key: "delete",
-      content: (customer) => (
+      content: (customer: Customer) => (
         <button
           onClick={() => this.props.onDelete(customer)}
           className="btn btn-sm btn-danger"
