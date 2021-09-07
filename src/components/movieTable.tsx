@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import  { Component } from "react";
 import { Link } from "react-router-dom";
 import { getCurrentUser } from "../services/authService";
 import Like from "./common/like";
@@ -76,7 +76,7 @@ class MovieTable extends Component<Props> {
   constructor(props: Props) {
     super(props);
     const user = getCurrentUser();
-    if (user) {
+    if (user as User) {
       this.columns.push(this.deleteColumn);
     }
   }
