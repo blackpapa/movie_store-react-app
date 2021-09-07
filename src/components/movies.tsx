@@ -165,6 +165,8 @@ class Movies extends Component<Props, State> {
             items={genres}
             onItemSelect={this.handleSelectedGenre}
             selectedItem={selectedGenre}
+            valueProperty={"_id"}
+            textProperty={"name"}
           />
         </div>
         <div className="col">
