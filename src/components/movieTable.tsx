@@ -1,16 +1,50 @@
-import React, { Component } from "react";
+import  { Component } from "react";
 import { Link } from "react-router-dom";
 import { getCurrentUser } from "../services/authService";
 import Like from "./common/like";
 import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
 
-class MovieTable extends Component {
+
+interface Movie {
+  _id: string,
+  title: string,
+  genre: Genre,
+  numberInStock: number,
+  dailyRentalRate: number,
+  liked?:boolean
+}
+
+interface Genre {
+  _id: string,
+  name: string,
+}
+
+interface SortColumn {
+  path: string,
+  order: string,
+}
+
+interface User {
+  _id: string,
+  name: string,
+  isAdmin? : boolean,
+}
+
+interface Props {
+  movies: Movie[]
+  sortColumn: SortColumn,
+  onLike: (movie: Movie) => void
+  onDelete: (movie: Movie) => void
+  onSort: (sortColumn: SortColumn) => void
+}
+
+class MovieTable extends Component<Props> {
   columns = [
     {
       path: "title",
       label: "Title",
-      content: (movie) => (
+      content: (movie: Movie) => (
         <Link to={`/movies/${movie._id}`} style={{ textDecoration: "none" }}>
           {movie.title}
         </Link>
@@ -21,7 +55,7 @@ class MovieTable extends Component {
     { path: "dailyRentalRate", label: "Rate" },
     {
       key: "like",
-      content: (movie) => (
+      content: (movie: Movie) => (
         <Like liked={movie.liked} onLike={() => this.props.onLike(movie)} />
       ),
     },
@@ -29,7 +63,7 @@ class MovieTable extends Component {
 
   deleteColumn = {
     key: "delete",
-    content: (movie) => (
+    content: (movie: Movie) => (
       <button
         onClick={() => this.props.onDelete(movie)}
         className="button btn-danger btn-sm"
@@ -39,10 +73,10 @@ class MovieTable extends Component {
     ),
   };
 
-  constructor() {
-    super();
+  constructor(props: Props) {
+    super(props);
     const user = getCurrentUser();
-    if (user) {
+    if (user as User) {
       this.columns.push(this.deleteColumn);
     }
   }

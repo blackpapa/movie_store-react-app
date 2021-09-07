@@ -1,7 +1,41 @@
-import React, { Component } from "react";
+import { Component } from "react";
 
-class TableHeader extends Component {
-  raiseSort = (path) => {
+interface Movie {
+  _id: string,
+  title: string,
+  genre: Genre,
+  numberInStock: number,
+  dailyRentalRate: number,
+  liked?:boolean
+}
+
+interface Genre {
+  _id: string,
+  name: string,
+}
+
+interface SortColumn {
+  path: string,
+  order: string,
+}
+
+interface Column {
+    path?: string,
+    label?: string,
+    content?: (movie: Movie) => JSX.Element;
+    key?: string,
+
+}
+
+interface Props {
+  columns: Column[],
+  sortColumn: SortColumn,
+  onSort: (sortColumn: SortColumn) => void
+
+}
+
+class TableHeader extends Component<Props> {
+  raiseSort = (path: string ) => {
     const sortColumn = { ...this.props.sortColumn };
     if (path === sortColumn.path) {
       sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
@@ -13,7 +47,7 @@ class TableHeader extends Component {
     return this.props.onSort(sortColumn);
   };
 
-  renderSortIcon = (column) => {
+  renderSortIcon = (column: Column) => {
     const { sortColumn } = this.props;
     if (column.path !== sortColumn.path) return null;
     if (sortColumn.order === "asc") return <i className="fa fa-sort-asc"></i>;
@@ -30,7 +64,7 @@ class TableHeader extends Component {
             <th
               className="clickable"
               key={column.path || column.key}
-              onClick={() => this.raiseSort(column.path)}
+              onClick={() => this.raiseSort(column.path as string)}
             >
               {column.label} {this.renderSortIcon(column)}
             </th>
