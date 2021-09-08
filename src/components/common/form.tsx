@@ -37,7 +37,7 @@ class Form extends Component<State> {
     return errors;
   };
 
-  validateProperty = ({ name, value }: EventTarget & HTMLInputElement) => {
+  validateProperty = ({ name, value }: EventTarget & (HTMLInputElement | HTMLSelectElement)) => {
     const obj = { [name]: value };
 
     const schema = Joi.object({
@@ -48,7 +48,7 @@ class Form extends Component<State> {
     return error ? error.details[0].message : null;
   };
 
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     const errors: any = { ...this.state.errors };
     const errorMessage = this.validateProperty(e.currentTarget);
     if (errorMessage) errors[e.currentTarget.name] = errorMessage;

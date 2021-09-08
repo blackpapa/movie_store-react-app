@@ -1,6 +1,15 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
-const Input = (props) => {
+type Props = {
+  type: string,
+  label: string,
+  name: string,
+  value: string,
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  error: string
+}
+
+const Input: React.FC<Props> = (props) => {
   const { type, label, name, value, onChange, error } = props;
   return (
     <div>

@@ -1,6 +1,15 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 
-const Select = ({ name, label, items, defaultOption, onChange, error }) => {
+type Props = {
+  name: string,
+  label: string,
+  items: any[],
+  defaultOption: string,
+  onChange:(e: ChangeEvent<HTMLSelectElement>) => void,
+  error:string
+}
+
+const Select: React.FC<Props> = ({ name, label, items, defaultOption, onChange, error }) => {
   return (
     <div className="form-group">
       <label htmlFor={name} className="form-label">
