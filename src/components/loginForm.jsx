@@ -11,7 +11,7 @@ class LoginForm extends Form {
   };
 
   schemaObj = {
-    username: Joi.string().required().label("Username"),
+    username: Joi.string().email({ tlds: { allow: ["com", "net"] } }).required().label("Username"),
     password: Joi.string().required().label("Password"),
   };
 
