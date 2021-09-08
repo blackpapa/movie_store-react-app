@@ -1,10 +1,28 @@
-import { Component } from "react";
+import { ChangeEvent, Component } from "react";
 import Joi from "joi";
 import Input from "./input";
 import Select from "./select";
 
-class Form extends Component {
-  state = { data: {}, errors: {} };
+interface Data {
+  [propName: string]: string
+}
+
+interface Errors {
+  [propName: string]: string
+}
+
+interface State {
+  data: Data ,
+  errors: Errors,
+}
+
+
+class Form extends Component<State> {
+  state: State = { data: {}, errors: {}};
+
+  schema: any
+  schemaObj: any
+  doSubmit : any
 
   validate = () => {
     const { error } = this.schema.validate(this.state.data, {
@@ -13,13 +31,13 @@ class Form extends Component {
 
     if (!error) return null;
 
-    const errors = {};
+    const errors: any = {};
     for (let item of error.details) errors[item.path[0]] = item.message;
 
     return errors;
   };
 
-  validateProperty = ({ name, value }) => {
+  validateProperty = ({ name, value }: EventTarget & (HTMLInputElement | HTMLSelectElement)) => {
     const obj = { [name]: value };
 
     const schema = Joi.object({
@@ -30,18 +48,18 @@ class Form extends Component {
     return error ? error.details[0].message : null;
   };
 
-  handleChange = (e) => {
-    const errors = { ...this.state.errors };
+  handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+    const errors: any = { ...this.state.errors };
     const errorMessage = this.validateProperty(e.currentTarget);
     if (errorMessage) errors[e.currentTarget.name] = errorMessage;
     else delete errors[e.currentTarget.name];
 
-    const data = { ...this.state.data };
+    const data: any = { ...this.state.data };
     data[e.currentTarget.name] = e.currentTarget.value;
     this.setState({ data, errors });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = (e: any) => {
     e.preventDefault();
 
     const errors = this.validate();
@@ -52,7 +70,7 @@ class Form extends Component {
     this.doSubmit();
   };
 
-  renderButton = (label) => {
+  renderButton = (label: string) => {
     return (
       <button disabled={this.validate()} className="btn mt-3 w-100 btn-primary">
         {label}
@@ -60,7 +78,7 @@ class Form extends Component {
     );
   };
 
-  renderInput = (name, label, type = "text") => {
+  renderInput = (name: string, label: string, type = "text") => {
     const { data, errors } = this.state;
     return (
       <Input
@@ -74,7 +92,7 @@ class Form extends Component {
     );
   };
 
-  renderSelect = (name, label, items, defaultOption = "default") => {
+  renderSelect = (name: string, label: string, items: any[], defaultOption = "default") => {
     const { errors } = this.state;
     return (
       <Select
@@ -87,6 +105,7 @@ class Form extends Component {
       />
     );
   };
+ 
 }
 
 export default Form;

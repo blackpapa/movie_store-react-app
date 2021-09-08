@@ -1,8 +1,13 @@
 import React from "react";
 import { Route, Redirect } from "react-router";
-import { getCurrentUser } from "./../../services/authService";
+import { getCurrentUser } from "../../services/authService";
 
-const ProtectedRoute = ({ path, component: Component, render }) => {
+type Props = {
+  path: string,
+  component: any,
+}
+
+const ProtectedRoute: React.FC<Props> = ({ path, component: Component }) => {
   return (
     <Route
       path={path}
@@ -13,7 +18,7 @@ const ProtectedRoute = ({ path, component: Component, render }) => {
               to={{ pathname: "/login", state: { from: props.location } }}
             />
           );
-        return Component ? <Component {...props} /> : render(props);
+        return Component ? <Component {...props} /> : null;
       }}
     ></Route>
   );
