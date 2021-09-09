@@ -27,8 +27,8 @@ class RegisterForm extends Form {
 
       loginWithJwt(response.headers["x-auth-token"]);
 
-      window.location = "/";
-    } catch (error) {
+      window.location.href = "/";
+    } catch (error: any) {
       if (error.response && error.response.status === 400) {
         const errors = { ...this.state.errors };
         errors.username = error.response.data;
