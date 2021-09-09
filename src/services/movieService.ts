@@ -6,8 +6,8 @@ interface Movie {
   _id?: string,
   title: string,
   genreId: string,
-  numberInStock: number,
-  dailyRentalRate: number,
+  numberInStock: string,
+  dailyRentalRate: string,
   liked?:boolean
 }
 

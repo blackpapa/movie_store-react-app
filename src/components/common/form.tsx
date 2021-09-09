@@ -1,9 +1,10 @@
 import { ChangeEvent, Component } from "react";
+import { RouteComponentProps, StaticContext } from 'react-router';
 import {Location} from 'history'
 import Joi from "joi";
 import Input from "./input";
 import Select from "./select";
-import { RouteComponentProps, StaticContext } from 'react-router';
+import {Genre }from '../movies'
 
 interface Data {
   [propName: string]: string | number
@@ -20,6 +21,8 @@ interface LocationState {
 interface State {
   data: Data ,
   errors: Errors,
+  defaultOption?: string,
+  genres?: Genre[]
 }
 
 interface Props extends RouteComponentProps<{
