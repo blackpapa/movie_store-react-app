@@ -22,7 +22,7 @@ interface State {
   searchQuery: string,
 }
 
-class Customers extends Component<State> {
+class Customers extends Component<{},State> {
   state = {
     customers: [],
     sortColumn: { path: "name", order: "asc" },

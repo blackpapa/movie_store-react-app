@@ -7,24 +7,28 @@ import Customers from "./components/customers";
 import Rentals from "./components/rentals";
 import MovieForm from "./components/movieForm";
 import NotFound from "./components/notFound";
-import NavBar from "./components/common/navbar";
+import NavBar, { User } from "./components/common/navbar";
 import Footer from "./components/common/footer";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
 import "./App.css";
-import ProtectedRoute from "./components/common/protectedRoute";
 
-class App extends Component {
+interface State {
+  user?: User
+}
+
+class App extends Component<{}, State> {
   state = {};
 
   componentDidMount() {
-    const user = getCurrentUser();
+    const user = getCurrentUser() as User;
     this.setState({ user });
   }
 
   render() {
-    const { user } = this.state;
+    const { user } = this.state as State;
     return (
       <React.Fragment>
         <ToastContainer />

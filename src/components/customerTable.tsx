@@ -21,7 +21,7 @@ interface Props {
   onSort: (sortColumn: SortColumn) => void
 }
 
-class CustomerTable extends Component<Props> {
+class CustomerTable extends Component<Props,{}> {
   state = {};
   columns = [
     { path: "name", label: "Name" },

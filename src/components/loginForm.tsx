@@ -1,8 +1,9 @@
 import React from "react";
 import Joi from "joi";
 import Form from "./common/form";
-import { getCurrentUser, login } from "./../services/authService";
-import { Redirect } from "react-router";
+import { getCurrentUser, login } from "../services/authService";
+import {  Redirect } from "react-router";
+
 
 class LoginForm extends Form {
   state = {
@@ -23,7 +24,7 @@ class LoginForm extends Form {
 
     const { state } = this.props.location;
 
-    window.location = state ? state.from.pathname : "/";
+    window.location.href = state ? state.from.pathname : "/";
   };
 
   render() {

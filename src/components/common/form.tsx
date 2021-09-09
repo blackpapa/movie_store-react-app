@@ -1,23 +1,36 @@
 import { ChangeEvent, Component } from "react";
+import { RouteComponentProps, StaticContext } from 'react-router';
+import {Location} from 'history'
 import Joi from "joi";
 import Input from "./input";
 import Select from "./select";
+import {Genre }from '../movies'
 
 interface Data {
-  [propName: string]: string
+  [propName: string]: string | number
 }
 
 interface Errors {
   [propName: string]: string
 }
 
+interface LocationState {
+  from: Location
+}
+
 interface State {
   data: Data ,
   errors: Errors,
+  defaultOption?: string,
+  genres?: Genre[]
 }
 
+interface Props extends RouteComponentProps<{
+  [x: string]: string | undefined;
+}, StaticContext, LocationState> {
+}
 
-class Form extends Component<State> {
+class Form extends Component<Props, State> {
   state: State = { data: {}, errors: {}};
 
   schema: any
@@ -49,12 +62,12 @@ class Form extends Component<State> {
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-    const errors: any = { ...this.state.errors };
+    const errors: Errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(e.currentTarget);
     if (errorMessage) errors[e.currentTarget.name] = errorMessage;
     else delete errors[e.currentTarget.name];
 
-    const data: any = { ...this.state.data };
+    const data: Data = { ...this.state.data };
     data[e.currentTarget.name] = e.currentTarget.value;
     this.setState({ data, errors });
   };

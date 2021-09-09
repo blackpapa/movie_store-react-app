@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 
-interface User {
+export interface User {
   _id: string,
   name: string,
   isAdmin? : boolean,
 }
 
 interface Props {
-  user: User
+  user?: User 
 }
  
 interface State {

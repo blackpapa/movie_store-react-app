@@ -10,7 +10,7 @@ import MovieTable from "./movieTable";
 import SearchBox from "./common/searchBox";
 import _ from "lodash";
 
-interface Movie {
+export interface Movie {
   _id: string,
   title: string,
   genre: Genre,
@@ -19,12 +19,12 @@ interface Movie {
   liked?:boolean
 }
 
-interface Genre {
+export interface Genre {
   _id: string,
   name: string,
 }
 
-interface SortColumn {
+export interface SortColumn {
   path: string,
   order: string,
 }
@@ -36,7 +36,7 @@ interface User {
 }
 
 interface Props {
-  user: User
+  user?: User
 }
 
 interface State {

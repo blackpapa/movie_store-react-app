@@ -1,6 +1,7 @@
 import React from "react";
 import { getGenres } from "../services/genreService";
 import { getMovie, saveMovie } from "../services/movieService";
+import { Movie } from "./movies";
 import { toast } from "react-toastify";
 import logger from "../services/logService";
 import Form from "./common/form";
@@ -24,13 +25,13 @@ class MovieForm extends Form {
     if (movieId === "new") return;
 
     try {
-      const { data: movie } = await getMovie(movieId);
+      const { data: movie } = await getMovie(movieId as string);
 
       this.setState({
         data: this.mapToViewMovie(movie),
         defaultOption: movie.genre.name,
       });
-    } catch (error) {
+    } catch (error : any) {
       if (error.response && error.response.status === 400) {
         toast.error("Please login to do the operation!!");
       }
@@ -53,7 +54,7 @@ class MovieForm extends Form {
   };
   schema = Joi.object(this.schemaObj);
 
-  mapToViewMovie = (movie) => {
+  mapToViewMovie = (movie: Movie) => {
     return {
       _id: movie._id,
       title: movie.title,

@@ -4,26 +4,8 @@ import { getCurrentUser } from "../services/authService";
 import Like from "./common/like";
 import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
+import { Movie, SortColumn } from "./movies";
 
-
-interface Movie {
-  _id: string,
-  title: string,
-  genre: Genre,
-  numberInStock: number,
-  dailyRentalRate: number,
-  liked?:boolean
-}
-
-interface Genre {
-  _id: string,
-  name: string,
-}
-
-interface SortColumn {
-  path: string,
-  order: string,
-}
 
 interface User {
   _id: string,
@@ -39,7 +21,7 @@ interface Props {
   onSort: (sortColumn: SortColumn) => void
 }
 
-class MovieTable extends Component<Props> {
+class MovieTable extends Component<Props, {}> {
   columns = [
     {
       path: "title",
