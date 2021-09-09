@@ -169,7 +169,7 @@ class Movies extends Component<Props, State> {
             textProperty={"name"}
           />
         </div>
-        <div className="col">
+        {totalCount === 0? <h2>Loading...</h2>:<div className="col">
           {user && (
             <Link to="/movies/new">
               <button className="btn btn-primary">New Movie</button>
@@ -191,7 +191,8 @@ class Movies extends Component<Props, State> {
             onPageChange={this.handlePageChange}
             currentPage={currentPage}
           />
-        </div>
+        </div> }
+        
       </div>
     );
   }

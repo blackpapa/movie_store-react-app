@@ -1,10 +1,10 @@
 import { ChangeEvent, Component } from "react";
 import { RouteComponentProps, StaticContext } from 'react-router';
 import {Location} from 'history'
+import {Genre }from '../movies'
 import Joi from "joi";
 import Input from "./input";
 import Select from "./select";
-import {Genre }from '../movies'
 
 interface Data {
   [propName: string]: string | number
