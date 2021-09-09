@@ -5,7 +5,6 @@ import { getCurrentUser, login } from "../services/authService";
 import {  Redirect } from "react-router";
 
 
-
 class LoginForm extends Form {
   state = {
     data: { username: "", password: "" },

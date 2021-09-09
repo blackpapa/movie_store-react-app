@@ -59,12 +59,12 @@ class Form extends Component<Props, State> {
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
-    const errors: any = { ...this.state.errors };
+    const errors: Errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(e.currentTarget);
     if (errorMessage) errors[e.currentTarget.name] = errorMessage;
     else delete errors[e.currentTarget.name];
 
-    const data: any = { ...this.state.data };
+    const data: Data = { ...this.state.data };
     data[e.currentTarget.name] = e.currentTarget.value;
     this.setState({ data, errors });
   };
