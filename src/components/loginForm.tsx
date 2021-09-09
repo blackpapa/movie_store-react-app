@@ -3,6 +3,7 @@ import Joi from "joi";
 import Form from "./common/form";
 import { getCurrentUser, login } from "../services/authService";
 import {  Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 
 class LoginForm extends Form {
@@ -34,7 +35,10 @@ class LoginForm extends Form {
         {this.renderInput("username", "Username")}
         {this.renderInput("password", "Password", "password")}
         {this.renderButton("Login")}
-        <p className="mt-5 mb-3 text-muted text-center">© 2017–2021</p>
+        <Link className="nav-link" to="/register">
+          <p className="mt-2 text text-center">Register</p>
+        </Link>
+        <p className="mt-3 mb-3 text-muted text-center">© 2017–2021</p>
       </form>
     );
   }
