@@ -13,7 +13,7 @@ interface Props {
   items: any[],
 }
 
-class TableBody extends Component<Props> {
+class TableBody extends Component<Props,{}> {
   renderCell = (item: any, column: Column) => {
     if (column.content) return column.content(item);
 

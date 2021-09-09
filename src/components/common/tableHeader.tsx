@@ -20,7 +20,7 @@ interface Props {
 
 }
 
-class TableHeader extends Component<Props> {
+class TableHeader extends Component<Props,{}> {
   raiseSort = (path: string ) => {
     const sortColumn = { ...this.props.sortColumn };
     if (path === sortColumn.path) {

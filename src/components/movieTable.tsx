@@ -21,7 +21,7 @@ interface Props {
   onSort: (sortColumn: SortColumn) => void
 }
 
-class MovieTable extends Component<Props> {
+class MovieTable extends Component<Props, {}> {
   columns = [
     {
       path: "title",
