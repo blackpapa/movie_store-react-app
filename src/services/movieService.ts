@@ -5,15 +5,10 @@ const apiEndPoint = "/movies";
 interface Movie {
   _id?: string,
   title: string,
-  genre: Genre,
+  genreId: string,
   numberInStock: number,
   dailyRentalRate: number,
   liked?:boolean
-}
-
-interface Genre {
-  _id: string,
-  name: string,
 }
 
 export function getMovies() {
