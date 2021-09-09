@@ -1,7 +1,9 @@
 import { ChangeEvent, Component } from "react";
+import {Location} from 'history'
 import Joi from "joi";
 import Input from "./input";
 import Select from "./select";
+import { RouteComponentProps, StaticContext } from 'react-router';
 
 interface Data {
   [propName: string]: string
@@ -11,13 +13,21 @@ interface Errors {
   [propName: string]: string
 }
 
+interface LocationState {
+  from: Location
+}
+
 interface State {
   data: Data ,
   errors: Errors,
 }
 
+interface Props extends RouteComponentProps<{
+  [x: string]: string | undefined;
+}, StaticContext, LocationState> {
+}
 
-class Form extends Component<State> {
+class Form extends Component<Props, State> {
   state: State = { data: {}, errors: {}};
 
   schema: any
