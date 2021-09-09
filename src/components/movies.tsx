@@ -36,7 +36,7 @@ interface User {
 }
 
 interface Props {
-  user: User
+  user?: User
 }
 
 interface State {
