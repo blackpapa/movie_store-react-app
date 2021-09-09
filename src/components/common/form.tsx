@@ -6,7 +6,7 @@ import Select from "./select";
 import { RouteComponentProps, StaticContext } from 'react-router';
 
 interface Data {
-  [propName: string]: string
+  [propName: string]: string | number
 }
 
 interface Errors {
