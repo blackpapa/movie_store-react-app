@@ -71,6 +71,12 @@ class Movies extends Component<Props, State> {
     });
   }
 
+  renderProgressBar = (): JSX.Element => {
+      return (<div className="progress">
+      <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={99} aria-valuemin={0} aria-valuemax={100} style={{width: '99%'}}>Loading...</div>
+    </div>)
+  }
+
   handleDelete = async (movie: Movie) => {
     const originalMovies = this.state.movies;
     const movies = originalMovies.filter((m: Movie) => m._id !== movie._id);
@@ -169,7 +175,7 @@ class Movies extends Component<Props, State> {
             textProperty={"name"}
           />
         </div>
-        {totalCount === 0? <h2>Loading...</h2>:<div className="col">
+        {totalCount === 0? this.renderProgressBar():<div className="col">
           {user && (
             <Link to="/movies/new">
               <button className="btn btn-primary">New Movie</button>
