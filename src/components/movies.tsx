@@ -8,6 +8,7 @@ import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
 import MovieTable from "./movieTable";
 import SearchBox from "./common/searchBox";
+import ProgressBar from './common/progressBar';
 import _ from "lodash";
 
 export interface Movie {
@@ -71,11 +72,6 @@ class Movies extends Component<Props, State> {
     });
   }
 
-  renderProgressBar = (): JSX.Element => {
-      return (<div className="progress">
-      <div className="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow={99} aria-valuemin={0} aria-valuemax={100} style={{width: '99%'}}>Loading...</div>
-    </div>)
-  }
 
   handleDelete = async (movie: Movie): Promise<void> => {
     const originalMovies = this.state.movies;
@@ -178,7 +174,7 @@ class Movies extends Component<Props, State> {
             textProperty={"name"}
           />
         </div>
-        {totalCount === 0? this.renderProgressBar():<div className="col">
+        {totalCount === 0? <ProgressBar/>:<div className="col">
           {user && (
             <Link to="/movies/new">
               <button className="btn btn-primary">New Movie</button>
