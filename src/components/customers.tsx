@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getCustomers } from "../services/customerService";
+import { Link } from 'react-router-dom';
 import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
 import _ from "lodash";
@@ -64,6 +65,9 @@ class Customers extends Component<{},State> {
 
     return (
       <React.Fragment>
+        <Link to ="/customers/new">
+          <button className="btn btn-primary">New Customer</button>
+        </Link>
         <SearchBox value={searchQuery} onChange={this.handleSearch} />
         <CustomerTable
           customers={customers}
