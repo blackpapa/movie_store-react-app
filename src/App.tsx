@@ -11,6 +11,7 @@ import NavBar, { User } from "./components/common/navbar";
 import Footer from "./components/common/footer";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
+import CustomerFrom from "./components/customerForm";
 import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
 import "./App.css";
@@ -40,6 +41,7 @@ class App extends Component<{}, State> {
               path="/movies"
               render={(props) => <Movies {...props} user={user} />}
             ></Route>
+            <Route path='/customers/:id' component={CustomerFrom} />
             <Route path="/customers" component={Customers}></Route>
             <Route path="/rentals" component={Rentals}></Route>
             <Route path="/not-found" component={NotFound}></Route>
