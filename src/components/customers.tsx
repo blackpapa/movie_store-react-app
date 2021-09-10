@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getCustomers } from "../services/fakeCustomerService";
+import { getCustomers } from "../services/customerService";
 import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
 import _ from "lodash";
@@ -29,8 +29,8 @@ class Customers extends Component<{},State> {
     searchQuery: "",
   };
 
-  componentDidMount() {
-    const customers = getCustomers();
+  async componentDidMount() {
+    const {data: customers} = await getCustomers();
     this.setState({ customers });
   }
 
