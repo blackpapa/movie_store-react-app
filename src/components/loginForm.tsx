@@ -4,6 +4,7 @@ import Form from "./common/form";
 import { getCurrentUser, login } from "../services/authService";
 import {  Redirect } from "react-router";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 class LoginForm extends Form {
@@ -14,18 +15,26 @@ class LoginForm extends Form {
 
   schemaObj = {
     username: Joi.string().email({ tlds: { allow: ["com", "net"] } }).required().label("Username"),
-    password: Joi.string().required().label("Password"),
+    password: Joi.string().min(5).required().label("Password"),
   };
 
   schema = Joi.object(this.schemaObj);
 
   doSubmit = async () => {
     const { data } = this.state;
-    await login(data.username, data.password);
 
-    const { state } = this.props.location;
-
-    window.location.href = state ? state.from.pathname : "/";
+    try {
+      await login(data.username, data.password);
+      const { state } = this.props.location;
+    
+      window.location.href = state ? state.from.pathname : "/";
+      
+    } catch (error: any) {
+      if(error.response) {
+        const {data} = error.response;
+        toast.info(data)
+      }
+    }
   };
 
   render() {
