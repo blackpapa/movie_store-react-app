@@ -1,17 +1,11 @@
 import React from 'react';
+import Form from './common/form';
 
-interface CustomerFromProps {
-    
-}
  
-interface CustomerFromState {
-    
-}
- 
-class CustomerFrom extends React.Component<CustomerFromProps, CustomerFromState> {
-    state = {  }
+class CustomerFrom extends Form {
+    state = {data: {}, errors: {} }
     render() { 
-        return (  <h1>Customer Form</h1>);
+        return (  <h1>{this.props.match.params.id}</h1>);
     }
 }
  

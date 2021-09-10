@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
 
@@ -24,7 +25,7 @@ interface Props {
 class CustomerTable extends Component<Props,{}> {
   state = {};
   columns = [
-    { path: "name", label: "Name" },
+    { path: "name", label: "Name", content:(customer: Customer)=> (<Link to={`/customers/${customer._id}`} style={{ textDecoration: "none" }}>{customer.name}</Link>) },
     { path: "isGold", label: "IsGold" },
     { path: "phone", label: "Phone" },
     {
