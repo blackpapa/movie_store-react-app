@@ -77,7 +77,7 @@ class Movies extends Component<Props, State> {
     </div>)
   }
 
-  handleDelete = async (movie: Movie) => {
+  handleDelete = async (movie: Movie): Promise<void> => {
     const originalMovies = this.state.movies;
     const movies = originalMovies.filter((m: Movie) => m._id !== movie._id);
     this.setState({ movies });
@@ -97,7 +97,7 @@ class Movies extends Component<Props, State> {
     }
   };
 
-  handleLike = (movie: Movie) => {
+  handleLike = (movie: Movie): void => {
     const movies:Movie[] = [...this.state.movies];
     const index = movies.indexOf(movie);
     movies[index] = { ...movie };
@@ -106,23 +106,26 @@ class Movies extends Component<Props, State> {
     this.setState({movies});
   };
 
-  handlePageChange = (page: number) => {
+  handlePageChange = (page: number): void => {
     this.setState({ currentPage: page });
   };
 
-  handleSelectedGenre = (genre: Genre) => {
+  handleSelectedGenre = (genre: Genre): void => {
     this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
   };
 
-  handleSort = (sortColumn: SortColumn) => {
+  handleSort = (sortColumn: SortColumn): void => {
     this.setState({ sortColumn });
   };
 
-  handleSearch = (searchQuery: string) => {
+  handleSearch = (searchQuery: string): void => {
     this.setState({ searchQuery, selectedGenre: {}, currentPage: 1 });
   };
 
-  getPageData = () => {
+  getPageData = ():{
+    movies: Movie[];
+    totalCount: number;
+} => {
     const {
       pageSize,
       currentPage,
@@ -146,7 +149,7 @@ class Movies extends Component<Props, State> {
 
     filtered = _.orderBy(filtered, sortColumn.path, sortColumn.order as ('asc' | 'desc'));
 
-    const movies = paginate(filtered, currentPage, pageSize);
+    const movies: Movie[] = paginate(filtered, currentPage, pageSize);
 
     return { movies, totalCount: filtered.length };
   };
