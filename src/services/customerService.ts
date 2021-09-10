@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios'
 import http from './httpService'
 
 const apiEndPoint = '/customers'
@@ -8,19 +9,19 @@ interface Customer {
     name: string
 }
 
-export function getCustomers(): Promise<Response> {
+export function getCustomers(): Promise<AxiosResponse<any>> {
     return http.get(apiEndPoint)
 }
 
-export function getCustomer(customerId): Promise<Response> {
+export function getCustomer(customerId: string): Promise<AxiosResponse<any>> {
     return http.get(`${apiEndPoint}/${customerId}`)
 }
 
-export function deleteCustomer(customerId): Promise<Response> {
+export function deleteCustomer(customerId: string): Promise<AxiosResponse<any>> {
     return http.delete(`${apiEndPoint}/${customerId}`)
 }
 
-export function saveCustomer(customer: Customer): Promise<Response> {
+export function saveCustomer(customer: Customer): Promise<AxiosResponse<any>> {
     if(customer._id) {
         const body = {...customer};
         delete body._id;
