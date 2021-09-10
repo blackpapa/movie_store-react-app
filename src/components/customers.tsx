@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
 import _ from "lodash";
+import ProgressBar from "./common/progressBar";
 
 interface Customer {
   _id:string,
@@ -51,7 +52,7 @@ class Customers extends Component<{},State> {
     this.setState({ customers });
   };
 
-  render() {
+  getPageData = () => {
     const { sortColumn, searchQuery, customers: allCustomers } = this.state;
 
     let customers = allCustomers;
@@ -63,8 +64,17 @@ class Customers extends Component<{},State> {
     }
     customers = _.orderBy(customers, sortColumn.path, sortColumn.order as ("asc" | "desc"));
 
+    return {customers, totalCount: customers.length}
+  }
+
+  render() {
+    const { sortColumn, searchQuery} = this.state;
+
+    const {customers, totalCount} = this.getPageData()
+
     return (
       <React.Fragment>
+        {totalCount === 0? <ProgressBar />: <div>
         <Link to ="/customers/new">
           <button className="btn btn-primary">New Customer</button>
         </Link>
@@ -74,7 +84,8 @@ class Customers extends Component<{},State> {
           onSort={this.handleSort}
           onDelete={this.handleDelete}
           sortColumn={sortColumn}
-        />
+        /></div>}
+        
       </React.Fragment>
     );
   }
