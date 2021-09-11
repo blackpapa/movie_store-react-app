@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
+import { getCurrentUser } from "../services/authService";
 import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
 
@@ -24,22 +25,32 @@ interface Props {
 
 class CustomerTable extends Component<Props,{}> {
   state = {};
-  columns = [
+  columns: object[] = [
     { path: "name", label: "Name", content:(customer: Customer)=> (<Link to={`/customers/${customer._id}`} style={{ textDecoration: "none" }}>{customer.name}</Link>) },
     { path: "isGold", label: "IsGold" },
     { path: "phone", label: "Phone" },
-    {
-      key: "delete",
-      content: (customer: Customer) => (
-        <button
-          onClick={() => this.props.onDelete(customer)}
-          className="btn btn-sm btn-danger"
-        >
-          Delete
-        </button>
-      ),
-    },
+    
   ];
+
+  deleteColumn = {
+    key: "delete",
+    content: (customer: Customer) => (
+      <button
+        onClick={() => this.props.onDelete(customer)}
+        className="btn btn-sm btn-danger"
+      >
+        Delete
+      </button>
+    ),
+  }
+
+  constructor(props: Props) {
+    super(props);
+    const user = getCurrentUser()
+    if(user)
+    this.columns.push(this.deleteColumn)
+  }
+
   render() {
     const { customers, sortColumn, onSort } = this.props;
 
