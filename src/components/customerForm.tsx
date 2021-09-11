@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import React from 'react';
-import { getCustomer } from '../services/customerService';
+import { getCustomer, saveCustomer } from '../services/customerService';
 import { Customer } from './customers';
 import logger from '../services/logService'
 import Form from './common/form';
@@ -42,13 +42,18 @@ class CustomerFrom extends Form {
 
     }
 
+    doSubmit = async() => {
+        await saveCustomer(this.state.data);
+        this.props.history.push('/customers')
+    }
+
     async componentDidMount() {
         this.populateCustomers()
     }
 
     render() { 
         return (<div>
-            <form className="form-login">
+            <form onSubmit={this.handleSubmit} className="form-login">
                 <h1>{this.props.match.params.id}</h1>
                 {this.renderInput('name', 'Name')}
                 {this.renderInput('isGold', 'IsGold')}

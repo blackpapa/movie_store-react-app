@@ -5,7 +5,7 @@ const apiEndPoint = '/customers'
 
 interface Customer {
     _id?: string,
-    isGold: boolean,
+    isGold: string,
     name: string
 }
 
