@@ -11,13 +11,13 @@ class MovieForm extends Form {
   state = {
     data: { title: "", genreId: "", numberInStock: "", dailyRentalRate: "" },
     defaultOption: "",
-    genres: [],
+    options: [],
     errors: {},
   };
 
   async populateGenres() {
     const { data: genres } = await getGenres();
-    this.setState({ genres });
+    this.setState({ options: genres });
   }
 
   async populateMovies() {
@@ -71,13 +71,13 @@ class MovieForm extends Form {
 
   render() {
     const { match } = this.props;
-    const { genres, defaultOption } = this.state;
+    const { options, defaultOption } = this.state;
     return (
       <div>
         <form onSubmit={this.handleSubmit} className="form-login">
           <h1>{match.params.id}</h1>
           {this.renderInput("title", "Title")}
-          {this.renderSelect("genreId", "Genre", genres, defaultOption)}
+          {this.renderSelect("genreId", "Genre", options, defaultOption)}
           {this.renderInput("numberInStock", "Number in Stock")}
           {this.renderInput("dailyRentalRate", "Rate")}
           {this.renderButton("Save")}

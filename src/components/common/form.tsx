@@ -18,12 +18,16 @@ interface LocationState {
   from: Location
 }
 
+interface Option {
+  _id: string,
+  name: string
+}
+
 interface State {
   data: Data ,
   errors: Errors,
   defaultOption?: string,
-  options?: any[],
-  genres?: Genre[]
+  options?: Option[],
 }
 
 interface Props extends RouteComponentProps<{
