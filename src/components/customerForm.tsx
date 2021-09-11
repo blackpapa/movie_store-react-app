@@ -42,7 +42,7 @@ class CustomerFrom extends Form {
 
     }
 
-    doSubmit = async() => {
+    doSubmit = async(): Promise<void> => {
         await saveCustomer(this.state.data);
         this.props.history.push('/customers')
     }

@@ -41,7 +41,7 @@ class App extends Component<{}, State> {
               path="/movies"
               render={(props) => <Movies {...props} user={user} />}
             ></Route>
-            <Route path='/customers/:id' component={CustomerFrom} />
+            <ProtectedRoute path='/customers/:id' component={CustomerFrom} />
             <Route path="/customers" component={Customers}></Route>
             <Route path="/rentals" component={Rentals}></Route>
             <Route path="/not-found" component={NotFound}></Route>
