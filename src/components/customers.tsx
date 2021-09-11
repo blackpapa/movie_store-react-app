@@ -5,6 +5,8 @@ import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
 import _ from "lodash";
 import ProgressBar from "./common/progressBar";
+import { deleteCustomer } from './../services/customerService';
+import { toast } from "react-toastify";
 
 interface Customer {
   _id:string,
@@ -22,6 +24,7 @@ interface State {
   customers: Customer[],
   sortColumn: SortColumn,
   searchQuery: string,
+  loadCompleted: boolean
 }
 
 class Customers extends Component<{},State> {
@@ -29,11 +32,12 @@ class Customers extends Component<{},State> {
     customers: [],
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
+    loadCompleted: false
   };
 
   async componentDidMount() {
     const {data: customers} = await getCustomers();
-    this.setState({ customers });
+    this.setState({ customers, loadCompleted: true });
   }
 
   handleSort = (sortColumn: SortColumn) => {
@@ -44,12 +48,26 @@ class Customers extends Component<{},State> {
     this.setState({ searchQuery });
   };
 
-  handleDelete = (customer:Customer) => {
+  handleDelete = async (customer:Customer) => {
     const originalCustomers = this.state.customers;
     const customers = originalCustomers.filter(
       (c: Customer) => c._id !== customer._id
     );
     this.setState({ customers });
+
+    try {
+      await deleteCustomer(customer._id)
+    } catch (error: any) {
+      if (error.response && error.response.status === 404) {
+        toast.error("The movie has already been deleted ");
+      } else if (error.response && error.response.status === 400) {
+        toast.error("Please login to do the operation !!");
+      } else if (error.response) {
+        toast.error(error.response.data);
+      }
+    }
+
+    this.setState({customers: originalCustomers})
   };
 
   getPageData = () => {
@@ -68,17 +86,18 @@ class Customers extends Component<{},State> {
   }
 
   render() {
-    const { sortColumn, searchQuery} = this.state;
+    const { sortColumn, searchQuery, loadCompleted} = this.state;
 
     const {customers, totalCount} = this.getPageData()
 
     return (
       <React.Fragment>
-        {totalCount === 0? <ProgressBar />: <div>
+        {!loadCompleted? <ProgressBar />: <div>
         <Link to ="/customers/new">
           <button className="btn btn-primary">New Customer</button>
         </Link>
         <SearchBox value={searchQuery} onChange={this.handleSearch} />
+        <p>There are {totalCount} customers in the store</p>
         <CustomerTable
           customers={customers}
           onSort={this.handleSort}

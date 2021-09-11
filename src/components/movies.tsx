@@ -47,7 +47,8 @@ interface State {
   currentPage: number,
   selectedGenre: Genre | {},
   searchQuery: string,
-  sortColumn: SortColumn
+  sortColumn: SortColumn,
+  loadCompleted: boolean
 }
 
 class Movies extends Component<Props, State> {
@@ -59,6 +60,7 @@ class Movies extends Component<Props, State> {
     selectedGenre: { _id: "", name: "All Genres" },
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
+    loadCompleted: false
   };
 
   async componentDidMount() {
@@ -69,6 +71,7 @@ class Movies extends Component<Props, State> {
     this.setState({
       movies,
       genres,
+      loadCompleted: true
     });
   }
 
@@ -158,6 +161,7 @@ class Movies extends Component<Props, State> {
       sortColumn,
       selectedGenre,
       searchQuery,
+      loadCompleted
     } = this.state;
     const { user } = this.props;
 
@@ -174,7 +178,7 @@ class Movies extends Component<Props, State> {
             textProperty={"name"}
           />
         </div>
-        {totalCount === 0? <ProgressBar/>:<div className="col">
+        {!loadCompleted? <ProgressBar/>:<div className="col">
           {user && (
             <Link to="/movies/new">
               <button className="btn btn-primary">New Movie</button>
