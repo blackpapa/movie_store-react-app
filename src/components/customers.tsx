@@ -65,9 +65,9 @@ class Customers extends Component<{},State> {
       } else if (error.response) {
         toast.error(error.response.data);
       }
+      this.setState({customers: originalCustomers})
     }
 
-    this.setState({customers: originalCustomers})
   };
 
   getPageData = () => {
