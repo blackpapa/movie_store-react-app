@@ -22,6 +22,7 @@ interface State {
   data: Data ,
   errors: Errors,
   defaultOption?: string,
+  options?: any[],
   genres?: Genre[]
 }
 

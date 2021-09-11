@@ -7,7 +7,7 @@ import Form from './common/form';
 
  
 class CustomerFrom extends Form {
-    state = {data: {name: "", isGold: "", phone: ""}, errors: {} }
+    state = {data: {name: "", isGold: "", phone: ""}, errors: {}, defaultOption: "", options: [{_id: 'true', name: 'true', }, {_id:'false', name: 'false'}] }
     
     schemaObj = {
         _id: Joi.string(),
@@ -34,7 +34,7 @@ class CustomerFrom extends Form {
         try {
            const {data: customer} = await getCustomer(customerId as string);
            
-           this.setState({data: this.mapToViewCustomer(customer as Customer)})
+           this.setState({data: this.mapToViewCustomer(customer as Customer), defaultOption: customer.isGold.toString()})
         } catch (error: any) {
             logger.log(error)
             this.props.history.replace('/not-found')
@@ -52,11 +52,12 @@ class CustomerFrom extends Form {
     }
 
     render() { 
+        const {options, defaultOption} = this.state
         return (<div>
             <form onSubmit={this.handleSubmit} className="form-login">
                 <h1>{this.props.match.params.id}</h1>
                 {this.renderInput('name', 'Name')}
-                {this.renderInput('isGold', 'IsGold')}
+                {this.renderSelect('isGold', 'IsGold', options, defaultOption)}
                 {this.renderInput('phone', 'Phone')}
                 {this.renderButton('Save')}
             </form>
