@@ -4,7 +4,7 @@ type Props = {
   type: string,
   label: string,
   name: string,
-  value: string | number,
+  value: any,
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   error: string
 }

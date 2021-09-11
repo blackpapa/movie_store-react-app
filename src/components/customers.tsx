@@ -8,7 +8,7 @@ import ProgressBar from "./common/progressBar";
 import { deleteCustomer } from './../services/customerService';
 import { toast } from "react-toastify";
 
-interface Customer {
+export interface Customer {
   _id:string,
   name: string,
   phone: string,

@@ -7,7 +7,7 @@ import Input from "./input";
 import Select from "./select";
 
 interface Data {
-  [propName: string]: string | number
+  [propName: string]: string | number | boolean | undefined
 }
 
 interface Errors {
