@@ -2,23 +2,24 @@ import { Component } from "react";
 import _ from "lodash";
 
 interface Column {
-  path?: string,
-  label?: string,
+  path?: string;
+  label?: string;
   content?: (item: any) => JSX.Element;
-  key?: string,
+  key?: string;
 }
 
 interface Props {
-  columns: Column[],
-  items: any[],
+  columns: Column[];
+  items: any[];
 }
 
-class TableBody extends Component<Props,{}> {
+class TableBody extends Component<Props, {}> {
   renderCell = (item: any, column: Column) => {
     if (column.content) return column.content(item);
 
-    return  _.get(item, column.path as string).toString()
-      
+    return typeof _.get(item, column.path as string) === "boolean"
+      ? _.get(item, column.path as string).toString()
+      : _.get(item, column.path as string);
   };
 
   createKey = (column: Column) => {
