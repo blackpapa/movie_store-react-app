@@ -1,19 +1,37 @@
-import React  from 'react';
-import TableBody from './common/tableBody';
-import Rental from './rentals';
+import React from "react";
+import TableBody from "./common/tableBody";
+import TableHeader from "./common/tableHeader";
+import { SortColumn } from "./movies";
+import Rental from "./rentals";
 
 interface Props {
-    rentals: Rental[]
+  rentals: Rental[];
+  sortColumn: SortColumn;
+  onSort: (sortColumn: SortColumn) => void;
 }
- 
- 
+
 class RentalTable extends React.Component<Props, {}> {
-    coulmns: object[] = []
-  
-    render() { 
-        const { rentals} = this.props
-        return (<TableBody columns={} items={rentals} />  );
-    }
+  columns: object[] = [
+    { path: "customer.name", label: "Customer" },
+    { path: "movie.title", label: "Movie" },
+    { path: "dataOut", label: "DateOut" },
+    { path: "dataReturn", label: "DateReturn" },
+    { path: "rentalFee", label: "RentalFee" },
+  ];
+
+  render() {
+    const { rentals, sortColumn, onSort } = this.props;
+    return (
+      <table className="table">
+        <TableHeader
+          columns={this.columns}
+          sortColumn={sortColumn}
+          onSort={onSort}
+        />
+        <TableBody columns={this.columns} items={rentals} />{" "}
+      </table>
+    );
+  }
 }
- 
+
 export default RentalTable;

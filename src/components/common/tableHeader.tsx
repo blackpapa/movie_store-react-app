@@ -1,27 +1,25 @@
 import { Component } from "react";
 
-
 interface SortColumn {
-  path: string,
-  order: string,
+  path: string;
+  order: string;
 }
 
 interface Column {
-    path?: string,
-    label?: string,
-    content?: (item: any) => JSX.Element;
-    key?: string,
+  path?: string;
+  label?: string;
+  content?: (item: any) => JSX.Element;
+  key?: string;
 }
 
 interface Props {
-  columns: Column[],
-  sortColumn: SortColumn,
-  onSort: (sortColumn: SortColumn) => void
-
+  columns: Column[];
+  sortColumn: SortColumn;
+  onSort: (sortColumn: SortColumn) => void;
 }
 
-class TableHeader extends Component<Props,{}> {
-  raiseSort = (path: string ) => {
+class TableHeader extends Component<Props, {}> {
+  raiseSort = (path: string) => {
     const sortColumn = { ...this.props.sortColumn };
     if (path === sortColumn.path) {
       sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
