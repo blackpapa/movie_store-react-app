@@ -14,8 +14,8 @@ class RentalTable extends React.Component<Props, {}> {
   columns: object[] = [
     { path: "customer.name", label: "Customer" },
     { path: "movie.title", label: "Movie" },
-    { path: "dataOut", label: "DateOut" },
-    { path: "dataReturn", label: "DateReturn" },
+    { path: "dateOut", label: "DateOut" },
+    { path: "dateReturn", label: "DateReturn" },
     { path: "rentalFee", label: "RentalFee" },
   ];
 
@@ -28,7 +28,7 @@ class RentalTable extends React.Component<Props, {}> {
           sortColumn={sortColumn}
           onSort={onSort}
         />
-        <TableBody columns={this.columns} items={rentals} />{" "}
+        <TableBody columns={this.columns} items={rentals} />
       </table>
     );
   }
