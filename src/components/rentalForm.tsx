@@ -26,12 +26,16 @@ class RentalForm extends Form {
     this.setState({ options: customers, secondOptions: movies });
   }
 
+  doSubmit = () => {
+    console.log("submit");
+  };
+
   render() {
     const { options, secondOptions } = this.state;
     return (
       <div>
         <h1>{this.props.match.params.id}</h1>
-        <form className="form-login">
+        <form onSubmit={this.handleSubmit} className="form-login">
           {this.renderSelect("customerId", "Customer", options)}
           {this.renderSelect("movieId", "Movie", secondOptions)}
           {this.renderButton("Submit")}
