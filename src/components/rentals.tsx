@@ -3,6 +3,7 @@ import { getRentals } from "../services/rentalService";
 import { Customer } from "./customers";
 import { SortColumn } from "./movies";
 import RentalTable from "./rentalTable";
+import _ from "lodash";
 
 interface Movie {
   title: string;
@@ -36,7 +37,13 @@ class Rentals extends Component<{}, State> {
   };
 
   render() {
-    const { rentals, sortColumn } = this.state;
+    const { rentals: allRentals, sortColumn } = this.state;
+
+    let rentals = _.orderBy(
+      allRentals,
+      sortColumn.path,
+      sortColumn.order as "asc" | "desc"
+    );
     return (
       <RentalTable
         rentals={rentals}
