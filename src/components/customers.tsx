@@ -3,11 +3,13 @@ import { getCustomers } from "../services/customerService";
 import { Link } from "react-router-dom";
 import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
-import _ from "lodash";
 import ProgressBar from "./common/progressBar";
 import { deleteCustomer } from "./../services/customerService";
 import { toast } from "react-toastify";
 import { User } from "./common/navbar";
+import _ from "lodash";
+import Pagination from "./common/pagination";
+import { paginate } from "./utils/paginate";
 
 export interface Customer {
   _id: string;
@@ -26,6 +28,8 @@ interface State {
   sortColumn: SortColumn;
   searchQuery: string;
   loadCompleted: boolean;
+  pageSize: number;
+  currentPage: number;
 }
 
 interface Props {
@@ -38,6 +42,8 @@ class Customers extends Component<Props, State> {
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
     loadCompleted: false,
+    pageSize: 4,
+    currentPage: 1,
   };
 
   async componentDidMount() {
@@ -74,27 +80,42 @@ class Customers extends Component<Props, State> {
     }
   };
 
-  getPageData = () => {
-    const { sortColumn, searchQuery, customers: allCustomers } = this.state;
+  handlePage = (page: number) => {
+    this.setState({ currentPage: page });
+  };
 
-    let customers = allCustomers;
+  getPageData = () => {
+    const {
+      sortColumn,
+      searchQuery,
+      customers: allCustomers,
+      currentPage,
+      pageSize,
+    } = this.state;
+
+    let filtered;
 
     if (searchQuery) {
-      customers = allCustomers.filter((c: Customer) =>
+      filtered = allCustomers.filter((c: Customer) =>
         c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
     }
-    customers = _.orderBy(
-      customers,
+    filtered = _.orderBy(
+      allCustomers,
       sortColumn.path,
       sortColumn.order as "asc" | "desc"
     );
 
-    return { customers, totalCount: customers.length };
+    const customers: Customer[] = paginate(filtered, currentPage, pageSize);
+
+    return { customers, totalCount: allCustomers.length };
   };
 
   render() {
-    const { sortColumn, searchQuery, loadCompleted } = this.state;
+    const { sortColumn, searchQuery, loadCompleted, pageSize, currentPage } =
+      this.state;
+
+    const { user } = this.props;
 
     const { customers, totalCount } = this.getPageData();
 
@@ -104,9 +125,11 @@ class Customers extends Component<Props, State> {
           <ProgressBar />
         ) : (
           <div>
-            <Link to="/customers/new">
-              <button className="btn btn-primary">New Customer</button>
-            </Link>
+            {user && (
+              <Link to="/customers/new">
+                <button className="btn btn-primary">New Customer</button>
+              </Link>
+            )}
             <SearchBox value={searchQuery} onChange={this.handleSearch} />
             <p>There are {totalCount} customers in the store</p>
             <CustomerTable
@@ -114,6 +137,12 @@ class Customers extends Component<Props, State> {
               onSort={this.handleSort}
               onDelete={this.handleDelete}
               sortColumn={sortColumn}
+            />
+            <Pagination
+              itemsCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handlePage}
             />
           </div>
         )}
