@@ -12,6 +12,7 @@ import Footer from "./components/common/footer";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import CustomerFrom from "./components/customerForm";
+import RentalForm from "./components/rentalForm";
 import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
 import "./App.css";
@@ -46,6 +47,7 @@ class App extends Component<{}, State> {
               path="/customers"
               render={(props) => <Customers {...props} user={user} />}
             ></Route>
+            <ProtectedRoute path="/rentals/:id" component={RentalForm} />
             <Route
               path="/rentals"
               render={(props) => <Rentals {...props} user={user} />}
