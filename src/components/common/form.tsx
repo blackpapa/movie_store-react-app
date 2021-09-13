@@ -17,16 +17,12 @@ interface LocationState {
   from: Location;
 }
 
-interface Option {
-  _id: string;
-  name: string;
-}
-
 interface State {
   data: Data;
   errors: Errors;
   defaultOption?: string;
-  options?: Option[];
+  options?: any[];
+  secondOptions?: any[];
 }
 
 interface Props
@@ -122,7 +118,7 @@ class Form extends Component<Props, State> {
     name: string,
     label: string,
     items: any[],
-    defaultOption = "default"
+    defaultOption = "Please select..."
   ) => {
     const { errors } = this.state;
     return (
