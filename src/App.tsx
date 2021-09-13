@@ -46,7 +46,10 @@ class App extends Component<{}, State> {
               path="/customers"
               render={(props) => <Customers {...props} user={user} />}
             ></Route>
-            <Route path="/rentals" component={Rentals}></Route>
+            <Route
+              path="/rentals"
+              render={(props) => <Rentals {...props} user={user} />}
+            ></Route>
             <Route path="/not-found" component={NotFound}></Route>
             <Route path="/login" component={LoginForm}></Route>
             <Route path="/logout" component={Logout}></Route>
