@@ -96,6 +96,7 @@ class Rentals extends Component<Props, State> {
     const { sortColumn, searchQuery, loadCompleted, currentPage, pageSize } =
       this.state;
 
+    const { user } = this.props;
     const { rentals, totalCount } = this.getPageData();
 
     return (
@@ -104,9 +105,11 @@ class Rentals extends Component<Props, State> {
           <ProgressBar />
         ) : (
           <div>
-            <Link to="/rentals/new">
-              <button className="btn btn-primary">New Rental</button>
-            </Link>
+            {user && (
+              <Link to="/rentals/new">
+                <button className="btn btn-primary">New Rental</button>
+              </Link>
+            )}
             <SearchBox value={searchQuery} onChange={this.handleSearch} />
             <p>There are {totalCount} rentals in the store</p>
             <RentalTable
