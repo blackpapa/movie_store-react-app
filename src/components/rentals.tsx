@@ -5,6 +5,7 @@ import { SortColumn } from "./movies";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
 import _ from "lodash";
+import ProgressBar from "./common/progressBar";
 
 interface Movie {
   title: string;
@@ -23,6 +24,7 @@ interface State {
   rentals: Rental[];
   sortColumn: SortColumn;
   searchQuery: string;
+  loadCompleted: boolean;
 }
 
 class Rentals extends Component<{}, State> {
@@ -30,12 +32,13 @@ class Rentals extends Component<{}, State> {
     rentals: [],
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
+    loadCompleted: false,
   };
 
   async componentDidMount() {
     const { data: rentals } = await getRentals();
 
-    this.setState({ rentals });
+    this.setState({ rentals, loadCompleted: true });
   }
 
   handleSort = (sortColumn: SortColumn) => {
@@ -47,7 +50,12 @@ class Rentals extends Component<{}, State> {
   };
 
   render() {
-    const { rentals: allRentals, sortColumn, searchQuery } = this.state;
+    const {
+      rentals: allRentals,
+      sortColumn,
+      searchQuery,
+      loadCompleted,
+    } = this.state;
 
     let rentals = allRentals;
 
@@ -63,12 +71,19 @@ class Rentals extends Component<{}, State> {
     );
     return (
       <React.Fragment>
-        <SearchBox value={searchQuery} onChange={this.handleSearch} />
-        <RentalTable
-          rentals={rentals}
-          onSort={this.handleSort}
-          sortColumn={sortColumn}
-        />
+        {!loadCompleted ? (
+          <ProgressBar />
+        ) : (
+          <div>
+            <SearchBox value={searchQuery} onChange={this.handleSearch} />
+            <p>There are {rentals.length} rentals in the store</p>
+            <RentalTable
+              rentals={rentals}
+              onSort={this.handleSort}
+              sortColumn={sortColumn}
+            />
+          </div>
+        )}
       </React.Fragment>
     );
   }
