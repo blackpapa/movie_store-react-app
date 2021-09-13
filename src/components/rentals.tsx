@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { getRentals } from "../services/rentalService";
 import { Customer } from "./customers";
 import { SortColumn } from "./movies";
 import RentalTable from "./rentalTable";
@@ -23,6 +24,12 @@ interface State {
 
 class Rentals extends Component<{}, State> {
   state = { rentals: [], sortColumn: { path: "name", order: "asc" } };
+
+  async componentDidMount() {
+    const { data: rentals } = await getRentals();
+
+    this.setState({ rentals });
+  }
 
   handleSort = (sortColumn: SortColumn) => {
     this.setState({ sortColumn });
