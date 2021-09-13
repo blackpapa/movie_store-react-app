@@ -5,10 +5,11 @@ import { SortColumn } from "./movies";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
-import _, { filter } from "lodash";
 import { User } from "./common/navbar";
 import Pagination from "./common/pagination";
 import { paginate } from "./utils/paginate";
+import { Link } from "react-router-dom";
+import _ from "lodash";
 
 interface Movie {
   title: string;
@@ -103,6 +104,9 @@ class Rentals extends Component<Props, State> {
           <ProgressBar />
         ) : (
           <div>
+            <Link to="/rentals/new">
+              <button className="btn btn-primary">New Rental</button>
+            </Link>
             <SearchBox value={searchQuery} onChange={this.handleSearch} />
             <p>There are {totalCount} rentals in the store</p>
             <RentalTable
