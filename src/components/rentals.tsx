@@ -4,8 +4,8 @@ import { Customer } from "./customers";
 import { SortColumn } from "./movies";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
-import _ from "lodash";
 import ProgressBar from "./common/progressBar";
+import _ from "lodash";
 
 interface Movie {
   title: string;
