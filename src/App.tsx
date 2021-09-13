@@ -17,7 +17,7 @@ import Logout from "./components/logout";
 import "./App.css";
 
 interface State {
-  user?: User
+  user?: User;
 }
 
 class App extends Component<{}, State> {
@@ -41,8 +41,11 @@ class App extends Component<{}, State> {
               path="/movies"
               render={(props) => <Movies {...props} user={user} />}
             ></Route>
-            <ProtectedRoute path='/customers/:id' component={CustomerFrom} />
-            <Route path="/customers" component={Customers}></Route>
+            <ProtectedRoute path="/customers/:id" component={CustomerFrom} />
+            <Route
+              path="/customers"
+              render={(props) => <Customers {...props} user={user} />}
+            ></Route>
             <Route path="/rentals" component={Rentals}></Route>
             <Route path="/not-found" component={NotFound}></Route>
             <Route path="/login" component={LoginForm}></Route>
