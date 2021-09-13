@@ -5,7 +5,10 @@ import { SortColumn } from "./movies";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
-import _ from "lodash";
+import _, { filter } from "lodash";
+import { User } from "./common/navbar";
+import Pagination from "./common/pagination";
+import { paginate } from "./utils/paginate";
 
 interface Movie {
   title: string;
@@ -20,19 +23,27 @@ export interface Rental {
   rentalFee?: number;
 }
 
+interface Props {
+  user?: User;
+}
+
 interface State {
   rentals: Rental[];
   sortColumn: SortColumn;
   searchQuery: string;
   loadCompleted: boolean;
+  currentPage: number;
+  pageSize: number;
 }
 
-class Rentals extends Component<{}, State> {
+class Rentals extends Component<Props, State> {
   state = {
     rentals: [],
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
     loadCompleted: false,
+    currentPage: 1,
+    pageSize: 2,
   };
 
   async componentDidMount() {
@@ -49,26 +60,35 @@ class Rentals extends Component<{}, State> {
     this.setState({ searchQuery });
   };
 
+  handlePage = (page: number) => {
+    this.setState({ currentPage: page });
+  };
+
   render() {
     const {
       rentals: allRentals,
       sortColumn,
       searchQuery,
       loadCompleted,
+      currentPage,
+      pageSize,
     } = this.state;
 
-    let rentals = allRentals;
+    let filtered;
 
     if (searchQuery)
-      rentals = allRentals.filter((r: Rental) =>
+      filtered = allRentals.filter((r: Rental) =>
         r.customer.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
 
-    rentals = _.orderBy(
-      rentals,
+    filtered = _.orderBy(
+      allRentals,
       sortColumn.path,
       sortColumn.order as "asc" | "desc"
     );
+
+    const rentals: Rental[] = paginate(filtered, currentPage, pageSize);
+
     return (
       <React.Fragment>
         {!loadCompleted ? (
@@ -81,6 +101,12 @@ class Rentals extends Component<{}, State> {
               rentals={rentals}
               onSort={this.handleSort}
               sortColumn={sortColumn}
+            />
+            <Pagination
+              itemsCount={this.state.rentals.length}
+              currentPage={this.state.currentPage}
+              pageSize={this.state.pageSize}
+              onPageChange={this.handlePage}
             />
           </div>
         )}
