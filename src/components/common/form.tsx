@@ -1,46 +1,49 @@
 import { ChangeEvent, Component } from "react";
-import { RouteComponentProps, StaticContext } from 'react-router';
-import {Location} from 'history'
-import {Genre }from '../movies'
+import { RouteComponentProps, StaticContext } from "react-router";
+import { Location } from "history";
 import Joi from "joi";
 import Input from "./input";
 import Select from "./select";
 
 interface Data {
-  [propName: string]: string | number | boolean | undefined
+  [propName: string]: string | number | boolean | undefined;
 }
 
 interface Errors {
-  [propName: string]: string
+  [propName: string]: string;
 }
 
 interface LocationState {
-  from: Location
+  from: Location;
 }
 
 interface Option {
-  _id: string,
-  name: string
+  _id: string;
+  name: string;
 }
 
 interface State {
-  data: Data ,
-  errors: Errors,
-  defaultOption?: string,
-  options?: Option[],
+  data: Data;
+  errors: Errors;
+  defaultOption?: string;
+  options?: Option[];
 }
 
-interface Props extends RouteComponentProps<{
-  [x: string]: string | undefined;
-}, StaticContext, LocationState> {
-}
+interface Props
+  extends RouteComponentProps<
+    {
+      [x: string]: string | undefined;
+    },
+    StaticContext,
+    LocationState
+  > {}
 
 class Form extends Component<Props, State> {
-  state: State = { data: {}, errors: {}};
+  state: State = { data: {}, errors: {} };
 
-  schema: any
-  schemaObj: any
-  doSubmit : any
+  schema: any;
+  schemaObj: any;
+  doSubmit: any;
 
   validate = () => {
     const { error } = this.schema.validate(this.state.data, {
@@ -55,7 +58,10 @@ class Form extends Component<Props, State> {
     return errors;
   };
 
-  validateProperty = ({ name, value }: EventTarget & (HTMLInputElement | HTMLSelectElement)) => {
+  validateProperty = ({
+    name,
+    value,
+  }: EventTarget & (HTMLInputElement | HTMLSelectElement)) => {
     const obj = { [name]: value };
 
     const schema = Joi.object({
@@ -66,7 +72,9 @@ class Form extends Component<Props, State> {
     return error ? error.details[0].message : null;
   };
 
-  handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
+  handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
     const errors: Errors = { ...this.state.errors };
     const errorMessage = this.validateProperty(e.currentTarget);
     if (errorMessage) errors[e.currentTarget.name] = errorMessage;
@@ -110,7 +118,12 @@ class Form extends Component<Props, State> {
     );
   };
 
-  renderSelect = (name: string, label: string, items: any[], defaultOption = "default") => {
+  renderSelect = (
+    name: string,
+    label: string,
+    items: any[],
+    defaultOption = "default"
+  ) => {
     const { errors } = this.state;
     return (
       <Select
@@ -123,7 +136,6 @@ class Form extends Component<Props, State> {
       />
     );
   };
- 
 }
 
 export default Form;

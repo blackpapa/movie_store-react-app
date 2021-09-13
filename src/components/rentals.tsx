@@ -3,6 +3,7 @@ import { getRentals } from "../services/rentalService";
 import { Customer } from "./customers";
 import { SortColumn } from "./movies";
 import RentalTable from "./rentalTable";
+import SearchBox from "./common/searchBox";
 import _ from "lodash";
 
 interface Movie {
@@ -21,10 +22,15 @@ export interface Rental {
 interface State {
   rentals: Rental[];
   sortColumn: SortColumn;
+  searchQuery: string;
 }
 
 class Rentals extends Component<{}, State> {
-  state = { rentals: [], sortColumn: { path: "name", order: "asc" } };
+  state = {
+    rentals: [],
+    sortColumn: { path: "name", order: "asc" },
+    searchQuery: "",
+  };
 
   async componentDidMount() {
     const { data: rentals } = await getRentals();
@@ -36,20 +42,34 @@ class Rentals extends Component<{}, State> {
     this.setState({ sortColumn });
   };
 
-  render() {
-    const { rentals: allRentals, sortColumn } = this.state;
+  handleSearch = (searchQuery: string) => {
+    this.setState({ searchQuery });
+  };
 
-    let rentals = _.orderBy(
-      allRentals,
+  render() {
+    const { rentals: allRentals, sortColumn, searchQuery } = this.state;
+
+    let rentals = allRentals;
+
+    if (searchQuery)
+      rentals = allRentals.filter((r: Rental) =>
+        r.customer.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+      );
+
+    rentals = _.orderBy(
+      rentals,
       sortColumn.path,
       sortColumn.order as "asc" | "desc"
     );
     return (
-      <RentalTable
-        rentals={rentals}
-        onSort={this.handleSort}
-        sortColumn={sortColumn}
-      />
+      <React.Fragment>
+        <SearchBox value={searchQuery} onChange={this.handleSearch} />
+        <RentalTable
+          rentals={rentals}
+          onSort={this.handleSort}
+          sortColumn={sortColumn}
+        />
+      </React.Fragment>
     );
   }
 }
