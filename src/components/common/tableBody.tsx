@@ -17,9 +17,13 @@ class TableBody extends Component<Props, {}> {
   renderCell = (item: any, column: Column) => {
     if (column.content) return column.content(item);
 
-    return typeof _.get(item, column.path as string) === "boolean"
-      ? _.get(item, column.path as string).toString()
-      : _.get(item, column.path as string);
+    let result = _.get(item, column.path as string);
+    //Change date-time form with milliseconds and time zone to date-only form
+    if (column.path && column.path.includes("date") && result) {
+      return result.split("T")[0];
+    }
+
+    return typeof result === "boolean" ? result.toString() : result;
   };
 
   createKey = (column: Column) => {
