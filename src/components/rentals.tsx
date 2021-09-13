@@ -43,7 +43,7 @@ class Rentals extends Component<Props, State> {
     searchQuery: "",
     loadCompleted: false,
     currentPage: 1,
-    pageSize: 2,
+    pageSize: 4,
   };
 
   async componentDidMount() {
@@ -64,12 +64,11 @@ class Rentals extends Component<Props, State> {
     this.setState({ currentPage: page });
   };
 
-  render() {
+  getPageData = () => {
     const {
       rentals: allRentals,
       sortColumn,
       searchQuery,
-      loadCompleted,
       currentPage,
       pageSize,
     } = this.state;
@@ -89,6 +88,15 @@ class Rentals extends Component<Props, State> {
 
     const rentals: Rental[] = paginate(filtered, currentPage, pageSize);
 
+    return { rentals, totalCount: allRentals.length };
+  };
+
+  render() {
+    const { sortColumn, searchQuery, loadCompleted, currentPage, pageSize } =
+      this.state;
+
+    const { rentals, totalCount } = this.getPageData();
+
     return (
       <React.Fragment>
         {!loadCompleted ? (
@@ -96,16 +104,16 @@ class Rentals extends Component<Props, State> {
         ) : (
           <div>
             <SearchBox value={searchQuery} onChange={this.handleSearch} />
-            <p>There are {rentals.length} rentals in the store</p>
+            <p>There are {totalCount} rentals in the store</p>
             <RentalTable
               rentals={rentals}
               onSort={this.handleSort}
               sortColumn={sortColumn}
             />
             <Pagination
-              itemsCount={this.state.rentals.length}
-              currentPage={this.state.currentPage}
-              pageSize={this.state.pageSize}
+              itemsCount={totalCount}
+              currentPage={currentPage}
+              pageSize={pageSize}
               onPageChange={this.handlePage}
             />
           </div>
