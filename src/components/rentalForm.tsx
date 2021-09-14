@@ -3,6 +3,7 @@ import Form from "./common/form";
 import { getCustomers } from "../services/customerService";
 import { getMovies } from "./../services/movieService";
 import Joi from "joi";
+import { createRental } from "../services/rentalService";
 
 class RentalForm extends Form {
   state = {
@@ -26,8 +27,11 @@ class RentalForm extends Form {
     this.setState({ options: customers, secondOptions: movies });
   }
 
-  doSubmit = () => {
-    console.log("submit");
+  doSubmit = async () => {
+    const { customerId, movieId } = this.state.data;
+    await createRental(customerId, movieId);
+
+    this.props.history.push("/rentals");
   };
 
   render() {

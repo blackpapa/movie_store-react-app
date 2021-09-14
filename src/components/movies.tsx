@@ -8,59 +8,59 @@ import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
 import MovieTable from "./movieTable";
 import SearchBox from "./common/searchBox";
-import ProgressBar from './common/progressBar';
+import ProgressBar from "./common/progressBar";
 import _ from "lodash";
 
 export interface Movie {
-  _id: string,
-  title: string,
-  genre: Genre,
-  numberInStock: number,
-  dailyRentalRate: number,
-  liked?:boolean
+  _id: string;
+  title: string;
+  genre: Genre;
+  numberInStock: number;
+  dailyRentalRate: number;
+  liked?: boolean;
 }
 
 export interface Genre {
-  _id: string,
-  name: string,
+  _id: string;
+  name: string;
 }
 
 export interface SortColumn {
-  path: string,
-  order: string,
+  path: string;
+  order: string;
 }
 
 interface User {
-  _id: string,
-  name: string,
-  isAdmin? : boolean,
+  _id: string;
+  name: string;
+  isAdmin?: boolean;
 }
 
 interface Props {
-  user?: User
+  user?: User;
 }
 
 interface State {
-  movies: Movie[],
-  genres: Genre[],
-  pageSize: number,
-  currentPage: number,
-  selectedGenre: Genre | {},
-  searchQuery: string,
-  sortColumn: SortColumn,
-  loadCompleted: boolean
+  movies: Movie[];
+  genres: Genre[];
+  pageSize: number;
+  currentPage: number;
+  selectedGenre: Genre | {};
+  searchQuery: string;
+  sortColumn: SortColumn;
+  loadCompleted: boolean;
 }
 
 class Movies extends Component<Props, State> {
   state = {
     movies: [],
     genres: [],
-    pageSize: 4,
+    pageSize: 5,
     currentPage: 1,
     selectedGenre: { _id: "", name: "All Genres" },
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
-    loadCompleted: false
+    loadCompleted: false,
   };
 
   async componentDidMount() {
@@ -71,10 +71,9 @@ class Movies extends Component<Props, State> {
     this.setState({
       movies,
       genres,
-      loadCompleted: true
+      loadCompleted: true,
     });
   }
-
 
   handleDelete = async (movie: Movie): Promise<void> => {
     const originalMovies = this.state.movies;
@@ -97,12 +96,12 @@ class Movies extends Component<Props, State> {
   };
 
   handleLike = (movie: Movie): void => {
-    const movies:Movie[] = [...this.state.movies];
+    const movies: Movie[] = [...this.state.movies];
     const index = movies.indexOf(movie);
     movies[index] = { ...movie };
     movies[index].liked = !movie.liked;
-   
-    this.setState({movies});
+
+    this.setState({ movies });
   };
 
   handlePageChange = (page: number): void => {
@@ -121,10 +120,10 @@ class Movies extends Component<Props, State> {
     this.setState({ searchQuery, selectedGenre: {}, currentPage: 1 });
   };
 
-  getPageData = ():{
+  getPageData = (): {
     movies: Movie[];
     totalCount: number;
-} => {
+  } => {
     const {
       pageSize,
       currentPage,
@@ -146,7 +145,11 @@ class Movies extends Component<Props, State> {
           : allMovies;
     }
 
-    filtered = _.orderBy(filtered, sortColumn.path, sortColumn.order as ('asc' | 'desc'));
+    filtered = _.orderBy(
+      filtered,
+      sortColumn.path,
+      sortColumn.order as "asc" | "desc"
+    );
 
     const movies: Movie[] = paginate(filtered, currentPage, pageSize);
 
@@ -161,7 +164,7 @@ class Movies extends Component<Props, State> {
       sortColumn,
       selectedGenre,
       searchQuery,
-      loadCompleted
+      loadCompleted,
     } = this.state;
     const { user } = this.props;
 
@@ -178,30 +181,33 @@ class Movies extends Component<Props, State> {
             textProperty={"name"}
           />
         </div>
-        {!loadCompleted? <ProgressBar/>:<div className="col">
-          {user && (
-            <Link to="/movies/new">
-              <button className="btn btn-primary">New Movie</button>
-            </Link>
-          )}
-          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+        {!loadCompleted ? (
+          <ProgressBar />
+        ) : (
+          <div className="col">
+            {user && (
+              <Link to="/movies/new">
+                <button className="btn btn-primary">New Movie</button>
+              </Link>
+            )}
+            <SearchBox value={searchQuery} onChange={this.handleSearch} />
 
-          <p>There are {totalCount} movies in the store</p>
-          <MovieTable
-            movies={movies}
-            onLike={this.handleLike}
-            onDelete={this.handleDelete}
-            onSort={this.handleSort}
-            sortColumn={sortColumn}
-          />
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            onPageChange={this.handlePageChange}
-            currentPage={currentPage}
-          />
-        </div> }
-        
+            <p>There are {totalCount} movies in the store</p>
+            <MovieTable
+              movies={movies}
+              onLike={this.handleLike}
+              onDelete={this.handleDelete}
+              onSort={this.handleSort}
+              sortColumn={sortColumn}
+            />
+            <Pagination
+              itemsCount={totalCount}
+              pageSize={pageSize}
+              onPageChange={this.handlePageChange}
+              currentPage={currentPage}
+            />
+          </div>
+        )}
       </div>
     );
   }

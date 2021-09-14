@@ -42,7 +42,7 @@ class Customers extends Component<Props, State> {
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
     loadCompleted: false,
-    pageSize: 4,
+    pageSize: 5,
     currentPage: 1,
   };
 

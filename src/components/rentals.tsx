@@ -44,7 +44,7 @@ class Rentals extends Component<Props, State> {
     searchQuery: "",
     loadCompleted: false,
     currentPage: 1,
-    pageSize: 4,
+    pageSize: 5,
   };
 
   async componentDidMount() {
