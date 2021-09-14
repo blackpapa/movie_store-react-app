@@ -8,6 +8,7 @@ interface Props {
   rentals: Rental[];
   sortColumn: SortColumn;
   onSort: (sortColumn: SortColumn) => void;
+  onReturn: (rental: Rental) => void;
 }
 
 class RentalTable extends React.Component<Props, {}> {
@@ -17,6 +18,18 @@ class RentalTable extends React.Component<Props, {}> {
     { path: "dateOut", label: "DateOut" },
     { path: "dateReturn", label: "DateReturn" },
     { path: "rentalFee", label: "RentalFee" },
+    {
+      key: "return",
+      content: (rental: Rental) =>
+        rental.dateReturn ? null : (
+          <button
+            onClick={() => this.props.onReturn(rental)}
+            className="btn btn-warning btn-sm"
+          >
+            Return
+          </button>
+        ),
+    },
   ];
 
   render() {

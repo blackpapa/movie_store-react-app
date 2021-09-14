@@ -2,8 +2,8 @@ import React from "react";
 import Form from "./common/form";
 import { getCustomers } from "../services/customerService";
 import { getMovies } from "./../services/movieService";
-import Joi from "joi";
 import { createRental } from "../services/rentalService";
+import Joi from "joi";
 
 class RentalForm extends Form {
   state = {

@@ -1,30 +1,35 @@
 import React, { Component } from "react";
-import { getRentals } from "../services/rentalService";
+import { getRentals, returnRental } from "../services/rentalService";
 import { Customer } from "./customers";
 import { SortColumn } from "./movies";
+import { paginate } from "./utils/paginate";
+import { Link } from "react-router-dom";
+import { User } from "./common/navbar";
+import { toast } from "react-toastify";
+import { RouteComponentProps } from "react-router";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
-import { User } from "./common/navbar";
 import Pagination from "./common/pagination";
-import { paginate } from "./utils/paginate";
-import { Link } from "react-router-dom";
+import moment from "moment";
 import _ from "lodash";
 
 interface Movie {
+  _id: string;
   title: string;
   dailyRentalRate: number;
 }
 
 export interface Rental {
+  _id: string;
   customer: Customer;
   movie: Movie;
-  dateOut?: Date;
-  dateReturn?: Date;
+  dateOut?: string;
+  dateReturn?: string;
   rentalFee?: number;
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
   user?: User;
 }
 
@@ -63,6 +68,30 @@ class Rentals extends Component<Props, State> {
 
   handlePage = (page: number) => {
     this.setState({ currentPage: page });
+  };
+
+  handleReturn = async (rental: Rental): Promise<void> => {
+    console.log(rental);
+
+    const originalRentals = this.state.rentals;
+
+    const rentals: Rental[] = [...this.state.rentals];
+    const index = rentals.indexOf(rental);
+    rentals[index] = { ...rental };
+    rentals[index].dateReturn = moment().toISOString().split("T")[0];
+    const rentalDays =
+      moment().diff(rental.dateOut, "days") === 0
+        ? 1
+        : moment().diff(rental.dateOut, "days");
+    rentals[index].rentalFee = rentalDays * rental.movie.dailyRentalRate;
+    this.setState({ rentals });
+
+    try {
+      await returnRental(rental.customer._id, rental.movie._id);
+    } catch (error: any) {
+      if (error.response) toast.error(error.response.data);
+      this.setState({ rentals: originalRentals });
+    }
   };
 
   getPageData = () => {
@@ -115,6 +144,7 @@ class Rentals extends Component<Props, State> {
             <RentalTable
               rentals={rentals}
               onSort={this.handleSort}
+              onReturn={this.handleReturn}
               sortColumn={sortColumn}
             />
             <Pagination

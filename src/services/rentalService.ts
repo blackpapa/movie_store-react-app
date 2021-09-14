@@ -9,3 +9,7 @@ export function getRentals() {
 export function createRental(customerId: string, movieId: string) {
     return http.post(apiEndPoint, {customerId, movieId})
 }
+
+export function returnRental(customerId: string, movieId: string) {
+    return http.post('/returns', {customerId, movieId})
+}
