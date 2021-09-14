@@ -22,12 +22,7 @@ const Select: React.FC<Props> = ({
       <label htmlFor={name} className="form-label">
         {label}
       </label>
-      <select
-        name={name}
-        id={name}
-        onChange={onChange}
-        className="form-control"
-      >
+      <select name={name} id={name} onChange={onChange} className="form-select">
         <option value="">{defaultOption}</option>
         {items.map((item) => (
           <option key={item._id} value={item._id}>
