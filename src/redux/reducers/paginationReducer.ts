@@ -12,11 +12,11 @@ const paginationReducer = (state = initialState, action: any) => {
         case SET_CURRENTPAGE:
             return {
                 ...state,
-                currentpage: payload
+                currentPage: payload
             }
+        default:
+            return state;
     }
-
-    return state;
 
 }
 
