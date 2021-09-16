@@ -33,6 +33,11 @@ export interface Rental {
 
 interface Props extends RouteComponentProps {
   user?: User;
+  pagination: { pageSize: number; currentPage: number };
+  setCurrentPageAction: (payload: number) => {
+    type: string;
+    payload: number;
+  };
 }
 
 interface State {
