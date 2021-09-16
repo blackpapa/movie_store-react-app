@@ -129,13 +129,13 @@ class Movies extends Component<Props, State> {
     totalCount: number;
   } => {
     const {
-      pageSize,
-      currentPage,
       movies: allMovies,
       selectedGenre,
       searchQuery,
       sortColumn,
     } = this.state;
+
+    const { pageSize, currentPage } = this.props.pagination;
 
     let filtered = allMovies;
     if (searchQuery) {
@@ -161,16 +161,10 @@ class Movies extends Component<Props, State> {
   };
 
   render() {
-    const {
-      pageSize,
-      currentPage,
-      genres,
-      sortColumn,
-      selectedGenre,
-      searchQuery,
-      loadCompleted,
-    } = this.state;
-    const { user } = this.props;
+    const { genres, sortColumn, selectedGenre, searchQuery, loadCompleted } =
+      this.state;
+    const { user, pagination } = this.props;
+    const { pageSize, currentPage } = pagination;
 
     const { movies, totalCount } = this.getPageData();
 
