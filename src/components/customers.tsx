@@ -36,6 +36,11 @@ interface State {
 
 interface Props extends RouteComponentProps {
   user?: User;
+  pagination: { pageSize: number; currentPage: number };
+  setCurrentPageAction: (payload: number) => {
+    type: string;
+    payload: number;
+  };
 }
 
 class Customers extends Component<Props, State> {
