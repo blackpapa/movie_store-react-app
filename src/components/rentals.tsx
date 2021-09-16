@@ -7,14 +7,14 @@ import { Link } from "react-router-dom";
 import { User } from "./common/navbar";
 import { toast } from "react-toastify";
 import { RouteComponentProps } from "react-router";
+import { connect, RootStateOrAny } from "react-redux";
+import { setCurrentPageAction } from "../redux/actions";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
 import Pagination from "./common/pagination";
 import moment from "moment";
 import _ from "lodash";
-import { connect, RootStateOrAny } from "react-redux";
-import { setCurrentPageAction } from "../redux/actions";
 
 interface Movie {
   _id: string;
