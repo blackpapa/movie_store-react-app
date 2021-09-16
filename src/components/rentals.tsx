@@ -45,8 +45,6 @@ interface State {
   sortColumn: SortColumn;
   searchQuery: string;
   loadCompleted: boolean;
-  currentPage: number;
-  pageSize: number;
 }
 
 class Rentals extends Component<Props, State> {
@@ -55,8 +53,6 @@ class Rentals extends Component<Props, State> {
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
     loadCompleted: false,
-    currentPage: 1,
-    pageSize: 5,
   };
 
   async componentDidMount() {
@@ -74,7 +70,7 @@ class Rentals extends Component<Props, State> {
   };
 
   handlePage = (page: number) => {
-    this.setState({ currentPage: page });
+    this.props.setCurrentPageAction(page);
   };
 
   handleReturn = async (rental: Rental): Promise<void> => {
@@ -102,13 +98,9 @@ class Rentals extends Component<Props, State> {
   };
 
   getPageData = () => {
-    const {
-      rentals: allRentals,
-      sortColumn,
-      searchQuery,
-      currentPage,
-      pageSize,
-    } = this.state;
+    const { rentals: allRentals, sortColumn, searchQuery } = this.state;
+
+    const { pageSize, currentPage } = this.props.pagination;
 
     let filtered;
 
@@ -129,10 +121,10 @@ class Rentals extends Component<Props, State> {
   };
 
   render() {
-    const { sortColumn, searchQuery, loadCompleted, currentPage, pageSize } =
-      this.state;
+    const { sortColumn, searchQuery, loadCompleted } = this.state;
 
-    const { user } = this.props;
+    const { user, pagination } = this.props;
+    const { pageSize, currentPage } = pagination;
     const { rentals, totalCount } = this.getPageData();
 
     return (
