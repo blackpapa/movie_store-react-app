@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getCustomers } from "../services/customerService";
-import { Link } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
@@ -32,7 +32,7 @@ interface State {
   currentPage: number;
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
   user?: User;
 }
 

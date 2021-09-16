@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, RouteComponentProps } from "react-router-dom";
 import { deleteMovie, getMovies } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import { paginate } from "./utils/paginate";
@@ -36,7 +36,7 @@ interface User {
   isAdmin?: boolean;
 }
 
-interface Props {
+interface Props extends RouteComponentProps {
   user?: User;
 }
 
