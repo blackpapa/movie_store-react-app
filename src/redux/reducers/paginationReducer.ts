@@ -5,7 +5,7 @@ const initialState =  {
     currentPage: 1
 }
 
-const paginationReducer = (state = initialState, action: any) => {
+const paginationReducer = (state = initialState, action: {type: string, payload: any}) => {
     const {type, payload} = action
 
     switch(type) {
