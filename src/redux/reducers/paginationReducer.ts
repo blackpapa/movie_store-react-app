@@ -3,10 +3,10 @@ const initialState =  {
     currentPage: 1
 }
 
-const paginationReducer = (state = initialState, action) => {
+const paginationReducer = (state = initialState, action: any) => {
 
     return state;
 
 }
 
-export default paginationReducer
+export default paginationReducer;
