@@ -153,6 +153,7 @@ class Customers extends Component<Props, State> {
 const mapStateToProps = (state: RootStateOrAny) => {
   return {
     pagination: state.pagination,
+    sort: state.sort,
   };
 };
 
