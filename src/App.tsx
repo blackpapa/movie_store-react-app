@@ -16,6 +16,8 @@ import RentalForm from "./components/rentalForm";
 import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
 import "./App.css";
+import { Provider } from "react-redux";
+import store from "./store";
 
 interface State {
   user?: User;
@@ -33,34 +35,36 @@ class App extends Component<{}, State> {
     const { user } = this.state as State;
     return (
       <React.Fragment>
-        <ToastContainer />
-        <NavBar user={user} />
-        <main className="container">
-          <Switch>
-            <ProtectedRoute path="/movies/:id" component={MovieForm} />
-            <Route
-              path="/movies"
-              render={(props) => <Movies {...props} user={user} />}
-            ></Route>
-            <ProtectedRoute path="/customers/:id" component={CustomerFrom} />
-            <Route
-              path="/customers"
-              render={(props) => <Customers {...props} user={user} />}
-            ></Route>
-            <ProtectedRoute path="/rentals/:id" component={RentalForm} />
-            <Route
-              path="/rentals"
-              render={(props) => <Rentals {...props} user={user} />}
-            ></Route>
-            <Route path="/not-found" component={NotFound}></Route>
-            <Route path="/login" component={LoginForm}></Route>
-            <Route path="/logout" component={Logout}></Route>
-            <Route path="/register" component={RegisterForm}></Route>
-            <Redirect from="/" exact to="/movies" />
-            <Redirect to="/not-found" />
-          </Switch>
-        </main>
-        <Footer />
+        <Provider store={store}>
+          <ToastContainer />
+          <NavBar user={user} />
+          <main className="container">
+            <Switch>
+              <ProtectedRoute path="/movies/:id" component={MovieForm} />
+              <Route
+                path="/movies"
+                render={(props) => <Movies {...props} user={user} />}
+              ></Route>
+              <ProtectedRoute path="/customers/:id" component={CustomerFrom} />
+              <Route
+                path="/customers"
+                render={(props) => <Customers {...props} user={user} />}
+              ></Route>
+              <ProtectedRoute path="/rentals/:id" component={RentalForm} />
+              <Route
+                path="/rentals"
+                render={(props) => <Rentals {...props} user={user} />}
+              ></Route>
+              <Route path="/not-found" component={NotFound}></Route>
+              <Route path="/login" component={LoginForm}></Route>
+              <Route path="/logout" component={Logout}></Route>
+              <Route path="/register" component={RegisterForm}></Route>
+              <Redirect from="/" exact to="/movies" />
+              <Redirect to="/not-found" />
+            </Switch>
+          </main>
+          <Footer />
+        </Provider>
       </React.Fragment>
     );
   }
