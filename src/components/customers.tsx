@@ -92,13 +92,9 @@ class Customers extends Component<Props, State> {
   };
 
   getPageData = () => {
-    const {
-      sortColumn,
-      searchQuery,
-      customers: allCustomers,
-      currentPage,
-      pageSize,
-    } = this.state;
+    const { sortColumn, searchQuery, customers: allCustomers } = this.state;
+
+    const { pageSize, currentPage } = this.props.pagination;
 
     let filtered;
 
@@ -119,10 +115,10 @@ class Customers extends Component<Props, State> {
   };
 
   render() {
-    const { sortColumn, searchQuery, loadCompleted, pageSize, currentPage } =
-      this.state;
+    const { sortColumn, searchQuery, loadCompleted } = this.state;
 
-    const { user } = this.props;
+    const { user, pagination } = this.props;
+    const { pageSize, currentPage } = pagination;
 
     const { customers, totalCount } = this.getPageData();
 
