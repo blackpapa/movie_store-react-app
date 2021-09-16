@@ -104,13 +104,16 @@ class Rentals extends Component<Props, State> {
 
     let filtered;
 
-    if (searchQuery)
+    if (searchQuery) {
       filtered = allRentals.filter((r: Rental) =>
         r.customer.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
+    } else {
+      filtered = allRentals;
+    }
 
     filtered = _.orderBy(
-      allRentals,
+      filtered,
       sortColumn.path,
       sortColumn.order as "asc" | "desc"
     );
