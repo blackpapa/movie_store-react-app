@@ -10,6 +10,8 @@ import MovieTable from "./movieTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
 import _ from "lodash";
+import { connect, RootStateOrAny } from "react-redux";
+import { setCurrentPageAction } from "../redux/actions/index";
 
 export interface Movie {
   _id: string;
@@ -213,4 +215,16 @@ class Movies extends Component<Props, State> {
   }
 }
 
-export default Movies;
+const mapStateToProps = (state: RootStateOrAny) => {
+  return {
+    pagination: state.pagination,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    setCurrentPageAction,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(Movies);
