@@ -41,14 +41,15 @@ interface User {
 interface Props extends RouteComponentProps {
   user?: User;
   pagination: { pageSize: number; currentPage: number };
-  setCurrentPageAction: (page: number) => object;
+  setCurrentPageAction: (payload: number) => {
+    type: string;
+    payload: number;
+  };
 }
 
 interface State {
   movies: Movie[];
   genres: Genre[];
-  pageSize: number;
-  currentPage: number;
   selectedGenre: Genre | {};
   searchQuery: string;
   sortColumn: SortColumn;
@@ -59,8 +60,6 @@ class Movies extends Component<Props, State> {
   state = {
     movies: [],
     genres: [],
-    pageSize: 5,
-    currentPage: 1,
     selectedGenre: { _id: "", name: "All Genres" },
     searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
@@ -109,11 +108,12 @@ class Movies extends Component<Props, State> {
   };
 
   handlePageChange = (page: number): void => {
-    this.setState({ currentPage: page });
+    this.props.setCurrentPageAction(page);
   };
 
   handleSelectedGenre = (genre: Genre): void => {
-    this.setState({ selectedGenre: genre, searchQuery: "", currentPage: 1 });
+    this.props.setCurrentPageAction(1);
+    this.setState({ selectedGenre: genre, searchQuery: "" });
   };
 
   handleSort = (sortColumn: SortColumn): void => {
@@ -121,7 +121,8 @@ class Movies extends Component<Props, State> {
   };
 
   handleSearch = (searchQuery: string): void => {
-    this.setState({ searchQuery, selectedGenre: {}, currentPage: 1 });
+    this.props.setCurrentPageAction(1);
+    this.setState({ searchQuery, selectedGenre: {} });
   };
 
   getPageData = (): {
