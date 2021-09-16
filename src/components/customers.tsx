@@ -30,8 +30,6 @@ interface State {
   sortColumn: SortColumn;
   searchQuery: string;
   loadCompleted: boolean;
-  pageSize: number;
-  currentPage: number;
 }
 
 interface Props extends RouteComponentProps {
@@ -49,8 +47,6 @@ class Customers extends Component<Props, State> {
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
     loadCompleted: false,
-    pageSize: 5,
-    currentPage: 1,
   };
 
   async componentDidMount() {
@@ -88,7 +84,7 @@ class Customers extends Component<Props, State> {
   };
 
   handlePage = (page: number) => {
-    this.setState({ currentPage: page });
+    this.props.setCurrentPageAction(page);
   };
 
   getPageData = () => {
