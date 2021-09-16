@@ -10,6 +10,8 @@ import { User } from "./common/navbar";
 import _ from "lodash";
 import Pagination from "./common/pagination";
 import { paginate } from "./utils/paginate";
+import { connect, RootStateOrAny } from "react-redux";
+import { setCurrentPageAction } from "../redux/actions";
 
 export interface Customer {
   _id: string;
@@ -151,4 +153,16 @@ class Customers extends Component<Props, State> {
   }
 }
 
-export default Customers;
+const mapStateToProps = (state: RootStateOrAny) => {
+  return {
+    pagination: state.pagination,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    setCurrentPageAction,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(Customers);
