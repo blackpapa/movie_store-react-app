@@ -40,6 +40,8 @@ interface User {
 
 interface Props extends RouteComponentProps {
   user?: User;
+  pagination: { pageSize: number; currentPage: number };
+  setCurrentPageAction: (page: number) => object;
 }
 
 interface State {
