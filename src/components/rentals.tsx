@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { User } from "./common/navbar";
 import { toast } from "react-toastify";
 import { RouteComponentProps } from "react-router";
+import { connect, RootStateOrAny } from "react-redux";
+import { setCurrentPageAction } from "../redux/actions";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
@@ -31,6 +33,11 @@ export interface Rental {
 
 interface Props extends RouteComponentProps {
   user?: User;
+  pagination: { pageSize: number; currentPage: number };
+  setCurrentPageAction: (payload: number) => {
+    type: string;
+    payload: number;
+  };
 }
 
 interface State {
@@ -38,8 +45,6 @@ interface State {
   sortColumn: SortColumn;
   searchQuery: string;
   loadCompleted: boolean;
-  currentPage: number;
-  pageSize: number;
 }
 
 class Rentals extends Component<Props, State> {
@@ -48,8 +53,6 @@ class Rentals extends Component<Props, State> {
     sortColumn: { path: "name", order: "asc" },
     searchQuery: "",
     loadCompleted: false,
-    currentPage: 1,
-    pageSize: 5,
   };
 
   async componentDidMount() {
@@ -67,7 +70,7 @@ class Rentals extends Component<Props, State> {
   };
 
   handlePage = (page: number) => {
-    this.setState({ currentPage: page });
+    this.props.setCurrentPageAction(page);
   };
 
   handleReturn = async (rental: Rental): Promise<void> => {
@@ -95,23 +98,22 @@ class Rentals extends Component<Props, State> {
   };
 
   getPageData = () => {
-    const {
-      rentals: allRentals,
-      sortColumn,
-      searchQuery,
-      currentPage,
-      pageSize,
-    } = this.state;
+    const { rentals: allRentals, sortColumn, searchQuery } = this.state;
+
+    const { pageSize, currentPage } = this.props.pagination;
 
     let filtered;
 
-    if (searchQuery)
+    if (searchQuery) {
       filtered = allRentals.filter((r: Rental) =>
         r.customer.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
+    } else {
+      filtered = allRentals;
+    }
 
     filtered = _.orderBy(
-      allRentals,
+      filtered,
       sortColumn.path,
       sortColumn.order as "asc" | "desc"
     );
@@ -122,10 +124,10 @@ class Rentals extends Component<Props, State> {
   };
 
   render() {
-    const { sortColumn, searchQuery, loadCompleted, currentPage, pageSize } =
-      this.state;
+    const { sortColumn, searchQuery, loadCompleted } = this.state;
 
-    const { user } = this.props;
+    const { user, pagination } = this.props;
+    const { pageSize, currentPage } = pagination;
     const { rentals, totalCount } = this.getPageData();
 
     return (
@@ -160,4 +162,16 @@ class Rentals extends Component<Props, State> {
   }
 }
 
-export default Rentals;
+const mapStateToProps = (state: RootStateOrAny) => {
+  return {
+    pagination: state.pagination,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    setCurrentPageAction,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(Rentals);

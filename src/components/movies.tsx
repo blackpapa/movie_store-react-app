@@ -4,14 +4,14 @@ import { deleteMovie, getMovies } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 import { paginate } from "./utils/paginate";
 import { toast } from "react-toastify";
+import { connect, RootStateOrAny } from "react-redux";
+import { setCurrentPageAction } from "../redux/actions/index";
 import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
 import MovieTable from "./movieTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
 import _ from "lodash";
-import { connect, RootStateOrAny } from "react-redux";
-import { setCurrentPageAction } from "../redux/actions/index";
 
 export interface Movie {
   _id: string;

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "./services/authService";
+import { Provider } from "react-redux";
 import Movies from "./components/movies";
 import Customers from "./components/customers";
 import Rentals from "./components/rentals";
@@ -15,9 +16,8 @@ import CustomerFrom from "./components/customerForm";
 import RentalForm from "./components/rentalForm";
 import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
-import "./App.css";
-import { Provider } from "react-redux";
 import store from "./store";
+import "./App.css";
 
 interface State {
   user?: User;

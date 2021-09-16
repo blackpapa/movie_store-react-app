@@ -10,6 +10,8 @@ import { User } from "./common/navbar";
 import _ from "lodash";
 import Pagination from "./common/pagination";
 import { paginate } from "./utils/paginate";
+import { connect, RootStateOrAny } from "react-redux";
+import { setCurrentPageAction, setQueryAction } from "../redux/actions";
 
 export interface Customer {
   _id: string;
@@ -26,24 +28,28 @@ interface SortColumn {
 interface State {
   customers: Customer[];
   sortColumn: SortColumn;
-  searchQuery: string;
   loadCompleted: boolean;
-  pageSize: number;
-  currentPage: number;
 }
 
 interface Props extends RouteComponentProps {
   user?: User;
+  pagination: { pageSize: number; currentPage: number };
+  setCurrentPageAction: (payload: number) => {
+    type: string;
+    payload: number;
+  };
+  sort: { sortColumn: SortColumn; searchQuery: string };
+  setQueryAction: (payload: string) => {
+    type: string;
+    payload: string;
+  };
 }
 
 class Customers extends Component<Props, State> {
   state = {
     customers: [],
     sortColumn: { path: "name", order: "asc" },
-    searchQuery: "",
     loadCompleted: false,
-    pageSize: 5,
-    currentPage: 1,
   };
 
   async componentDidMount() {
@@ -56,7 +62,7 @@ class Customers extends Component<Props, State> {
   };
 
   handleSearch = (searchQuery: string) => {
-    this.setState({ searchQuery });
+    this.props.setQueryAction(searchQuery);
   };
 
   handleDelete = async (customer: Customer) => {
@@ -81,17 +87,15 @@ class Customers extends Component<Props, State> {
   };
 
   handlePage = (page: number) => {
-    this.setState({ currentPage: page });
+    this.props.setCurrentPageAction(page);
   };
 
   getPageData = () => {
-    const {
-      sortColumn,
-      searchQuery,
-      customers: allCustomers,
-      currentPage,
-      pageSize,
-    } = this.state;
+    const { sortColumn, customers: allCustomers } = this.state;
+
+    const { pagination, sort } = this.props;
+    const { pageSize, currentPage } = pagination;
+    const { searchQuery } = sort;
 
     let filtered;
 
@@ -99,9 +103,12 @@ class Customers extends Component<Props, State> {
       filtered = allCustomers.filter((c: Customer) =>
         c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
+    } else {
+      filtered = allCustomers;
     }
+
     filtered = _.orderBy(
-      allCustomers,
+      filtered,
       sortColumn.path,
       sortColumn.order as "asc" | "desc"
     );
@@ -112,10 +119,11 @@ class Customers extends Component<Props, State> {
   };
 
   render() {
-    const { sortColumn, searchQuery, loadCompleted, pageSize, currentPage } =
-      this.state;
+    const { sortColumn, loadCompleted } = this.state;
 
-    const { user } = this.props;
+    const { user, pagination, sort } = this.props;
+    const { pageSize, currentPage } = pagination;
+    const { searchQuery } = sort;
 
     const { customers, totalCount } = this.getPageData();
 
@@ -151,4 +159,18 @@ class Customers extends Component<Props, State> {
   }
 }
 
-export default Customers;
+const mapStateToProps = (state: RootStateOrAny) => {
+  return {
+    pagination: state.pagination,
+    sort: state.sort,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    setCurrentPageAction,
+    setQueryAction,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(Customers);
