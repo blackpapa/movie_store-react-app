@@ -13,6 +13,8 @@ import ProgressBar from "./common/progressBar";
 import Pagination from "./common/pagination";
 import moment from "moment";
 import _ from "lodash";
+import { connect, RootStateOrAny } from "react-redux";
+import { setCurrentPageAction } from "../redux/actions";
 
 interface Movie {
   _id: string;
@@ -160,4 +162,16 @@ class Rentals extends Component<Props, State> {
   }
 }
 
-export default Rentals;
+const mapStateToProps = (state: RootStateOrAny) => {
+  return {
+    pagination: state.pagination,
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    setCurrentPageAction,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps())(Rentals);
