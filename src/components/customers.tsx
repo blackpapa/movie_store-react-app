@@ -11,7 +11,7 @@ import _ from "lodash";
 import Pagination from "./common/pagination";
 import { paginate } from "./utils/paginate";
 import { connect, RootStateOrAny } from "react-redux";
-import { setCurrentPageAction } from "../redux/actions";
+import { setCurrentPageAction, setQueryAction } from "../redux/actions";
 
 export interface Customer {
   _id: string;
@@ -28,7 +28,6 @@ interface SortColumn {
 interface State {
   customers: Customer[];
   sortColumn: SortColumn;
-  searchQuery: string;
   loadCompleted: boolean;
 }
 
@@ -39,13 +38,17 @@ interface Props extends RouteComponentProps {
     type: string;
     payload: number;
   };
+  sort: { sortColumn: SortColumn; searchQuery: string };
+  setQueryAction: (payload: string) => {
+    type: string;
+    payload: string;
+  };
 }
 
 class Customers extends Component<Props, State> {
   state = {
     customers: [],
     sortColumn: { path: "name", order: "asc" },
-    searchQuery: "",
     loadCompleted: false,
   };
 
@@ -59,7 +62,7 @@ class Customers extends Component<Props, State> {
   };
 
   handleSearch = (searchQuery: string) => {
-    this.setState({ searchQuery });
+    this.props.setQueryAction(searchQuery);
   };
 
   handleDelete = async (customer: Customer) => {
@@ -88,9 +91,11 @@ class Customers extends Component<Props, State> {
   };
 
   getPageData = () => {
-    const { sortColumn, searchQuery, customers: allCustomers } = this.state;
+    const { sortColumn, customers: allCustomers } = this.state;
 
-    const { pageSize, currentPage } = this.props.pagination;
+    const { pagination, sort } = this.props;
+    const { pageSize, currentPage } = pagination;
+    const { searchQuery } = sort;
 
     let filtered;
 
@@ -98,9 +103,12 @@ class Customers extends Component<Props, State> {
       filtered = allCustomers.filter((c: Customer) =>
         c.name.toLowerCase().startsWith(searchQuery.toLowerCase())
       );
+    } else {
+      filtered = allCustomers;
     }
+
     filtered = _.orderBy(
-      allCustomers,
+      filtered,
       sortColumn.path,
       sortColumn.order as "asc" | "desc"
     );
@@ -111,10 +119,11 @@ class Customers extends Component<Props, State> {
   };
 
   render() {
-    const { sortColumn, searchQuery, loadCompleted } = this.state;
+    const { sortColumn, loadCompleted } = this.state;
 
-    const { user, pagination } = this.props;
+    const { user, pagination, sort } = this.props;
     const { pageSize, currentPage } = pagination;
+    const { searchQuery } = sort;
 
     const { customers, totalCount } = this.getPageData();
 
@@ -160,6 +169,7 @@ const mapStateToProps = (state: RootStateOrAny) => {
 const mapDispatchToProps = () => {
   return {
     setCurrentPageAction,
+    setQueryAction,
   };
 };
 
