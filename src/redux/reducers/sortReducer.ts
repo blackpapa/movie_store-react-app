@@ -10,7 +10,7 @@ const initialState = {
 }
 
 const sortReducer = (state = initialState, action: {type: string, payload: any}) => {
-    state = initialState
+ 
     const {type, payload} = action;
 
     switch(type) {

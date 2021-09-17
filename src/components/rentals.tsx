@@ -75,7 +75,11 @@ class Rentals extends Component<Props, State> {
   }
 
   componentWillUnmount() {
+    //Clear the state in redux store
     this.props.setLoadingAction(false);
+    this.props.setCurrentPageAction(1);
+    this.props.setQueryAction("");
+    this.props.setSortColumnAction({ path: "name", order: "asc" });
   }
 
   handleSort = (sortColumn: SortColumn) => {
