@@ -1,24 +1,24 @@
-import  { Component } from "react";
+import { Component } from "react";
 import { Link } from "react-router-dom";
+import { SortColumn } from "../redux/actions";
 import { getCurrentUser } from "../services/authService";
 import Like from "./common/like";
 import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
-import { Movie, SortColumn } from "./movies";
-
+import { Movie } from "./movies";
 
 interface User {
-  _id: string,
-  name: string,
-  isAdmin? : boolean,
+  _id: string;
+  name: string;
+  isAdmin?: boolean;
 }
 
 interface Props {
-  movies: Movie[]
-  sortColumn: SortColumn,
-  onLike: (movie: Movie) => void
-  onDelete: (movie: Movie) => void
-  onSort: (sortColumn: SortColumn) => void
+  movies: Movie[];
+  sortColumn: SortColumn;
+  onLike: (movie: Movie) => void;
+  onDelete: (movie: Movie) => void;
+  onSort: (sortColumn: SortColumn) => void;
 }
 
 class MovieTable extends Component<Props, {}> {

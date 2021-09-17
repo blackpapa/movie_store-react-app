@@ -1,20 +1,25 @@
 import React, { Component } from "react";
 import { getRentals, returnRental } from "../services/rentalService";
 import { Customer } from "./customers";
-import { SortColumn } from "./movies";
 import { paginate } from "./utils/paginate";
 import { Link } from "react-router-dom";
 import { User } from "./common/navbar";
 import { toast } from "react-toastify";
 import { RouteComponentProps } from "react-router";
 import { connect, RootStateOrAny } from "react-redux";
-import { setCurrentPageAction } from "../redux/actions";
+import {
+  setCurrentPageAction,
+  setLoadingAction,
+  setQueryAction,
+  SortColumn,
+} from "../redux/actions";
 import RentalTable from "./rentalTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
 import Pagination from "./common/pagination";
 import moment from "moment";
 import _ from "lodash";
+import { setSortColumnAction } from "./../redux/actions/index";
 
 interface Movie {
   _id: string;
@@ -34,39 +39,47 @@ export interface Rental {
 interface Props extends RouteComponentProps {
   user?: User;
   pagination: { pageSize: number; currentPage: number };
+  sort: { sortColumn: SortColumn; searchQuery: string };
+  loading: { loadCompleted: boolean };
   setCurrentPageAction: (payload: number) => {
     type: string;
     payload: number;
+  };
+  setQueryAction: (payload: string) => {
+    type: string;
+    payload: string;
+  };
+  setSortColumnAction: (payload: SortColumn) => {
+    type: string;
+    payload: SortColumn;
+  };
+  setLoadingAction: (payload: boolean) => {
+    type: string;
+    payload: boolean;
   };
 }
 
 interface State {
   rentals: Rental[];
-  sortColumn: SortColumn;
-  searchQuery: string;
-  loadCompleted: boolean;
 }
 
 class Rentals extends Component<Props, State> {
   state = {
     rentals: [],
-    sortColumn: { path: "name", order: "asc" },
-    searchQuery: "",
-    loadCompleted: false,
   };
 
   async componentDidMount() {
     const { data: rentals } = await getRentals();
-
-    this.setState({ rentals, loadCompleted: true });
+    this.props.setLoadingAction(true);
+    this.setState({ rentals });
   }
 
   handleSort = (sortColumn: SortColumn) => {
-    this.setState({ sortColumn });
+    this.props.setSortColumnAction(sortColumn);
   };
 
   handleSearch = (searchQuery: string) => {
-    this.setState({ searchQuery });
+    this.props.setQueryAction(searchQuery);
   };
 
   handlePage = (page: number) => {
@@ -98,8 +111,8 @@ class Rentals extends Component<Props, State> {
   };
 
   getPageData = () => {
-    const { rentals: allRentals, sortColumn, searchQuery } = this.state;
-
+    const { rentals: allRentals } = this.state;
+    const { sortColumn, searchQuery } = this.props.sort;
     const { pageSize, currentPage } = this.props.pagination;
 
     let filtered;
@@ -124,15 +137,14 @@ class Rentals extends Component<Props, State> {
   };
 
   render() {
-    const { sortColumn, searchQuery, loadCompleted } = this.state;
-
-    const { user, pagination } = this.props;
+    const { user, pagination, sort, loading } = this.props;
+    const { sortColumn, searchQuery } = sort;
     const { pageSize, currentPage } = pagination;
     const { rentals, totalCount } = this.getPageData();
 
     return (
       <React.Fragment>
-        {!loadCompleted ? (
+        {!loading.loadCompleted ? (
           <ProgressBar />
         ) : (
           <div>
@@ -165,12 +177,17 @@ class Rentals extends Component<Props, State> {
 const mapStateToProps = (state: RootStateOrAny) => {
   return {
     pagination: state.pagination,
+    sort: state.sort,
+    loading: state.loading,
   };
 };
 
 const mapDispatchToProps = () => {
   return {
     setCurrentPageAction,
+    setQueryAction,
+    setSortColumnAction,
+    setLoadingAction,
   };
 };
 

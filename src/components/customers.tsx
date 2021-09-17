@@ -1,17 +1,23 @@
 import React, { Component } from "react";
 import { getCustomers } from "../services/customerService";
 import { Link, RouteComponentProps } from "react-router-dom";
-import CustomerTable from "./customerTable";
-import SearchBox from "./common/searchBox";
-import ProgressBar from "./common/progressBar";
 import { deleteCustomer } from "./../services/customerService";
 import { toast } from "react-toastify";
 import { User } from "./common/navbar";
-import _ from "lodash";
-import Pagination from "./common/pagination";
 import { paginate } from "./utils/paginate";
 import { connect, RootStateOrAny } from "react-redux";
-import { setCurrentPageAction, setQueryAction } from "../redux/actions";
+import {
+  setCurrentPageAction,
+  setQueryAction,
+  setSortColumnAction,
+  setLoadingAction,
+  SortColumn,
+} from "../redux/actions";
+import CustomerTable from "./customerTable";
+import SearchBox from "./common/searchBox";
+import ProgressBar from "./common/progressBar";
+import Pagination from "./common/pagination";
+import _ from "lodash";
 
 export interface Customer {
   _id: string;
@@ -20,45 +26,46 @@ export interface Customer {
   isGold?: boolean;
 }
 
-interface SortColumn {
-  path: string;
-  order: string;
-}
-
 interface State {
   customers: Customer[];
-  sortColumn: SortColumn;
-  loadCompleted: boolean;
 }
 
 interface Props extends RouteComponentProps {
   user?: User;
   pagination: { pageSize: number; currentPage: number };
+  sort: { sortColumn: SortColumn; searchQuery: string };
+  loading: { loadCompleted: boolean };
   setCurrentPageAction: (payload: number) => {
     type: string;
     payload: number;
   };
-  sort: { sortColumn: SortColumn; searchQuery: string };
   setQueryAction: (payload: string) => {
     type: string;
     payload: string;
+  };
+  setSortColumnAction: (payload: SortColumn) => {
+    type: string;
+    payload: SortColumn;
+  };
+  setLoadingAction: (payload: boolean) => {
+    type: string;
+    payload: boolean;
   };
 }
 
 class Customers extends Component<Props, State> {
   state = {
     customers: [],
-    sortColumn: { path: "name", order: "asc" },
-    loadCompleted: false,
   };
 
   async componentDidMount() {
     const { data: customers } = await getCustomers();
-    this.setState({ customers, loadCompleted: true });
+    this.props.setLoadingAction(true);
+    this.setState({ customers });
   }
 
   handleSort = (sortColumn: SortColumn) => {
-    this.setState({ sortColumn });
+    this.props.setSortColumnAction(sortColumn);
   };
 
   handleSearch = (searchQuery: string) => {
@@ -91,11 +98,11 @@ class Customers extends Component<Props, State> {
   };
 
   getPageData = () => {
-    const { sortColumn, customers: allCustomers } = this.state;
+    const { customers: allCustomers } = this.state;
 
     const { pagination, sort } = this.props;
     const { pageSize, currentPage } = pagination;
-    const { searchQuery } = sort;
+    const { searchQuery, sortColumn } = sort;
 
     let filtered;
 
@@ -119,17 +126,15 @@ class Customers extends Component<Props, State> {
   };
 
   render() {
-    const { sortColumn, loadCompleted } = this.state;
-
-    const { user, pagination, sort } = this.props;
+    const { user, pagination, sort, loading } = this.props;
     const { pageSize, currentPage } = pagination;
-    const { searchQuery } = sort;
+    const { searchQuery, sortColumn } = sort;
 
     const { customers, totalCount } = this.getPageData();
 
     return (
       <React.Fragment>
-        {!loadCompleted ? (
+        {!loading.loadCompleted ? (
           <ProgressBar />
         ) : (
           <div>
@@ -163,6 +168,7 @@ const mapStateToProps = (state: RootStateOrAny) => {
   return {
     pagination: state.pagination,
     sort: state.sort,
+    loading: state.loading,
   };
 };
 
@@ -170,6 +176,8 @@ const mapDispatchToProps = () => {
   return {
     setCurrentPageAction,
     setQueryAction,
+    setSortColumnAction,
+    setLoadingAction,
   };
 };
 

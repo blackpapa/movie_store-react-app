@@ -5,7 +5,12 @@ import { getGenres } from "../services/genreService";
 import { paginate } from "./utils/paginate";
 import { toast } from "react-toastify";
 import { connect, RootStateOrAny } from "react-redux";
-import { setCurrentPageAction } from "../redux/actions/index";
+import {
+  setCurrentPageAction,
+  setLoadingAction,
+  setQueryAction,
+  SortColumn,
+} from "../redux/actions/index";
 import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
 import MovieTable from "./movieTable";
@@ -27,11 +32,6 @@ export interface Genre {
   name: string;
 }
 
-export interface SortColumn {
-  path: string;
-  order: string;
-}
-
 interface User {
   _id: string;
   name: string;
@@ -41,9 +41,19 @@ interface User {
 interface Props extends RouteComponentProps {
   user?: User;
   pagination: { pageSize: number; currentPage: number };
+  loading: { loadCompleted: boolean };
+  sort: { searchQuery: string; sortColumn: SortColumn };
   setCurrentPageAction: (payload: number) => {
     type: string;
     payload: number;
+  };
+  setLoadingAction: (payload: boolean) => {
+    type: string;
+    payload: boolean;
+  };
+  setQueryAction: (payload: string) => {
+    type: string;
+    payload: string;
   };
 }
 
@@ -51,9 +61,7 @@ interface State {
   movies: Movie[];
   genres: Genre[];
   selectedGenre: Genre | {};
-  searchQuery: string;
   sortColumn: SortColumn;
-  loadCompleted: boolean;
 }
 
 class Movies extends Component<Props, State> {
@@ -61,20 +69,18 @@ class Movies extends Component<Props, State> {
     movies: [],
     genres: [],
     selectedGenre: { _id: "", name: "All Genres" },
-    searchQuery: "",
     sortColumn: { path: "title", order: "asc" },
-    loadCompleted: false,
   };
 
   async componentDidMount() {
     const { data: movies } = await getMovies();
     const { data } = await getGenres();
 
+    this.props.setLoadingAction(true);
     const genres = [{ _id: "", name: "All Genres" }, ...data];
     this.setState({
       movies,
       genres,
-      loadCompleted: true,
     });
   }
 
@@ -113,7 +119,8 @@ class Movies extends Component<Props, State> {
 
   handleSelectedGenre = (genre: Genre): void => {
     this.props.setCurrentPageAction(1);
-    this.setState({ selectedGenre: genre, searchQuery: "" });
+    this.props.setQueryAction("");
+    this.setState({ selectedGenre: genre });
   };
 
   handleSort = (sortColumn: SortColumn): void => {
@@ -122,21 +129,18 @@ class Movies extends Component<Props, State> {
 
   handleSearch = (searchQuery: string): void => {
     this.props.setCurrentPageAction(1);
-    this.setState({ searchQuery, selectedGenre: {} });
+    this.props.setQueryAction(searchQuery);
+    this.setState({ selectedGenre: {} });
   };
 
   getPageData = (): {
     movies: Movie[];
     totalCount: number;
   } => {
-    const {
-      movies: allMovies,
-      selectedGenre,
-      searchQuery,
-      sortColumn,
-    } = this.state;
+    const { movies: allMovies, selectedGenre, sortColumn } = this.state;
 
     const { pageSize, currentPage } = this.props.pagination;
+    const { searchQuery } = this.props.sort;
 
     let filtered = allMovies;
     if (searchQuery) {
@@ -162,9 +166,9 @@ class Movies extends Component<Props, State> {
   };
 
   render() {
-    const { genres, sortColumn, selectedGenre, searchQuery, loadCompleted } =
-      this.state;
-    const { user, pagination } = this.props;
+    const { genres, sortColumn, selectedGenre } = this.state;
+    const { user, pagination, loading, sort } = this.props;
+    const { searchQuery } = sort;
     const { pageSize, currentPage } = pagination;
 
     const { movies, totalCount } = this.getPageData();
@@ -180,7 +184,7 @@ class Movies extends Component<Props, State> {
             textProperty={"name"}
           />
         </div>
-        {!loadCompleted ? (
+        {!loading.loadCompleted ? (
           <ProgressBar />
         ) : (
           <div className="col">
@@ -215,12 +219,16 @@ class Movies extends Component<Props, State> {
 const mapStateToProps = (state: RootStateOrAny) => {
   return {
     pagination: state.pagination,
+    sort: state.sort,
+    loading: state.loading,
   };
 };
 
 const mapDispatchToProps = () => {
   return {
     setCurrentPageAction,
+    setQueryAction,
+    setLoadingAction,
   };
 };
 
