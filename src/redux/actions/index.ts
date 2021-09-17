@@ -1,4 +1,4 @@
-interface SortColumn {
+export interface SortColumn {
     path: string;
     order: string;
   }

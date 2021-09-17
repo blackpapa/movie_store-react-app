@@ -10,6 +10,7 @@ import {
   setCurrentPageAction,
   setQueryAction,
   setSortColumnAction,
+  SortColumn,
 } from "../redux/actions";
 import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
@@ -22,11 +23,6 @@ export interface Customer {
   name: string;
   phone: string;
   isGold?: boolean;
-}
-
-interface SortColumn {
-  path: string;
-  order: string;
 }
 
 interface State {
