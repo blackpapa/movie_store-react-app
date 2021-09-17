@@ -1,8 +1,8 @@
 import React from "react";
+import { SortColumn } from "../redux/actions";
+import { Rental } from "./rentals";
 import TableBody from "./common/tableBody";
 import TableHeader from "./common/tableHeader";
-import { SortColumn } from "./movies";
-import { Rental } from "./rentals";
 
 interface Props {
   rentals: Rental[];
