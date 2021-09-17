@@ -76,12 +76,12 @@ class Movies extends Component<Props, State> {
     const { data: movies } = await getMovies();
     const { data } = await getGenres();
 
-    this.props.setLoadingAction(true);
     const genres = [{ _id: "", name: "All Genres" }, ...data];
     this.setState({
       movies,
       genres,
     });
+    this.props.setLoadingAction(true);
   }
 
   handleDelete = async (movie: Movie): Promise<void> => {

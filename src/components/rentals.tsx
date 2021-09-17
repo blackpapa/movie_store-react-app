@@ -70,8 +70,8 @@ class Rentals extends Component<Props, State> {
 
   async componentDidMount() {
     const { data: rentals } = await getRentals();
-    this.props.setLoadingAction(true);
     this.setState({ rentals });
+    this.props.setLoadingAction(true);
   }
 
   handleSort = (sortColumn: SortColumn) => {

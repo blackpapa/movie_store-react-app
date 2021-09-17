@@ -60,8 +60,8 @@ class Customers extends Component<Props, State> {
 
   async componentDidMount() {
     const { data: customers } = await getCustomers();
-    this.props.setLoadingAction(true);
     this.setState({ customers });
+    this.props.setLoadingAction(true);
   }
 
   handleSort = (sortColumn: SortColumn) => {
