@@ -9,6 +9,7 @@ import {
   setCurrentPageAction,
   setLoadingAction,
   setQueryAction,
+  setSortColumnAction,
   SortColumn,
 } from "../redux/actions/index";
 import Pagination from "./common/pagination";
@@ -55,13 +56,16 @@ interface Props extends RouteComponentProps {
     type: string;
     payload: string;
   };
+  setSortColumnAction: (payload: SortColumn) => {
+    type: string;
+    payload: SortColumn;
+  };
 }
 
 interface State {
   movies: Movie[];
   genres: Genre[];
   selectedGenre: Genre | {};
-  sortColumn: SortColumn;
 }
 
 class Movies extends Component<Props, State> {
@@ -69,7 +73,6 @@ class Movies extends Component<Props, State> {
     movies: [],
     genres: [],
     selectedGenre: { _id: "", name: "All Genres" },
-    sortColumn: { path: "title", order: "asc" },
   };
 
   async componentDidMount() {
@@ -81,6 +84,7 @@ class Movies extends Component<Props, State> {
       movies,
       genres,
     });
+    this.props.setSortColumnAction({ path: "title", order: "asc" });
     this.props.setLoadingAction(true);
   }
 
@@ -88,6 +92,7 @@ class Movies extends Component<Props, State> {
     this.props.setLoadingAction(false);
     this.props.setCurrentPageAction(1);
     this.props.setQueryAction("");
+    this.props.setSortColumnAction({ path: "name", order: "asc" });
   }
 
   handleDelete = async (movie: Movie): Promise<void> => {
@@ -130,7 +135,7 @@ class Movies extends Component<Props, State> {
   };
 
   handleSort = (sortColumn: SortColumn): void => {
-    this.setState({ sortColumn });
+    this.props.setSortColumnAction(sortColumn);
   };
 
   handleSearch = (searchQuery: string): void => {
@@ -143,10 +148,10 @@ class Movies extends Component<Props, State> {
     movies: Movie[];
     totalCount: number;
   } => {
-    const { movies: allMovies, selectedGenre, sortColumn } = this.state;
+    const { movies: allMovies, selectedGenre } = this.state;
 
     const { pageSize, currentPage } = this.props.pagination;
-    const { searchQuery } = this.props.sort;
+    const { searchQuery, sortColumn } = this.props.sort;
 
     let filtered = allMovies;
     if (searchQuery) {
@@ -172,9 +177,9 @@ class Movies extends Component<Props, State> {
   };
 
   render() {
-    const { genres, sortColumn, selectedGenre } = this.state;
+    const { genres, selectedGenre } = this.state;
     const { user, pagination, loading, sort } = this.props;
-    const { searchQuery } = sort;
+    const { searchQuery, sortColumn } = sort;
     const { pageSize, currentPage } = pagination;
 
     const { movies, totalCount } = this.getPageData();
@@ -235,6 +240,7 @@ const mapDispatchToProps = () => {
     setCurrentPageAction,
     setQueryAction,
     setLoadingAction,
+    setSortColumnAction,
   };
 };
 
