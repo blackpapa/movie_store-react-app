@@ -27,6 +27,7 @@ class App extends Component<{}, State> {
   state = {};
 
   componentDidMount() {
+    document.title = "Movie Store";
     const user = getCurrentUser() as User;
     this.setState({ user });
   }
