@@ -86,6 +86,8 @@ class Movies extends Component<Props, State> {
 
   componentWillUnmount() {
     this.props.setLoadingAction(false);
+    this.props.setCurrentPageAction(1);
+    this.props.setQueryAction("");
   }
 
   handleDelete = async (movie: Movie): Promise<void> => {
