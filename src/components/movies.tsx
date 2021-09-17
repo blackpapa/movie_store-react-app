@@ -84,6 +84,10 @@ class Movies extends Component<Props, State> {
     this.props.setLoadingAction(true);
   }
 
+  componentWillUnmount() {
+    this.props.setLoadingAction(false);
+  }
+
   handleDelete = async (movie: Movie): Promise<void> => {
     const originalMovies = this.state.movies;
     const movies = originalMovies.filter((m: Movie) => m._id !== movie._id);

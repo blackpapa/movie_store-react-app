@@ -64,6 +64,10 @@ class Customers extends Component<Props, State> {
     this.props.setLoadingAction(true);
   }
 
+  componentWillUnmount() {
+    this.props.setLoadingAction(false);
+  }
+
   handleSort = (sortColumn: SortColumn) => {
     this.props.setSortColumnAction(sortColumn);
   };
