@@ -71,15 +71,15 @@ class Customers extends Component<Props, State> {
     this.props.setSortColumnAction({ path: "name", order: "asc" });
   }
 
-  handleSort = (sortColumn: SortColumn) => {
+  handleSort = (sortColumn: SortColumn): void => {
     this.props.setSortColumnAction(sortColumn);
   };
 
-  handleSearch = (searchQuery: string) => {
+  handleSearch = (searchQuery: string): void => {
     this.props.setQueryAction(searchQuery);
   };
 
-  handleDelete = async (customer: Customer) => {
+  handleDelete = async (customer: Customer): Promise<void> => {
     const originalCustomers = this.state.customers;
     const customers = originalCustomers.filter(
       (c: Customer) => c._id !== customer._id
@@ -100,11 +100,14 @@ class Customers extends Component<Props, State> {
     }
   };
 
-  handlePage = (page: number) => {
+  handlePage = (page: number): void => {
     this.props.setCurrentPageAction(page);
   };
 
-  getPageData = () => {
+  getPageData = (): {
+    customers: Customer[];
+    totalCount: number;
+  } => {
     const { customers: allCustomers } = this.state;
 
     const { pagination, sort } = this.props;

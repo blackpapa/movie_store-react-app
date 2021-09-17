@@ -82,15 +82,15 @@ class Rentals extends Component<Props, State> {
     this.props.setSortColumnAction({ path: "name", order: "asc" });
   }
 
-  handleSort = (sortColumn: SortColumn) => {
+  handleSort = (sortColumn: SortColumn): void => {
     this.props.setSortColumnAction(sortColumn);
   };
 
-  handleSearch = (searchQuery: string) => {
+  handleSearch = (searchQuery: string): void => {
     this.props.setQueryAction(searchQuery);
   };
 
-  handlePage = (page: number) => {
+  handlePage = (page: number): void => {
     this.props.setCurrentPageAction(page);
   };
 
@@ -118,7 +118,10 @@ class Rentals extends Component<Props, State> {
     }
   };
 
-  getPageData = () => {
+  getPageData = (): {
+    rentals: Rental[];
+    totalCount: number;
+  } => {
     const { rentals: allRentals } = this.state;
     const { sortColumn, searchQuery } = this.props.sort;
     const { pageSize, currentPage } = this.props.pagination;
