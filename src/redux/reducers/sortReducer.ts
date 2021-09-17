@@ -1,8 +1,9 @@
 import { SET_SEARCH_QUERY } from "../actions";
+import { SET_SORT_COLUMN } from './../actions/index';
 
 const initialState = {
     searchQuery : '',
-    SortColumn: {
+    sortColumn: {
         path: 'name',
         order: 'asc'
     }
@@ -16,6 +17,11 @@ const sortReducer = (state = initialState, action: {type: string, payload: any})
             return {
                 ...state,
                 searchQuery: payload
+            }
+        case SET_SORT_COLUMN:
+            return {
+                ...state,
+                sortColumn: payload
             }
         default: 
            return state
