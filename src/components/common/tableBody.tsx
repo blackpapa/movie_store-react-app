@@ -20,7 +20,8 @@ class TableBody extends Component<Props, {}> {
     let result = _.get(item, column.path as string);
     //Change date-time form with milliseconds and time zone to date-only form
     if (column.path && column.path.includes("date") && result) {
-      return result.split("T")[0];
+      result = result.split("T")[0] + " " + result.split("T")[1].split(".")[0];
+      return result;
     }
 
     return typeof result === "boolean" ? result.toString() : result;
