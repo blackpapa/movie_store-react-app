@@ -2,19 +2,19 @@ import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 export interface User {
-  _id: string,
-  name: string,
-  isAdmin? : boolean,
+  _id: string;
+  name: string;
+  isAdmin?: boolean;
 }
 
 interface Props {
-  user?: User 
+  user?: User;
 }
- 
+
 interface State {
-  isCollapsed: boolean
+  isCollapsed: boolean;
 }
- 
+
 class NavBar extends Component<Props, State> {
   state = { isCollapsed: true };
 
