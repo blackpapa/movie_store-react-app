@@ -24,7 +24,7 @@ class RentalTable extends React.Component<Props, {}> {
         rental.dateReturn ? null : (
           <button
             onClick={() => this.props.onReturn(rental)}
-            className="btn btn-warning btn-sm"
+            className="btn btn-primary btn-sm"
           >
             Return
           </button>
