@@ -1,18 +1,15 @@
-import { Component } from "react";
 import { logout } from "../services/authService";
+import React, { useEffect } from "react";
 
-class Logout extends Component<{},{}> {
-  state = {};
+interface LogoutProps {}
 
-  componentDidMount() {
+const Logout: React.FC<LogoutProps> = () => {
+  useEffect(() => {
     logout();
-
     window.location.href = "/";
-  }
+  }, []);
 
-  render() {
-    return null;
-  }
-}
+  return null;
+};
 
 export default Logout;
