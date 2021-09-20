@@ -95,14 +95,14 @@ class Rentals extends Component<Props, State> {
   };
 
   handleReturn = async (rental: Rental): Promise<void> => {
-    console.log(rental);
+    //console.log(rental);
 
     const originalRentals = this.state.rentals;
 
     const rentals: Rental[] = [...this.state.rentals];
     const index = rentals.indexOf(rental);
     rentals[index] = { ...rental };
-    rentals[index].dateReturn = moment().toISOString().split("T")[0];
+    rentals[index].dateReturn = moment().toISOString();
     const rentalDays =
       moment().diff(rental.dateOut, "days") === 0
         ? 1
