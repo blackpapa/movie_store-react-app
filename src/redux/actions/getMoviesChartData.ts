@@ -4,16 +4,16 @@ import { AnyAction } from 'redux';
 import { getMovies } from "../../services/movieService";
 import _ from 'lodash'
 
-export const AWAITING_CHART_DATA = 'AWAITNG_CHART_DATA'
-export const SUCCESS_CHART_DATA = 'SUCCESS_CHART_DATA'
-export const REJECT_CHART_DATA = 'REJECT_CHART_DATA'
+export const AWAITING_MOVIES_CHART_DATA = 'AWAITNG_MOVIES_CHART_DATA'
+export const SUCCESS_MOVIES_CHART_DATA = 'SUCCESS_MOVIES_CHART_DATA'
+export const REJECT_MOVIES_CHART_DATA = 'REJECT_MOVIES_CHART_DATA'
 
-export const getChartData = (): ThunkAction<void, RootStateOrAny, unknown, AnyAction> => async dispatch => {
+export const getMoviesChartData = (): ThunkAction<void, RootStateOrAny, unknown, AnyAction> => async dispatch => {
 
     
     try {
         dispatch({
-            type: AWAITING_CHART_DATA
+            type: AWAITING_MOVIES_CHART_DATA
         })
         
       const { data: movies } = await getMovies();
@@ -28,7 +28,7 @@ export const getChartData = (): ThunkAction<void, RootStateOrAny, unknown, AnyAc
       }
 
       dispatch({
-          type: SUCCESS_CHART_DATA,
+          type: SUCCESS_MOVIES_CHART_DATA,
           payload: {
               labels,
               data
@@ -36,10 +36,13 @@ export const getChartData = (): ThunkAction<void, RootStateOrAny, unknown, AnyAc
       })
 
     } catch (error: any) {
-        dispatch({
-            type:REJECT_CHART_DATA,
-            payload: error.response.data
-        })
+        if(error.response) {
+            dispatch({
+                type:REJECT_MOVIES_CHART_DATA,
+                payload: error.response.data
+            })
+
+        }
     }
 
 }

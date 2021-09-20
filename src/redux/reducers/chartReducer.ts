@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { AWAITING_CHART_DATA, REJECT_CHART_DATA, SUCCESS_CHART_DATA } from './../actions/getChartData';
+import { AWAITING_MOVIES_CHART_DATA, REJECT_MOVIES_CHART_DATA, SUCCESS_MOVIES_CHART_DATA } from '../actions/getMoviesChartData';
 
 const initialState = {
     loading: false,
@@ -10,7 +10,7 @@ const initialState = {
             label: "# of Movies",
             data: [],
             backgroundColor: [
-              "rgba(255, 99, 132, 0.2)",
+              "rgba(13, 229, 255, 0.2)",
               "rgba(54, 162, 235, 0.2)",
               "rgba(255, 206, 86, 0.2)",
               "rgba(75, 192, 192, 0.2)",
@@ -18,7 +18,7 @@ const initialState = {
               "rgba(255, 159, 64, 0.2)",
             ],
             borderColor: [
-              "rgba(255, 99, 132, 1)",
+              "rgba(13, 229, 255, 1)",
               "rgba(54, 162, 235, 1)",
               "rgba(255, 206, 86, 1)",
               "rgba(75, 192, 192, 1)",
@@ -35,12 +35,12 @@ const initialState = {
 const chartReducer = (state = initialState, action: AnyAction) => {
     const {type, payload} = action;
     switch(type) {
-        case AWAITING_CHART_DATA:
+        case AWAITING_MOVIES_CHART_DATA:
             return {
                 ...state,
                 loading: true
             }
-        case SUCCESS_CHART_DATA:
+        case SUCCESS_MOVIES_CHART_DATA:
             return {
                 ...state,
                 loading: false,
@@ -51,7 +51,7 @@ const chartReducer = (state = initialState, action: AnyAction) => {
                         label: "Stock of Movies",
                         data: payload.data,
                         backgroundColor: [
-                          "rgba(165, 102, 121, 0.2)",
+                          "rgba(13, 229, 255, 0.2)",
                           "rgba(54, 162, 235, 0.2)",
                           "rgba(255, 206, 86, 0.2)",
                           "rgba(75, 192, 192, 0.2)",
@@ -59,7 +59,7 @@ const chartReducer = (state = initialState, action: AnyAction) => {
                           "rgba(255, 159, 64, 0.2)",
                         ],
                         borderColor: [
-                          "rgba(165, 102, 121, 1)",
+                          "rgba(13, 229, 255, 1)",
                           "rgba(54, 162, 235, 1)",
                           "rgba(255, 206, 86, 1)",
                           "rgba(75, 192, 192, 1)",
@@ -72,7 +72,7 @@ const chartReducer = (state = initialState, action: AnyAction) => {
                   }
 
             }
-            case REJECT_CHART_DATA:
+            case REJECT_MOVIES_CHART_DATA:
                 return {
                     ...state,
                     error: payload
