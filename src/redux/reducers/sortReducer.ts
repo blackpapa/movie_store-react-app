@@ -1,3 +1,4 @@
+import { AnyAction } from "redux";
 import { SET_SEARCH_QUERY } from "../actions";
 import { SET_SORT_COLUMN } from './../actions/index';
 
@@ -9,7 +10,7 @@ const initialState = {
     }
 }
 
-const sortReducer = (state = initialState, action: {type: string, payload: any}) => {
+const sortReducer = (state = initialState, action: AnyAction) => {
  
     const {type, payload} = action;
 

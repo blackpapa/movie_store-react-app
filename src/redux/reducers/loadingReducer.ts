@@ -1,10 +1,11 @@
+import { AnyAction } from "redux";
 import { SET_LOADING } from "../actions";
 
 const initialState = {
     loadCompleted: false
 }
 
-const loadingReducer = (state = initialState, action: {type: string, payload: boolean})=>  {
+const loadingReducer = (state = initialState, action: AnyAction)=>  {
    
     const {type, payload} = action;
 

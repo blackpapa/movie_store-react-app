@@ -1,3 +1,4 @@
+import { AnyAction } from "redux";
 import { SET_CURRENTPAGE } from "../actions";
 
 const initialState =  {
@@ -5,7 +6,7 @@ const initialState =  {
     currentPage: 1
 }
 
-const paginationReducer = (state = initialState, action: {type: string, payload: any}) => {
+const paginationReducer = (state = initialState, action: AnyAction) => {
     const {type, payload} = action
 
     switch(type) {
