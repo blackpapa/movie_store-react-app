@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import { getMovies } from "./../services/movieService";
+import _ from "lodash";
 
 interface ChartProps {}
 
 const Chart: React.FC<ChartProps> = () => {
-  const data = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+  let data = {
+    labels: [] as string[],
     datasets: [
       {
-        label: "# of Votes",
-        data: [12, 19, 3, 5, 2, 3],
+        label: "# of Movies",
+        data: [] as number[],
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
@@ -30,6 +32,20 @@ const Chart: React.FC<ChartProps> = () => {
       },
     ],
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const { data: movies } = await getMovies();
+      const filtered = _.orderBy(movies, "numberInStock", "desc").slice(0, 6);
+
+      for (let i = 0; i < filtered.length; i++) {
+        data.labels.push(filtered[i].title);
+        data.datasets[0].data.push(filtered[i].numberInStock);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return <Bar data={data} />;
 };
