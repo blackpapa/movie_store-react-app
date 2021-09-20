@@ -18,6 +18,7 @@ import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
 import store from "./store";
 import "./App.css";
+import Chart from "./components/chart";
 
 interface State {
   user?: User;
@@ -56,6 +57,7 @@ class App extends Component<{}, State> {
                 path="/rentals"
                 render={(props) => <Rentals {...props} user={user} />}
               ></Route>
+              <Route path="/chart" component={Chart}></Route>
               <Route path="/not-found" component={NotFound}></Route>
               <Route path="/login" component={LoginForm}></Route>
               <Route path="/logout" component={Logout}></Route>

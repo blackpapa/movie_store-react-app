@@ -5,10 +5,10 @@ export interface SortColumn {
   }
 
 //Constants
-export const SET_CURRENTPAGE = "Set currentpage"
-export const SET_SEARCH_QUERY = 'Set search query'
-export const SET_SORT_COLUMN = 'Set sort column'
-export const SET_LOADING = 'Set loading'
+export const SET_CURRENTPAGE = "SET_CURRENT_PAGE"
+export const SET_SEARCH_QUERY = 'SET_SEARCH_QUERY'
+export const SET_SORT_COLUMN = 'SET_SORT_COLUMN'
+export const SET_LOADING = 'SET_LOADING'
 
 
 //Action creators
