@@ -48,10 +48,10 @@ const chartReducer = (state = initialState, action: AnyAction) => {
                     labels: payload.labels,
                     datasets: [
                       {
-                        label: "# of Movies",
+                        label: "Stock of Movies",
                         data: payload.data,
                         backgroundColor: [
-                          "rgba(255, 99, 132, 0.2)",
+                          "rgba(165, 102, 121, 0.2)",
                           "rgba(54, 162, 235, 0.2)",
                           "rgba(255, 206, 86, 0.2)",
                           "rgba(75, 192, 192, 0.2)",
@@ -59,7 +59,7 @@ const chartReducer = (state = initialState, action: AnyAction) => {
                           "rgba(255, 159, 64, 0.2)",
                         ],
                         borderColor: [
-                          "rgba(255, 99, 132, 1)",
+                          "rgba(165, 102, 121, 1)",
                           "rgba(54, 162, 235, 1)",
                           "rgba(255, 206, 86, 1)",
                           "rgba(75, 192, 192, 1)",
