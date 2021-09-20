@@ -10,12 +10,12 @@ export const REJECT_CHART_DATA = 'REJECT_CHART_DATA'
 
 export const getChartData = (): ThunkAction<void, RootStateOrAny, unknown, AnyAction> => async dispatch => {
 
+    
     try {
-        
         dispatch({
             type: AWAITING_CHART_DATA
         })
-
+        
       const { data: movies } = await getMovies();
       const filtered = _.orderBy(movies, "numberInStock", "desc").slice(0, 6);
 
