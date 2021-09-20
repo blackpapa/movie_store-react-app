@@ -9,7 +9,6 @@ import Rentals from "./components/rentals";
 import MovieForm from "./components/movieForm";
 import NotFound from "./components/notFound";
 import NavBar, { User } from "./components/common/navbar";
-import Footer from "./components/common/footer";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import CustomerFrom from "./components/customerForm";
@@ -66,7 +65,6 @@ class App extends Component<{}, State> {
               <Redirect to="/not-found" />
             </Switch>
           </main>
-          <Footer />
         </Provider>
       </React.Fragment>
     );

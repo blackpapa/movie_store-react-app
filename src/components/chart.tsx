@@ -26,7 +26,12 @@ const Chart: React.FC<ChartProps> = () => {
         <h1 className="h2">Dashboard</h1>
         <BtnToolBar />
       </div>
-      {state.loading ? <ProgressBar /> : <Bar data={state.data} />};
+      {state.loading ? (
+        <ProgressBar />
+      ) : (
+        <Bar data={state.data} style={{ maxHeight: 500 }} />
+      )}
+      ;
     </div>
   );
 };
