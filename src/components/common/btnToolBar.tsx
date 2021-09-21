@@ -1,15 +1,25 @@
 import React from "react";
 
-interface BtnToolBarProps {}
+interface BtnToolBarProps {
+  onChart: (path: string) => void;
+}
 
-const BtnToolBar: React.FC<BtnToolBarProps> = () => {
+const BtnToolBar: React.FC<BtnToolBarProps> = (props) => {
   return (
     <div className="btn-toolbar mb-2 mb-md-0">
       <div className="btn-group me-2">
-        <button type="button" className="btn btn-sm btn-outline-secondary">
+        <button
+          type="button"
+          onClick={() => props.onChart("Stocks")}
+          className="btn btn-sm btn-outline-secondary"
+        >
           Stocks
         </button>
-        <button type="button" className="btn btn-sm btn-outline-secondary">
+        <button
+          type="button"
+          onClick={() => props.onChart("Prices")}
+          className="btn btn-sm btn-outline-secondary"
+        >
           Prices
         </button>
       </div>
