@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { AWAITING_MOVIES_CHART_DATA, REJECT_MOVIES_CHART_DATA, SUCCESS_MOVIES_CHART_DATA } from '../actions/getMoviesChartData';
+import { AWAITING_MOVIES_CHART_DATA, REJECT_MOVIES_CHART_DATA, SUCCESS_MOVIES_CHART_DATA } from '../actions/chartActions';
 
 const initialState = {
     loading: false,
@@ -48,7 +48,7 @@ const chartReducer = (state = initialState, action: AnyAction) => {
                     labels: payload.labels,
                     datasets: [
                       {
-                        label: "Stock of Movies",
+                        label: payload.path + ' of Movies',
                         data: payload.data,
                         backgroundColor: [
                           "rgba(13, 229, 255, 0.2)",

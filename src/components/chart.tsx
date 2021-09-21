@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { getMoviesChartData } from "../redux/actions/getMoviesChartData";
+import { getMoviesChartData } from "../redux/actions/chartActions";
 import { toast } from "react-toastify";
 import ProgressBar from "./common/progressBar";
 import BtnToolBar from "./common/btnToolBar";
@@ -13,7 +13,7 @@ const Chart: React.FC<ChartProps> = () => {
   const state = useSelector((state: RootStateOrAny) => state.chart);
 
   useEffect(() => {
-    dispatch(getMoviesChartData());
+    dispatch(getMoviesChartData("Stocks"));
   }, []);
 
   if (state.error) {
@@ -28,12 +28,16 @@ const Chart: React.FC<ChartProps> = () => {
           <div className="btn-group me-2">
             <button
               type="button"
-              onClick={() => dispatch(getMoviesChartData())}
+              onClick={() => dispatch(getMoviesChartData("Stocks"))}
               className="btn btn-sm btn-outline-secondary"
             >
               Stocks
             </button>
-            <button type="button" className="btn btn-sm btn-outline-secondary">
+            <button
+              type="button"
+              onClick={() => dispatch(getMoviesChartData("Prices"))}
+              className="btn btn-sm btn-outline-secondary"
+            >
               Prices
             </button>
           </div>
