@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Bar } from "react-chartjs-2";
+import { Bar, Doughnut } from "react-chartjs-2";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { getMoviesChartData } from "../redux/actions/chartActions";
 import { toast } from "react-toastify";
@@ -33,7 +33,13 @@ const Chart: React.FC<ChartProps> = () => {
       {state.loading ? (
         <ProgressBar />
       ) : (
-        <Bar data={state.data} style={{ maxHeight: 500 }} />
+        <div>
+          <Bar data={state.data} style={{ maxHeight: 500 }} />
+          <Doughnut
+            data={state.data}
+            style={{ maxHeight: 300, marginTop: 10 }}
+          />
+        </div>
       )}
     </div>
   );
