@@ -10,7 +10,7 @@ interface ChartProps {}
 
 const Chart: React.FC<ChartProps> = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state: RootStateOrAny) => state.chart);
+  const chart = useSelector((state: RootStateOrAny) => state.chart);
 
   const handleChart = (path: string): void => {
     dispatch(getMoviesChartData(path));
@@ -20,8 +20,8 @@ const Chart: React.FC<ChartProps> = () => {
     dispatch(getMoviesChartData("Stocks"));
   }, []);
 
-  if (state.error) {
-    toast.error(state.error);
+  if (chart.error) {
+    toast.error(chart.error);
   }
 
   return (
@@ -30,13 +30,13 @@ const Chart: React.FC<ChartProps> = () => {
         <h1 className="h2">Chart</h1>
         <BtnToolBar onChart={handleChart} />
       </div>
-      {state.loading ? (
+      {chart.loading ? (
         <ProgressBar />
       ) : (
         <div>
-          <Bar data={state.data} style={{ maxHeight: 500 }} />
+          <Bar data={chart.data} style={{ maxHeight: 500 }} />
           <Doughnut
-            data={state.data}
+            data={chart.data}
             style={{ maxHeight: 300, marginTop: 10 }}
           />
         </div>
