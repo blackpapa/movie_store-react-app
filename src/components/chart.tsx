@@ -3,13 +3,16 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { getMoviesChartData } from "../redux/actions/chartActions";
 import { toast } from "react-toastify";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 import ProgressBar from "./common/progressBar";
 import BtnToolBar from "./common/btnToolBar";
 
 interface ChartProps {}
 
 const Chart: React.FC<ChartProps> = () => {
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootStateOrAny, unknown, AnyAction> =
+    useDispatch();
   const chart = useSelector((state: RootStateOrAny) => state.chart);
 
   const handleChart = (path: string): void => {
