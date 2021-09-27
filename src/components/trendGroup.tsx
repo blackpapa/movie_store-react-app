@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ProgressBar from "./common/progressBar";
 import { gql, QueryResult, useQuery } from "@apollo/client";
 import _ from "lodash";
@@ -26,11 +26,13 @@ export const MOVIES_TREND = gql`
 `;
 
 const TrendGroup: React.FC<TrendGroupProps> = () => {
-  const { data, error, loading }: QueryResult =
-    useQuery<MovieTrendData>(MOVIES_TREND);
-
   const ranks: number[] = [1, 2, 3, 4, 5];
   let i = 0;
+
+  const { data, error, loading }: QueryResult = useQuery<MovieTrendData>(
+    MOVIES_TREND,
+    { pollInterval: 500 }
+  );
 
   if (loading) return <ProgressBar />;
   if (error) return <h1>Error: {error}</h1>;
