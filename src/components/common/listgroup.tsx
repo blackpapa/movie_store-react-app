@@ -23,6 +23,7 @@ const Listgroup: React.FC<Props> = (props) => {
         <li
           onClick={() => onItemSelect(item)}
           key={item[valueProperty]}
+          style={{ cursor: "pointer" }}
           className={
             selectedItem.name === item.name
               ? "list-group-item active"
