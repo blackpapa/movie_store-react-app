@@ -12,7 +12,7 @@ import logger from "./services/logService";
 logger.init();
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_API_URL + "/graphql",
+  uri: "http://localhost:3900/graphql?",
   cache: new InMemoryCache(),
 });
 
