@@ -2,6 +2,7 @@ import React from "react";
 import ProgressBar from "./common/progressBar";
 import { gql, QueryResult, useQuery } from "@apollo/client";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 interface Movie {
   id: string;
@@ -44,15 +45,25 @@ const TrendGroup: React.FC<TrendGroupProps> = () => {
       <small className="text-muted">(Rank by total rentals)</small>
       <div className="list-group">
         {trends.map((trend) => (
-          <label className="list-group-item" key={trend.id}>
-            <span className="d-block small opacity-50">
-              {ranks[i++]}. Trend
-            </span>
-            {`#${trend.title}`}
-            <span className="d-block small opacity-50">
-              {trend.rentalsCount} total rentals
-            </span>
-          </label>
+          <Link
+            key={trend.id}
+            to="/trendChart"
+            style={{ textDecoration: "none" }}
+          >
+            <label
+              style={{ cursor: "pointer" }}
+              className="list-group-item"
+              key={trend.id}
+            >
+              <span className="d-block small opacity-50">
+                {ranks[i++]}. Trend
+              </span>
+              {`#${trend.title}`}
+              <span className="d-block small opacity-50">
+                {trend.rentalsCount} total rentals
+              </span>
+            </label>
+          </Link>
         ))}
       </div>
     </div>

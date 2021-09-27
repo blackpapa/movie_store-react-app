@@ -16,8 +16,9 @@ import RentalForm from "./components/rentalForm";
 import ProtectedRoute from "./components/common/protectedRoute";
 import Logout from "./components/logout";
 import store from "./store";
-import "./App.css";
 import Chart from "./components/chart";
+import TrendChart from "./components/trendChart";
+import "./App.css";
 
 interface State {
   user?: User;
@@ -57,6 +58,7 @@ class App extends Component<{}, State> {
                 render={(props) => <Rentals {...props} user={user} />}
               ></Route>
               <Route path="/chart" component={Chart}></Route>
+              <Route path="/trendchart" component={TrendChart}></Route>
               <Route path="/not-found" component={NotFound}></Route>
               <Route path="/login" component={LoginForm}></Route>
               <Route path="/logout" component={Logout}></Route>
