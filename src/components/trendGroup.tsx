@@ -1,7 +1,7 @@
 import React from "react";
+import ProgressBar from "./common/progressBar";
 import { gql, QueryResult, useQuery } from "@apollo/client";
 import _ from "lodash";
-import ProgressBar from "./common/progressBar";
 
 interface Movie {
   id: string;
@@ -15,7 +15,7 @@ interface MovieTrendData {
 
 interface TrendGroupProps {}
 
-const MOVIES_TREND = gql`
+export const MOVIES_TREND = gql`
   {
     movies {
       id
@@ -28,6 +28,10 @@ const MOVIES_TREND = gql`
 const TrendGroup: React.FC<TrendGroupProps> = () => {
   const { data, error, loading }: QueryResult =
     useQuery<MovieTrendData>(MOVIES_TREND);
+
+  const ranks: number[] = [1, 2, 3, 4, 5];
+  let i = 0;
+
   if (loading) return <ProgressBar />;
   if (error) return <h1>Error: {error}</h1>;
 
@@ -35,18 +39,20 @@ const TrendGroup: React.FC<TrendGroupProps> = () => {
 
   return (
     <div>
-      <h5>Trend</h5>
-      <ul className="list-group">
+      <small className="text-muted">(Rank by total rentals)</small>
+      <div className="list-group">
         {trends.map((trend) => (
-          <li
-            className="list-group-item d-flex justify-content-between align-items-center"
-            key={trend.id}
-          >
+          <label className="list-group-item" key={trend.id}>
+            <span className="d-block small opacity-50">
+              {ranks[i++]}. Trend
+            </span>
             {`#${trend.title}`}
-            <small>{trend.rentalsCount}</small>
-          </li>
+            <span className="d-block small opacity-50">
+              {trend.rentalsCount} total rentals
+            </span>
+          </label>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
