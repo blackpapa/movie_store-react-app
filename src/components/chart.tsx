@@ -13,15 +13,16 @@ interface ChartProps {}
 const Chart: React.FC<ChartProps> = () => {
   const dispatch: ThunkDispatch<RootStateOrAny, unknown, AnyAction> =
     useDispatch();
-  const chart = useSelector((state: RootStateOrAny) => state.chart);
 
-  const handleChart = (path: string): void => {
-    dispatch(getMoviesChartData(path));
-  };
+  const chart = useSelector((state: RootStateOrAny) => state.chart);
 
   useEffect(() => {
     dispatch(getMoviesChartData("Stocks"));
   }, []);
+
+  const handleChart = (path: string): void => {
+    dispatch(getMoviesChartData(path));
+  };
 
   if (chart.error) {
     toast.error(chart.error);
