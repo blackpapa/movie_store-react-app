@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
-import { useQuery } from "@apollo/client";
+import { QueryResult, useQuery } from "@apollo/client";
 import { MOVIES_TREND } from "./trendGroup";
 import { Bar, Doughnut } from "react-chartjs-2";
 import { SUCCESS_MOVIES_CHART_DATA } from "../redux/actions/chartActions";
+import { Dispatch } from "redux";
 import ProgressBar from "./common/progressBar";
 import _ from "lodash";
 
@@ -11,8 +12,8 @@ interface TrendChartProps {}
 
 const TrendChart: React.FC<TrendChartProps> = () => {
   const chart = useSelector((state: RootStateOrAny) => state.chart);
-  const dispatch = useDispatch();
-  const { data: glData, loading, error } = useQuery(MOVIES_TREND);
+  const dispatch: Dispatch = useDispatch();
+  const { data: glData, loading, error }: QueryResult = useQuery(MOVIES_TREND);
 
   useEffect(() => {
     dispatch({

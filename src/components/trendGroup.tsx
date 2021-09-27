@@ -1,8 +1,8 @@
 import React from "react";
 import ProgressBar from "./common/progressBar";
 import { gql, QueryResult, useQuery } from "@apollo/client";
-import _ from "lodash";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 
 interface Movie {
   id: string;
