@@ -22,6 +22,13 @@ const BtnToolBar: React.FC<BtnToolBarProps> = (props) => {
         >
           Prices
         </button>
+        <button
+          type="button"
+          onClick={() => props.onChart("Rentals")}
+          className="btn btn-sm btn-outline-secondary"
+        >
+          Rentals
+        </button>
       </div>
       <button
         type="button"
