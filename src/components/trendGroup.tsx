@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ProgressBar from "./common/progressBar";
 import { gql, QueryResult, useQuery } from "@apollo/client";
 import _ from "lodash";

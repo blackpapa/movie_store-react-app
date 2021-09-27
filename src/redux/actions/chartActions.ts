@@ -33,11 +33,9 @@ export const getMoviesChartData = (path: string): ThunkAction<void, RootStateOrA
             for (let i = 0; i < filtered.length; i++) {
               labels.push(filtered[i].title);
               data.push(filtered[i].dailyRentalRate);
-            }
-        }
+            } 
+        } 
         
-     
-
       dispatch({
           type: SUCCESS_MOVIES_CHART_DATA,
           payload: {
