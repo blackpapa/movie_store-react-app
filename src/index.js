@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 logger.init();
 
 const client = new ApolloClient({
-  uri: process.env.REACT_APP_API_URL + "/graphql?",
+  uri: process.env.REACT_APP_API_URL + "/graphql",
   cache: new InMemoryCache(),
 });
 
