@@ -18,6 +18,7 @@ import MovieTable from "./movieTable";
 import SearchBox from "./common/searchBox";
 import ProgressBar from "./common/progressBar";
 import _ from "lodash";
+import TrendGroup from "./trendGroup";
 
 export interface Movie {
   _id: string;
@@ -194,6 +195,8 @@ class Movies extends Component<Props, State> {
             valueProperty={"_id"}
             textProperty={"name"}
           />
+          <br />
+          <TrendGroup />
         </div>
         {!loading.loadCompleted ? (
           <ProgressBar />

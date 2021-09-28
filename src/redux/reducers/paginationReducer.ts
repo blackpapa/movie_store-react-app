@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 import { SET_CURRENTPAGE } from "../actions";
 
 const initialState =  {
-    pageSize: 5,
+    pageSize: 7,
     currentPage: 1
 }
 

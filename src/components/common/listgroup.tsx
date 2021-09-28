@@ -1,18 +1,18 @@
 import React from "react";
 
 type Item = {
-  _id: string,
-  name: string,
-  [propName: string] : string;
-}
+  _id: string;
+  name: string;
+  [propName: string]: string;
+};
 
 type Props = {
-  items: Item[],
-  onItemSelect : (item: Item) => void
-  selectedItem: Item,
-  valueProperty: string,
-  textProperty: string
-}
+  items: Item[];
+  onItemSelect: (item: Item) => void;
+  selectedItem: Item;
+  valueProperty: string;
+  textProperty: string;
+};
 
 const Listgroup: React.FC<Props> = (props) => {
   const { items, onItemSelect, selectedItem, valueProperty, textProperty } =
@@ -23,6 +23,7 @@ const Listgroup: React.FC<Props> = (props) => {
         <li
           onClick={() => onItemSelect(item)}
           key={item[valueProperty]}
+          style={{ cursor: "pointer" }}
           className={
             selectedItem.name === item.name
               ? "list-group-item active"

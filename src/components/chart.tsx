@@ -3,25 +3,29 @@ import { Bar, Doughnut } from "react-chartjs-2";
 import { RootStateOrAny, useDispatch, useSelector } from "react-redux";
 import { getMoviesChartData } from "../redux/actions/chartActions";
 import { toast } from "react-toastify";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 import ProgressBar from "./common/progressBar";
 import BtnToolBar from "./common/btnToolBar";
 
 interface ChartProps {}
 
 const Chart: React.FC<ChartProps> = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state: RootStateOrAny) => state.chart);
+  const dispatch: ThunkDispatch<RootStateOrAny, unknown, AnyAction> =
+    useDispatch();
 
-  const handleChart = (path: string): void => {
-    dispatch(getMoviesChartData(path));
-  };
+  const chart = useSelector((state: RootStateOrAny) => state.chart);
 
   useEffect(() => {
     dispatch(getMoviesChartData("Stocks"));
   }, []);
 
-  if (state.error) {
-    toast.error(state.error);
+  const handleChart = (path: string): void => {
+    dispatch(getMoviesChartData(path));
+  };
+
+  if (chart.error) {
+    toast.error(chart.error);
   }
 
   return (
@@ -30,13 +34,13 @@ const Chart: React.FC<ChartProps> = () => {
         <h1 className="h2">Chart</h1>
         <BtnToolBar onChart={handleChart} />
       </div>
-      {state.loading ? (
+      {chart.loading ? (
         <ProgressBar />
       ) : (
         <div>
-          <Bar data={state.data} style={{ maxHeight: 500 }} />
+          <Bar data={chart.data} style={{ maxHeight: 500 }} />
           <Doughnut
-            data={state.data}
+            data={chart.data}
             style={{ maxHeight: 300, marginTop: 10 }}
           />
         </div>
