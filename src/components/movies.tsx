@@ -196,7 +196,7 @@ class Movies extends Component<Props, State> {
             textProperty={"name"}
           />
           <br />
-          {/* <TrendGroup /> */}
+          <TrendGroup />
         </div>
         {!loading.loadCompleted ? (
           <ProgressBar />
