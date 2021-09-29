@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
-import { deleteMovie, getMovies } from "../services/movieService";
-import { getGenres } from "../services/genreService";
+import { deleteMovie } from "../services/movieService";
 import { paginate } from "./utils/paginate";
 import { toast } from "react-toastify";
 import { connect, RootStateOrAny } from "react-redux";
