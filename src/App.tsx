@@ -3,8 +3,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getCurrentUser } from "./services/authService";
 import { Provider } from "react-redux";
-import Movies from "./components/movies";
-import Customers from "./components/customers";
 import Rentals from "./components/rentals";
 import MovieForm from "./components/movieForm";
 import NotFound from "./components/notFound";
@@ -20,6 +18,7 @@ import Chart from "./components/chart";
 import TrendChart from "./components/trendChart";
 import "./App.css";
 import GqlCustomers from "./components/gqlCustomers";
+import GqlMovies from "./components/gqlMovies";
 
 interface State {
   user?: User;
@@ -46,7 +45,7 @@ class App extends Component<{}, State> {
               <ProtectedRoute path="/movies/:id" component={MovieForm} />
               <Route
                 path="/movies"
-                render={(props) => <Movies {...props} user={user} />}
+                render={(props) => <GqlMovies {...props} user={user} />}
               ></Route>
               <ProtectedRoute path="/customers/:id" component={CustomerFrom} />
               <Route

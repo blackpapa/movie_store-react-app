@@ -45,6 +45,8 @@ interface Props extends RouteComponentProps {
   pagination: { pageSize: number; currentPage: number };
   loading: { loadCompleted: boolean };
   sort: { searchQuery: string; sortColumn: SortColumn };
+  movies: Movie[];
+  genres: Genre[];
   setCurrentPageAction: (payload: number) => {
     type: string;
     payload: number;
@@ -77,8 +79,7 @@ class Movies extends Component<Props, State> {
   };
 
   async componentDidMount() {
-    const { data: movies } = await getMovies();
-    const { data } = await getGenres();
+    const { movies, genres: data } = this.props;
 
     const genres = [{ _id: "", name: "All Genres" }, ...data];
     this.setState({
