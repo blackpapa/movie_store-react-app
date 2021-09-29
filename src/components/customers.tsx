@@ -132,7 +132,7 @@ class Customers extends Component<Props, State> {
 
     const customers: Customer[] = paginate(filtered, currentPage, pageSize);
 
-    return { customers, totalCount: allCustomers.length };
+    return { customers, totalCount: filtered.length };
   };
 
   render() {

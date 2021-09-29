@@ -144,7 +144,7 @@ class Rentals extends Component<Props, State> {
 
     const rentals: Rental[] = paginate(filtered, currentPage, pageSize);
 
-    return { rentals, totalCount: allRentals.length };
+    return { rentals, totalCount: filtered.length };
   };
 
   render() {
