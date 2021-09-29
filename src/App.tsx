@@ -19,6 +19,7 @@ import store from "./store";
 import Chart from "./components/chart";
 import TrendChart from "./components/trendChart";
 import "./App.css";
+import GqlCustomers from "./components/gqlCustomers";
 
 interface State {
   user?: User;
@@ -50,7 +51,7 @@ class App extends Component<{}, State> {
               <ProtectedRoute path="/customers/:id" component={CustomerFrom} />
               <Route
                 path="/customers"
-                render={(props) => <Customers {...props} user={user} />}
+                render={(props) => <GqlCustomers {...props} user={user} />}
               ></Route>
               <ProtectedRoute path="/rentals/:id" component={RentalForm} />
               <Route
