@@ -19,7 +19,7 @@ interface TrendGroupProps {}
 export const MOVIES_TREND = gql`
   {
     movies {
-      id
+      _id
       title
       rentalsCount
     }
@@ -46,14 +46,14 @@ const TrendGroup: React.FC<TrendGroupProps> = () => {
       <div className="list-group">
         {trends.map((trend) => (
           <Link
-            key={trend.id}
+            key={trend._id}
             to="/trendChart"
             style={{ textDecoration: "none" }}
           >
             <label
               style={{ cursor: "pointer" }}
               className="list-group-item"
-              key={trend.id}
+              key={trend._id}
             >
               <span className="d-block small opacity-50">
                 {ranks[i++]}. Trend
