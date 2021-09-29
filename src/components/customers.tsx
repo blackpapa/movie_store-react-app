@@ -15,7 +15,6 @@ import {
 } from "../redux/actions";
 import CustomerTable from "./customerTable";
 import SearchBox from "./common/searchBox";
-import ProgressBar from "./common/progressBar";
 import Pagination from "./common/pagination";
 import _ from "lodash";
 
@@ -35,6 +34,7 @@ interface Props extends RouteComponentProps {
   pagination: { pageSize: number; currentPage: number };
   sort: { sortColumn: SortColumn; searchQuery: string };
   loading: { loadCompleted: boolean };
+  customers: Customer[];
   setCurrentPageAction: (payload: number) => {
     type: string;
     payload: number;
@@ -59,13 +59,11 @@ class Customers extends Component<Props, State> {
   };
 
   async componentDidMount() {
-    const { data: customers } = await getCustomers();
+    const { customers } = this.props;
     this.setState({ customers });
-    this.props.setLoadingAction(true);
   }
 
   componentWillUnmount() {
-    this.props.setLoadingAction(false);
     this.props.setCurrentPageAction(1);
     this.props.setQueryAction("");
     this.props.setSortColumnAction({ path: "name", order: "asc" });
@@ -144,31 +142,28 @@ class Customers extends Component<Props, State> {
 
     return (
       <React.Fragment>
-        {!loading.loadCompleted ? (
-          <ProgressBar />
-        ) : (
-          <div>
-            {user && (
-              <Link to="/customers/new">
-                <button className="btn btn-primary">New Customer</button>
-              </Link>
-            )}
-            <SearchBox value={searchQuery} onChange={this.handleSearch} />
-            <p>There are {totalCount} customers in the store</p>
-            <CustomerTable
-              customers={customers}
-              onSort={this.handleSort}
-              onDelete={this.handleDelete}
-              sortColumn={sortColumn}
-            />
-            <Pagination
-              itemsCount={totalCount}
-              pageSize={pageSize}
-              currentPage={currentPage}
-              onPageChange={this.handlePage}
-            />
-          </div>
-        )}
+        <div>
+          {user && (
+            <Link to="/customers/new">
+              <button className="btn btn-primary">New Customer</button>
+            </Link>
+          )}
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
+          <p>There are {totalCount} customers in the store</p>
+          <CustomerTable
+            customers={customers}
+            onSort={this.handleSort}
+            onDelete={this.handleDelete}
+            sortColumn={sortColumn}
+          />
+          <Pagination
+            itemsCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePage}
+          />
+        </div>
+        )
       </React.Fragment>
     );
   }
