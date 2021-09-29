@@ -86,11 +86,9 @@ class Movies extends Component<Props, State> {
       genres,
     });
     this.props.setSortColumnAction({ path: "title", order: "asc" });
-    this.props.setLoadingAction(true);
   }
 
   componentWillUnmount() {
-    this.props.setLoadingAction(false);
     this.props.setCurrentPageAction(1);
     this.props.setQueryAction("");
     this.props.setSortColumnAction({ path: "name", order: "asc" });

@@ -163,7 +163,6 @@ class Customers extends Component<Props, State> {
             onPageChange={this.handlePage}
           />
         </div>
-        )
       </React.Fragment>
     );
   }
