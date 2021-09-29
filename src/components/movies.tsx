@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { Link, RouteComponentProps } from "react-router-dom";
-import { deleteMovie, getMovies } from "../services/movieService";
-import { getGenres } from "../services/genreService";
+import { deleteMovie } from "../services/movieService";
 import { paginate } from "./utils/paginate";
 import { toast } from "react-toastify";
 import { connect, RootStateOrAny } from "react-redux";
@@ -45,6 +44,8 @@ interface Props extends RouteComponentProps {
   pagination: { pageSize: number; currentPage: number };
   loading: { loadCompleted: boolean };
   sort: { searchQuery: string; sortColumn: SortColumn };
+  movies: Movie[];
+  genres: Genre[];
   setCurrentPageAction: (payload: number) => {
     type: string;
     payload: number;
@@ -77,8 +78,7 @@ class Movies extends Component<Props, State> {
   };
 
   async componentDidMount() {
-    const { data: movies } = await getMovies();
-    const { data } = await getGenres();
+    const { movies, genres: data } = this.props;
 
     const genres = [{ _id: "", name: "All Genres" }, ...data];
     this.setState({
