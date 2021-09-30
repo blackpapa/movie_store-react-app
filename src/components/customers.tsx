@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getCustomers } from "../services/customerService";
 import { Link, RouteComponentProps } from "react-router-dom";
 import { deleteCustomer } from "./../services/customerService";
 import { toast } from "react-toastify";
@@ -134,7 +133,7 @@ class Customers extends Component<Props, State> {
   };
 
   render() {
-    const { user, pagination, sort, loading } = this.props;
+    const { user, pagination, sort } = this.props;
     const { pageSize, currentPage } = pagination;
     const { searchQuery, sortColumn } = sort;
 

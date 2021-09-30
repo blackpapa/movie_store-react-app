@@ -177,7 +177,7 @@ class Movies extends Component<Props, State> {
 
   render() {
     const { genres, selectedGenre } = this.state;
-    const { user, pagination, loading, sort } = this.props;
+    const { user, pagination, sort } = this.props;
     const { searchQuery, sortColumn } = sort;
     const { pageSize, currentPage } = pagination;
 
