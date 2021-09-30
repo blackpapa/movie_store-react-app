@@ -196,33 +196,29 @@ class Movies extends Component<Props, State> {
           <br />
           <TrendGroup />
         </div>
-        {!loading.loadCompleted ? (
-          <ProgressBar />
-        ) : (
-          <div className="col">
-            {user && (
-              <Link to="/movies/new">
-                <button className="btn btn-primary">New Movie</button>
-              </Link>
-            )}
-            <SearchBox value={searchQuery} onChange={this.handleSearch} />
+        <div className="col">
+          {user && (
+            <Link to="/movies/new">
+              <button className="btn btn-primary">New Movie</button>
+            </Link>
+          )}
+          <SearchBox value={searchQuery} onChange={this.handleSearch} />
 
-            <p>There are {totalCount} movies in the store</p>
-            <MovieTable
-              movies={movies}
-              onLike={this.handleLike}
-              onDelete={this.handleDelete}
-              onSort={this.handleSort}
-              sortColumn={sortColumn}
-            />
-            <Pagination
-              itemsCount={totalCount}
-              pageSize={pageSize}
-              onPageChange={this.handlePageChange}
-              currentPage={currentPage}
-            />
-          </div>
-        )}
+          <p>There are {totalCount} movies in the store</p>
+          <MovieTable
+            movies={movies}
+            onLike={this.handleLike}
+            onDelete={this.handleDelete}
+            onSort={this.handleSort}
+            sortColumn={sortColumn}
+          />
+          <Pagination
+            itemsCount={totalCount}
+            pageSize={pageSize}
+            onPageChange={this.handlePageChange}
+            currentPage={currentPage}
+          />
+        </div>
       </div>
     );
   }
