@@ -32,7 +32,7 @@ const TrendGroup: React.FC<TrendGroupProps> = () => {
 
   const { data, error, loading }: QueryResult = useQuery<MovieTrendData>(
     MOVIES_TREND,
-    { fetchPolicy: "cache-and-network" }
+    { pollInterval: 100 }
   );
 
   if (loading) return <ProgressBar />;
