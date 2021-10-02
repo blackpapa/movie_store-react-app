@@ -21,7 +21,9 @@ const getCustomersQuery = gql`
 `;
 
 const GqlCustomers: React.FC<gqlCustomersProps> = ({ user, ...rest }) => {
-  const { data, error, loading } = useQuery(getCustomersQuery);
+  const { data, error, loading } = useQuery(getCustomersQuery, {
+    fetchPolicy: "cache-and-network",
+  });
 
   if (loading) return <ProgressBar />;
   if (error) return <h1>error</h1>;

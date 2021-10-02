@@ -31,7 +31,9 @@ const getMoviesAndGenresQuery = gql`
 `;
 
 const GqlMovies: React.FC<GqlMoviesProps> = ({ user, ...rest }) => {
-  const { data, error, loading } = useQuery(getMoviesAndGenresQuery);
+  const { data, error, loading } = useQuery(getMoviesAndGenresQuery, {
+    fetchPolicy: "cache-and-network",
+  });
 
   if (loading) return <ProgressBar />;
   if (error) return <h1>Error: {error}</h1>;
