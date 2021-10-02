@@ -13,11 +13,7 @@ interface TrendChartProps {}
 const TrendChart: React.FC<TrendChartProps> = () => {
   const chart = useSelector((state: RootStateOrAny) => state.chart);
   const dispatch: Dispatch = useDispatch();
-  const {
-    data: glData,
-    loading,
-    error,
-  }: QueryResult = useQuery(MOVIES_TREND, { pollInterval: 100 });
+  const { data: glData, loading, error }: QueryResult = useQuery(MOVIES_TREND);
 
   useEffect(() => {
     dispatch({
