@@ -15,9 +15,8 @@ import Pagination from "./common/pagination";
 import Listgroup from "./common/listgroup";
 import MovieTable from "./movieTable";
 import SearchBox from "./common/searchBox";
-import ProgressBar from "./common/progressBar";
-import _ from "lodash";
 import TrendGroup from "./trendGroup";
+import _ from "lodash";
 
 export interface Movie {
   _id: string;
