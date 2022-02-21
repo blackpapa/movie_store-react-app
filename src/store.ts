@@ -5,7 +5,7 @@ import { compose } from 'redux';
 import thunk from 'redux-thunk'
 
 const store = createStore(rootReducer, 
-    compose(applyMiddleware(thunk), composeWithDevTools())
+    compose(applyMiddleware(thunk))
     );
 
 export default store;
